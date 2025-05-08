@@ -9,10 +9,16 @@ on:
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
+# Allow the action to create and update deployments
 permissions:
   contents: read
   pages: write
   id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
