@@ -29,6 +29,7 @@ node_modules
 
 # Build specific exclusions
 */bin/
+*/bin/*
 
 # Environment variables
 *.env
