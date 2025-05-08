@@ -38,6 +38,11 @@ jobs:
           cd documentation
           npm run build
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: documentation/dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
