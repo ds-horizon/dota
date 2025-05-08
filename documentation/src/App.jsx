@@ -401,7 +401,7 @@ function App() {
                     Get Started Free <ArrowRight />
                   </button>
                   <a
-                    href="https://github.com"
+                    href="https://github.com/dream-sports-labs/dota"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-secondary btn-lg group"

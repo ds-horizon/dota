@@ -6,7 +6,7 @@ export default function Footer() {
         <p className="text-xs text-muted-foreground mb-1">
           DOTA is provided under the{' '}
           <a
-            href="https://github.com/microsoft/react-native-code-push/blob/main/LICENSE"
+            href="https://github.com/dream-sports-labs/dota/blob/main/LICENSE"
             target="_blank"
             rel="noopener noreferrer"
             className="text-dota-600 hover:underline"
@@ -18,7 +18,7 @@ export default function Footer() {
       </div>
       <div className="footer-links">
         <a
-          href="https://github.com/microsoft/react-native-code-push"
+          href="https://github.com/dream-sports-labs/dota"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs"

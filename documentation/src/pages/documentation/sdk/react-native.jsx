@@ -61,7 +61,7 @@ export default function ReactNativeConfig() {
         <p className="mb-4">
           In order for{' '}
           <a
-            href="https://github.com/microsoft/react-native-code-push"
+            href="https://github.com/dream-sports-labs/dota"
             className="text-dota-600 hover:underline"
           >
             react-native-code-push
