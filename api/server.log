@@ -1,0 +1,28 @@
+
+> code-push-server@0.0.1 start
+> node ./bin/script/server.js aws:env
+
+Initializing S3Storage
+Initializing RedisManager with config type: redis
+No REDIS_HOST or REDIS_PORT environment variable configured.
+API listening at http://localhost:3010
+(node:25381) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
+ SDK releases are limited to address critical bug fixes and security issues only.
+
+Please migrate your code to use AWS SDK for JavaScript (v3).
+For more information, check the blog post at https://a.co/cUPnyil
+(Use `node --trace-warnings ...` to show where the warning was created)
+Database "codepushdb" ensured.
+Executing (default): SELECT 1+1 AS result
+Models registered
+Sequelize models synced
+{
+  tenant: tenant,
+  package: package,
+  deployment: deployment,
+  account: account,
+  accessKey: accessKey,
+  AppPointer: AppPointer,
+  collaborator: collaborator,
+  apps: apps
+}

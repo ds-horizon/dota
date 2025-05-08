@@ -1,0 +1,396 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Color Palette (Modern Blue) */
+  --primary-hue: 217;
+  --primary-saturation: 91%;
+  --primary-lightness: 60%;
+  --primary: hsl(
+    var(--primary-hue),
+    var(--primary-saturation),
+    var(--primary-lightness)
+  ); /* Bright Blue */
+  --primary-dark: hsl(
+    var(--primary-hue),
+    var(--primary-saturation),
+    45%
+  ); /* Darker shade for hover/active or backgrounds */
+  --primary-light: hsl(var(--primary-hue), var(--primary-saturation), 75%);
+  --primary-lightest: hsl(
+    var(--primary-hue),
+    var(--primary-saturation),
+    95%
+  ); /* Very light for subtle backgrounds */
+  --primary-foreground: hsl(0, 0%, 100%); /* Text on primary bg */
+
+  /* Accent Color (e.g., for specific highlights, can be different) */
+  --primary-accent-hue: 250;
+  --primary-accent-saturation: 80%;
+  --primary-accent-lightness: 65%;
+  --primary-accent: hsl(
+    var(--primary-accent-hue),
+    var(--primary-accent-saturation),
+    var(--primary-accent-lightness)
+  ); /* A complementary violet/purple */
+
+  /* Text Colors */
+  --text-heading: hsl(215, 30%, 15%); /* Dark cool gray for headings */
+  --text-primary: hsl(215, 25%, 25%); /* Default primary text */
+  --text-secondary: hsl(215, 15%, 45%); /* Lighter for secondary text/descriptions */
+  --text-tertiary: hsl(215, 15%, 65%); /* Even lighter for footers, subtle info */
+
+  /* Backgrounds */
+  --bg-page-background: hsl(0, 0%, 100%); /* White */
+  --bg-section-bg: hsl(210, 30%, 98%); /* Very light gray for alternating sections */
+  --bg-card: hsl(0, 0%, 100%);
+
+  /* Borders */
+  --border-color: hsl(210, 25%, 90%); /* Light gray for borders */
+  --border-color-strong: hsl(210, 20%, 80%);
+
+  /* Semantic Colors (optional, can be Tailwind defaults or custom) */
+  --color-success: hsl(145, 63%, 42%);
+  --color-warning: hsl(45, 100%, 51%);
+  --color-danger: hsl(350, 70%, 50%);
+
+  /* Shadows - More refined shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.07), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+}
+
+@layer base {
+  body {
+    @apply bg-page-background text-text-primary antialiased font-sans;
+    font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-text-heading font-bold relative;
+  }
+  
+  h1 {
+    @apply text-4xl mb-8 relative;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    @apply text-2xl mb-6 mt-8;
+  }
+  
+  h3 {
+    @apply text-xl mb-4 mt-6;
+  }
+  
+  h4 {
+    @apply text-lg mb-3 mt-5;
+  }
+  
+  p {
+    @apply leading-relaxed;
+  }
+  ::selection {
+    @apply bg-primary/20 text-primary;
+  }
+}
+
+/* Define Tailwind color utilities based on CSS variables */
+/* This makes them available as Tailwind classes e.g., bg-primary, text-primary-dark */
+@layer utilities {
+  .text-primary {
+    color: var(--primary);
+  }
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  .border-primary {
+    border-color: var(--primary);
+  }
+
+  .text-primary-dark {
+    color: var(--primary-dark);
+  }
+  .bg-primary-dark {
+    background-color: var(--primary-dark);
+  }
+
+  .text-primary-light {
+    color: var(--primary-light);
+  }
+  .bg-primary-light {
+    background-color: var(--primary-light);
+  }
+
+  .text-primary-lightest {
+    color: var(--primary-lightest);
+  }
+  .bg-primary-lightest {
+    background-color: var(--primary-lightest);
+  }
+
+  .text-primary-accent {
+    color: var(--primary-accent);
+  }
+  .bg-primary-accent {
+    background-color: var(--primary-accent);
+  }
+
+  .text-text-heading {
+    color: var(--text-heading);
+  }
+  .text-text-primary {
+    color: var(--text-primary);
+  }
+  .text-text-secondary {
+    color: var(--text-secondary);
+  }
+  .text-text-tertiary {
+    color: var(--text-tertiary);
+  }
+
+  .bg-page-background {
+    background-color: var(--bg-page-background);
+  }
+  .bg-section-bg {
+    background-color: var(--bg-section-bg);
+  }
+  .bg-card {
+    background-color: var(--bg-card);
+  }
+
+  .border-border-color {
+    border-color: var(--border-color);
+  }
+  .border-border-strong {
+    border-color: var(--border-color-strong);
+  }
+}
+
+/* Component Styles */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg font-medium text-sm tracking-wide transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary-dark focus:ring-primary;
+  }
+  .btn-secondary {
+    @apply bg-primary-lightest text-primary hover:bg-primary-light border border-primary/30 focus:ring-primary;
+  }
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+  .btn-cta-primary {
+    /* For main dark background CTA */
+    @apply bg-white text-primary hover:bg-gray-100 focus:ring-white/70;
+  }
+  .btn-cta-secondary {
+    /* For main dark background CTA */
+    @apply bg-transparent text-white border border-white/50 hover:bg-white/10 focus:ring-white/70;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-semibold tracking-wider;
+  }
+  .badge-primary {
+    @apply bg-primary text-primary-foreground;
+  }
+  .badge-subtle {
+    @apply bg-primary-lightest text-primary;
+  }
+  .badge-dot {
+    @apply w-2 h-2 rounded-full;
+  }
+
+  .feature-card {
+    @apply bg-card p-6 lg:p-8 rounded-xl border border-border-color hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
+  }
+  .feature-icon {
+    @apply p-3 mb-5 inline-flex rounded-lg bg-primary-lightest text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 transform group-hover:scale-110;
+  }
+
+  .doc-card {
+    @apply block h-full bg-card p-6 rounded-xl border border-border-color hover:border-primary hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer;
+  }
+
+  .faq-card {
+    @apply bg-card rounded-xl border border-border-color transition-all duration-300;
+  }
+  .faq-card:hover {
+    @apply shadow-md border-border-strong;
+  }
+  .faq-question {
+    @apply w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-xl;
+  }
+  .faq-answer {
+    @apply px-6 overflow-hidden transition-all duration-500 ease-in-out max-h-0;
+  }
+  .faq-answer.open {
+    @apply max-h-screen pb-5 border-t border-border-color; /* Use a large enough max-h */
+  }
+
+  .terminal-container {
+    @apply shadow-xl border border-gray-200/80; /* Adjusted shadow and border */
+  }
+  .terminal-header {
+    @apply bg-gray-100/80 p-2.5 border-b border-gray-200/80; /* Slightly more padding and subtle color */
+  }
+  .terminal-header .text-xs {
+    @apply text-gray-500;
+  }
+
+  .code-window-wrapper {
+    @apply relative;
+  }
+  .code-window {
+    @apply bg-gray-900 rounded-xl overflow-hidden shadow-2xl border border-gray-700/50;
+  }
+  .code-header {
+    @apply flex items-center p-3 bg-gray-800/70 border-b border-gray-700/50;
+  }
+  .code-dots {
+    @apply flex space-x-2;
+  }
+  .code-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+  .code-title {
+    @apply text-gray-400 text-xs ml-auto font-mono select-none;
+  }
+  .code-content {
+    @apply p-5 bg-gray-900/80 backdrop-blur-sm; /* Added subtle backdrop blur if bg is semi-transparent */
+  }
+  .code-content pre {
+    @apply text-gray-300 font-mono text-xs sm:text-sm leading-relaxed whitespace-pre-wrap; /* Ensure wrapping for long lines */
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  }
+  .code-content code .token.comment,
+  .code-content code .token.prolog,
+  .code-content code .token.doctype,
+  .code-content code .token.cdata {
+    @apply text-gray-500;
+  }
+  .code-content code .token.punctuation {
+    @apply text-gray-400;
+  }
+  .code-content code .token.property,
+  .code-content code .token.tag,
+  .code-content code .token.boolean,
+  .code-content code .token.number,
+  .code-content code .token.constant,
+  .code-content code .token.symbol,
+  .code-content code .token.deleted {
+    @apply text-purple-400;
+  }
+  .code-content code .token.selector,
+  .code-content code .token.attr-name,
+  .code-content code .token.string,
+  .code-content code .token.char,
+  .code-content code .token.builtin,
+  .code-content code .token.inserted {
+    @apply text-emerald-400;
+  }
+  .code-content code .token.operator,
+  .code-content code .token.entity,
+  .code-content code .token.url,
+  .language-css .token.string,
+  .style .token.string {
+    @apply text-sky-300;
+  }
+  .code-content code .token.atrule,
+  .code-content code .token.attr-value,
+  .code-content code .token.keyword {
+    @apply text-sky-400;
+  }
+  .code-content code .token.function,
+  .code-content code .token.class-name {
+    @apply text-yellow-400; /* Changed from pink for better contrast on dark */
+  }
+  .code-content code .token.regex,
+  .code-content code .token.important,
+  .code-content code .token.variable {
+    @apply text-orange-400;
+  }
+  /* Specific for the DOTA example */
+  .code-content code .text-blue-600 {
+    /* From original, can be adapted or use prism classes */
+    color: #60a5fa; /* Tailwind blue-400 */
+  }
+  .code-content code .text-green-600 {
+    /* From original */
+    color: #34d399; /* Tailwind emerald-400 */
+  }
+}
+
+/* Hero Section Gradient Animation */
+.hero-gradient-animation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Behind content */
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary-hue) var(--primary-saturation) 97%) 0%,
+    /* Very light primary */ hsl(var(--primary-accent-hue) var(--primary-accent-saturation) 97%) 50%,
+    /* Very light accent */ hsl(var(--primary-hue) var(--primary-saturation) 97%) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* General Animations */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
