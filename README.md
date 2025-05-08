@@ -1,3 +1,5 @@
+###### ⚠️ This is a fork of [code-push-server](https://github.com/microsoft/code-push-server). All credit goes to the original author.
+
 # DOTA - Over-the-Air Updates for React Native Apps
 
 DOTA enables React Native developers to deploy mobile app updates directly to their users' devices. It consists of two parts: DOTA Server where developers publish app updates (JS, HTML, CSS or image changes), and [DOTA React Native Client SDK](https://github.com/microsoft/react-native-code-push) that enables querying for updates from within an app.
@@ -42,8 +44,6 @@ DOTA can be deployed to AWS using your preferred AWS services for computing and 
 ### Azure Deployment
 
 DOTA is designed to run as an Azure App Service with Azure Blob Storage for backend storage needs.
-
-###### ⚠️ This is a fork of [code-push-server](https://github.com/microsoft/code-push-server). All credit goes to the original author.
 
 ## ⚖️ License
 
