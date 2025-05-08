@@ -1,0 +1,37 @@
+🗂️ AWS LocalStack initialized at http://localhost:4566
+📂 Seeding AWS storage with sample data...
+🔨 Building application...
+🛜 Starting server with AWS storage...
+⏳ Waiting for server to be ready...
+🚀 Server started with AWS storage
+🧹 Cleaning environment before login...
+/Users/ashutoshpalania/Desktop/dota-workspace/code-push-server/api
+🔑 Logging in to CLI...
+node:internal/modules/cjs/loader:1397
+  throw err;
+  ^
+
+Error: Cannot find module 'yargs'
+Require stack:
+- /Users/ashutoshpalania/Desktop/dota-workspace/code-push-server/cli/bin/script/command-parser.js
+- /Users/ashutoshpalania/Desktop/dota-workspace/code-push-server/cli/bin/script/cli.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1394:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1050:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1055:22)
+    at Function._load (node:internal/modules/cjs/loader:1204:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
+    at Module.require (node:internal/modules/cjs/loader:1480:12)
+    at require (node:internal/modules/helpers:135:16)
+    at Object.<anonymous> (/Users/ashutoshpalania/Desktop/dota-workspace/code-push-server/cli/bin/script/command-parser.js:7:15)
+    at Module._compile (node:internal/modules/cjs/loader:1723:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/ashutoshpalania/Desktop/dota-workspace/code-push-server/cli/bin/script/command-parser.js',
+    '/Users/ashutoshpalania/Desktop/dota-workspace/code-push-server/cli/bin/script/cli.js'
+  ]
+}
+
+Node.js v23.7.0
+📝 Server log available at: /Users/ashutoshpalania/Desktop/dota-workspace/code-push-server/cli/server.log
+⏹️  Press Ctrl+C to stop the server
