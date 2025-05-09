@@ -41,7 +41,7 @@ export default function CLIInstallation() {
         <h2 className="text-2xl font-bold mb-4">Open Source & Contributions</h2>
         <p className="mb-4">
           DOTA CLI is <strong>open source</strong>. Interested in helping us improve? Check out our
-          GitHub repository for details on how to contribute fixes or features. We appreciate all
+          GitHub <a href="https://github.com/dream-sports-labs/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">repository</a> for details on how to contribute fixes or features. We appreciate all
           your input and feedback!
         </p>
       </div>
@@ -83,7 +83,7 @@ export default function CLIInstallation() {
         </pre>
       </div>
 
-      <div className="bg-gray-50 dark:bg-gray-800 border rounded-lg p-6 mb-8">
+      <div className="bg-accent border rounded-lg p-6 mb-8">
         <h3 className="text-xl font-bold mb-4">Optional: Global Installation</h3>
         <p className="mb-4">
           If you prefer to install the CLI globally on your system, run:

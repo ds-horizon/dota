@@ -59,14 +59,13 @@ export default function ReactNativeConfig() {
 
       <div className="mb-8">
         <p className="mb-4">
-          In order for{' '}
-          <a
-            href="https://github.com/dream-sports-labs/dota"
-            className="text-dota-600 hover:underline"
-          >
-            react-native-code-push
-          </a>{' '}
-          to use your server, additional configuration value is needed.
+          In order for your react-native application to use your server, additional configuration value is needed.
+        </p>
+        <p className="mb-4">
+          This configuration is essential because, by default, React Native CodePush connects to Microsoft's AppCenter service. 
+          When using DOTA, you need to redirect your app to your custom DOTA server instead. 
+          Without this configuration, your application would try to fetch updates from AppCenter rather than your DOTA server, 
+          resulting in your over-the-air updates not being delivered to your users.
         </p>
       </div>
 
@@ -244,27 +243,27 @@ const checkForUpdates = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50 border rounded-lg p-6">
+      <div className="bg-accent border rounded-lg p-6">
         <h3 className="text-xl font-semibold mb-3">Next Steps</h3>
         <p className="mb-4">After configuring your React Native application:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>
             Set up{' '}
-            <a href="/cli/installation" className="text-dota-600 hover:underline">
+            <a href="/documentation/cli/installation" className="text-dota-600 hover:underline">
               DOTA CLI
             </a>{' '}
             for managing your deployments
           </li>
           <li>
             Learn how to use the{' '}
-            <a href="/documentation/sdk/integration" className="text-dota-600 hover:underline">
+            <a href="/documentation/cli/commands" className="text-dota-600 hover:underline">
               CLI commands
             </a>{' '}
             to publish updates
           </li>
           <li>
             Review{' '}
-            <a href="/advanced/metrics" className="text-dota-600 hover:underline">
+            <a href="/documentation/advanced/metrics" className="text-dota-600 hover:underline">
               Metrics
             </a>{' '}
             to monitor your deployments

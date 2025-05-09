@@ -881,7 +881,8 @@ li {
 
 .alert-info,
 .alert-warning,
-.alert-tip {
+.alert-tip,
+.alert-note {
   padding: 1rem;
   border-radius: 0.375rem;
   margin-bottom: 1rem;
@@ -892,20 +893,23 @@ li {
 
 .alert-info .alert-icon,
 .alert-warning .alert-icon,
-.alert-tip .alert-icon {
+.alert-tip .alert-icon,
+.alert-note .alert-icon {
   flex-shrink: 0;
   margin-top: 0.125rem; /* Align icon slightly better */
 }
 
 .alert-info .alert-content,
 .alert-warning .alert-content,
-.alert-tip .alert-content {
+.alert-tip .alert-content,
+.alert-note .alert-content {
   flex-grow: 1;
 }
 
 .alert-info .alert-content p:last-child,
 .alert-warning .alert-content p:last-child,
-.alert-tip .alert-content p:last-child {
+.alert-tip .alert-content p:last-child,
+.alert-note .alert-content p:last-child {
   margin-bottom: 0;
 }
 
@@ -930,6 +934,15 @@ li {
 
 .dark-mode .alert-tip {
   color: #dcfce7; /* Adjust text color for dark mode */
+}
+
+.alert-note {
+  background-color: var(--alert-warning-bg);
+  border-left: 4px solid var(--alert-warning-border);
+}
+
+.alert-note .alert-icon {
+  color: var(--alert-warning-border);
 }
 
 /* Responsive styles */
@@ -1364,4 +1377,46 @@ li {
 .content h3.simple-heading::before,
 .content-with-toc h3.simple-heading::before {
   display: none !important;
+}
+
+/* FAQ Styling */
+.faq-card {
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  background-color: var(--accent);
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  color: var(--text-color);
+}
+
+.faq-question:hover {
+  background-color: var(--muted);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background-color: var(--accent);
+  color: var(--text-color);
+  border-top: 0px solid var(--border-color);
+}
+
+.faq-answer.open {
+  max-height: 500px;
+  padding: 0.5rem 1rem 1rem;
+  border-top: 1px solid var(--border-color);
 }

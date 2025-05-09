@@ -35,7 +35,7 @@ export default function Sidebar() {
                   to="/documentation/deployment/local"
                   style={isActive('/documentation/deployment/local')}
                 >
-                  Local Development
+                  Local Deployment
                 </Link>
               </li>
               <li className="sidebar-subitem">

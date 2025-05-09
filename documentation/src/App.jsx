@@ -302,7 +302,7 @@ function App() {
             ))}
           </nav>
           <div className="hidden md:flex items-center">
-            <button onClick={navigateToInternalDocumentation} className="btn btn-primary">
+            <button onClick={navigateToInternalDocumentation} className="btn btn-primary font-bold text-white">
               Get Started <ArrowRight />
             </button>
           </div>
@@ -365,7 +365,7 @@ function App() {
               ))}
               <button
                 onClick={navigateToInternalDocumentation}
-                className="btn btn-primary w-full mt-2"
+                className="btn btn-primary w-full mt-2 font-bold text-white"
               >
                 Get Started <ArrowRight />
               </button>
@@ -390,13 +390,12 @@ function App() {
                   <span className="text-primary">Instantly.</span>
                 </h1>
                 <p className="text-lg text-text-secondary mb-10 max-w-xl">
-                  Deploy updates to your React Native apps seamlessly, bypassing App Store reviews.
-                  Gain complete control over your deployment pipeline and user data.
+                Deliver updates to your React Native apps quickly without waiting for App Store approval.Gain complete control over your deployment pipeline and user data.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={navigateToInternalDocumentation}
-                    className="btn btn-primary btn-lg group"
+                    className="btn btn-primary btn-lg group font-bold text-white"
                   >
                     Get Started Free <ArrowRight />
                   </button>
@@ -453,7 +452,7 @@ function App() {
         <section id="features" ref={sectionRefs.features} className="py-20 lg:py-28 bg-section-bg">
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <div className="badge badge-primary mb-4">
+              <div className="badge badge-primary mb-4 font-bold text-white">
                 <span className="badge-dot bg-white/50"></span>
                 Core Features
               </div>
@@ -583,7 +582,7 @@ AppRegistry.registerComponent('YourAppName', () => App);`}
         >
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <div className="badge badge-primary mb-4">
+              <div className="badge badge-primary mb-4 font-bold text-white">
                 <span className="badge-dot bg-white/50"></span>
                 Documentation
               </div>
@@ -612,7 +611,7 @@ AppRegistry.registerComponent('YourAppName', () => App);`}
             </div>
 
             <div className="mt-16 text-center">
-              <button onClick={navigateToInternalDocumentation} className="btn btn-primary group">
+              <button onClick={navigateToInternalDocumentation} className="btn btn-primary group font-bold text-white">
                 View Full Documentation <ArrowRight />
               </button>
             </div>
@@ -678,7 +677,7 @@ AppRegistry.registerComponent('YourAppName', () => App);`}
         <section className="py-20 lg:py-28 bg-primary-dark text-white">
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 simple-heading">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 simple-heading text-white">
                 Ready to Control Your App Updates?
               </h2>
               <p className="text-lg text-primary-foreground/80 mb-10">
@@ -692,13 +691,6 @@ AppRegistry.registerComponent('YourAppName', () => App);`}
                 >
                   Get Started Now <ArrowRight />
                 </button>
-                <a
-                  href="#documentation"
-                  onClick={() => scrollToSection('documentation')}
-                  className="btn btn-cta-secondary group"
-                >
-                  Explore Docs <ArrowRight />
-                </a>
               </div>
             </div>
           </div>

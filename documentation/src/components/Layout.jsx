@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
 import TableOfContents from './TableOfContents';
+import ScrollToTop from './ScrollToTop';
 import '../styles/globals.css';
 
 // Define the navigation structure that matches the sidebar
@@ -12,7 +13,7 @@ const navigationItems = [
   {
     title: 'Deployment',
     children: [
-      { path: '/documentation/deployment/local', title: 'Local Development' },
+      { path: '/documentation/deployment/local', title: 'Local Deployment' },
       { path: '/documentation/deployment/aws', title: 'AWS' },
       { path: '/documentation/deployment/azure', title: 'Azure App Service' },
     ],
@@ -74,6 +75,7 @@ export default function Layout() {
 
   return (
     <div className="layout">
+      <ScrollToTop />
       <Header />
       <div className="main-container">
         <aside className="sidebar-container">

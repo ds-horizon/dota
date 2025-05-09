@@ -24,7 +24,7 @@ export default function Introduction() {
         DOTA SDK and CLI are open-source! 🎉 We believe in creating an accessible, collaborative platform that thrives on community contributions.
       </p>
       <p className="mb-6">
-        <strong>Contribute:</strong> Interested in helping us improve? Check out our GitHub repository to get started! From feature suggestions to bug fixes, all contributions are welcome.
+        <strong>Contribute:</strong> Interested in helping us improve? Check out our <a href="https://github.com/dream-sports-labs/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">GitHub repository</a> to get started! From feature suggestions to bug fixes, all contributions are welcome.
       </p>
 
       <h2 className="text-2xl font-bold mb-4">Features Offered</h2>
@@ -45,16 +45,16 @@ export default function Introduction() {
 
       <h2 className="text-2xl font-bold mb-4">Getting Started</h2>
       <div className="grid gap-6 md:grid-cols-2 mb-6">
-        <div className="rounded-lg border bg-card dark:bg-gray-800 text-card-foreground dark:text-gray-200 shadow-sm p-6">
+        <div className="rounded-lg border border-border-color bg-accent shadow-sm p-6">
           <h3 className="text-xl font-bold mb-2">Get Started with CLI</h3>
-          <p className="text-muted-foreground dark:text-gray-400 mb-4">Learn how to install and set up the DOTA CLI for your project</p>
+          <p className="text-muted-foreground mb-4">Learn how to install and set up the DOTA CLI for your project</p>
           <a href="/documentation/cli/installation" className="text-dota-600 hover:text-dota-700 font-medium">
             Learn more →
           </a>
         </div>
-        <div className="rounded-lg border bg-card dark:bg-gray-800 text-card-foreground dark:text-gray-200 shadow-sm p-6">
+        <div className="rounded-lg border border-border-color bg-accent shadow-sm p-6">
           <h3 className="text-xl font-bold mb-2">Configure React Native</h3>
-          <p className="text-muted-foreground dark:text-gray-400 mb-4">Set up your React Native application to work with DOTA</p>
+          <p className="text-muted-foreground mb-4">Set up your React Native application to work with DOTA</p>
           <a href="/documentation/configuration/react-native" className="text-dota-600 hover:text-dota-700 font-medium">
             Learn more →
           </a>

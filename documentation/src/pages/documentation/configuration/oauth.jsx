@@ -21,7 +21,7 @@ export default function OAuthConfig() {
       </div>
 
       <div className="flex flex-col md:flex-row gap-12">
-        <div className="md:w-2/3">
+        <div className="w-full">
           <div className="mb-8" id="google-oauth">
             <h2 className="text-2xl font-bold mb-4">Google OAuth</h2>
 
@@ -180,8 +180,8 @@ NODE_ENV=development # or NODE_ENV=test`}</code>
 
             <ol className="list-decimal pl-6 space-y-2">
               <li>Restart your DOTA server to apply the environment variable changes</li>
-              <li>Navigate to your DOTA server login page</li>
-              <li>Attempt to log in using Google authentication</li>
+              <li>Generate an access key from your DOTA server</li>
+              <li>Try logging into CLI with the generated access key as your authentication token</li>
               <li>Verify that you can successfully authenticate and access protected resources</li>
             </ol>
           </div>
