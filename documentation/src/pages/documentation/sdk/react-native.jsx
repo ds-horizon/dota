@@ -62,10 +62,9 @@ export default function ReactNativeConfig() {
           In order for your react-native application to use your server, additional configuration value is needed.
         </p>
         <p className="mb-4">
-          This configuration is essential because, by default, React Native CodePush connects to Microsoft's AppCenter service. 
-          When using DOTA, you need to redirect your app to your custom DOTA server instead. 
-          Without this configuration, your application would try to fetch updates from AppCenter rather than your DOTA server, 
-          resulting in your over-the-air updates not being delivered to your users.
+          This configuration is essential for your React Native app to connect to your DOTA server for receiving updates. 
+          Without this configuration, your application would not be able to find and download the updates you deploy, 
+          preventing your over-the-air updates from reaching your users.
         </p>
       </div>
 
