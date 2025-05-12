@@ -26,6 +26,10 @@ import SDKIntegration from './pages/documentation/sdk/integration.jsx';
 import CLICommands from './pages/documentation/cli/commands.jsx';
 import CLIInstallation from './pages/documentation/cli/installation.jsx';
 
+// Web Dashboard
+import WebDashboard from './pages/documentation/web/dashboard.jsx';
+import WebSetup from './pages/documentation/web/setup.jsx';
+
 // Deployment
 import AWSDeployment from './pages/documentation/deployment/aws.jsx';
 import AzureDeployment from './pages/documentation/deployment/azure.jsx';
@@ -60,6 +64,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           {/* CLI Routes */}
           <Route path="/documentation/cli/commands" element={<CLICommands />} />
           <Route path="/documentation/cli/installation" element={<CLIInstallation />} />
+
+          {/* Web Dashboard Routes */}
+          <Route path="/documentation/web/setup" element={<WebSetup />} />
+          <Route path="/documentation/web/dashboard" element={<WebDashboard />} />
 
           {/* Deployment Routes */}
           <Route path="/documentation/deployment/aws" element={<AWSDeployment />} />

@@ -124,6 +124,28 @@ export default function Sidebar() {
           </li>
 
           <li className="sidebar-section">
+            <h4 className="sidebar-heading">Web Dashboard</h4>
+            <ul className="sidebar-subnav">
+              <li className="sidebar-subitem">
+                <Link
+                  to="/documentation/web/setup"
+                  style={isActive('/documentation/web/setup')}
+                >
+                  Setup
+                </Link>
+              </li>
+              <li className="sidebar-subitem">
+                <Link
+                  to="/documentation/web/dashboard"
+                  style={isActive('/documentation/web/dashboard')}
+                >
+                  Dashboard
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li className="sidebar-section">
             <h4 className="sidebar-heading">Advanced</h4>
             <ul className="sidebar-subnav">
               <li className="sidebar-subitem">

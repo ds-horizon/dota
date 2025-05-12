@@ -4,9 +4,13 @@
 
 Initializing S3Storage
 Initializing RedisManager with config type: redis
-No REDIS_HOST or REDIS_PORT environment variable configured.
+value  undefined
+typeof  undefined
+clusterEnabledWithDoubleEqual false
+clusterEnabledWithTrippleEqual false
+Redis config since no cluster enabled: { host: 'localhost', port: 6379 }
 API listening at http://localhost:3010
-(node:16289) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
+(node:97393) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
  SDK releases are limited to address critical bug fixes and security issues only.
 
 Please migrate your code to use AWS SDK for JavaScript (v3).
@@ -26,7 +30,3 @@ Sequelize models synced
   collaborator: collaborator,
   apps: apps
 }
-Executing (default): SELECT `id`, `name`, `key`, `packageId`, `appId`, `createdTime`, `createdAt`, `updatedAt` FROM `deployments` AS `deployment` WHERE `deployment`.`key` = 'O25dwjupnmTCC-q70qC1CzWfO73NkSR75brivk' LIMIT 1;
-Executing (default): SELECT `id`, `appVersion`, `blobUrl`, `description`, `diffPackageMap`, `isDisabled`, `isMandatory`, `label`, `manifestBlobUrl`, `originalDeployment`, `originalLabel`, `packageHash`, `releasedBy`, `releaseMethod`, `rollout`, `size`, `uploadTime`, `deploymentId`, `createdAt`, `updatedAt` FROM `packages` AS `package` WHERE `package`.`deploymentId` = 'id_5' ORDER BY `package`.`uploadTime` ASC;
-Executing (default): SELECT `id`, `name`, `key`, `packageId`, `appId`, `createdTime`, `createdAt`, `updatedAt` FROM `deployments` AS `deployment` WHERE `deployment`.`key` = 'O25dwjupnmTCC-q70qC1CzWfO73NkSR75brivk' LIMIT 1;
-Executing (default): SELECT `id`, `appVersion`, `blobUrl`, `description`, `diffPackageMap`, `isDisabled`, `isMandatory`, `label`, `manifestBlobUrl`, `originalDeployment`, `originalLabel`, `packageHash`, `releasedBy`, `releaseMethod`, `rollout`, `size`, `uploadTime`, `deploymentId`, `createdAt`, `updatedAt` FROM `packages` AS `package` WHERE `package`.`deploymentId` = 'id_5' ORDER BY `package`.`uploadTime` ASC;

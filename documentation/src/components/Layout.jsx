@@ -40,6 +40,13 @@ const navigationItems = [
     ],
   },
   {
+    title: 'Web Dashboard',
+    children: [
+      { path: '/documentation/web/setup', title: 'Setup' },
+      { path: '/documentation/web/dashboard', title: 'Dashboard' },
+    ],
+  },
+  {
     title: 'Advanced',
     children: [
       { path: '/documentation/advanced/metrics', title: 'Metrics' },
