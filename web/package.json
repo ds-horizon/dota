@@ -13,7 +13,8 @@
     "gen:config": "yarn tsx ./scripts/make-version-file.ts",
     "postinstall": "pnpm gen:routes && pnpm gen:config",
     "test": "NODE_ENV=test pnpm vitest run",
-    "test:coverage": "NODE_ENV=test pnpm vitest run --coverage"
+    "test:coverage": "NODE_ENV=test pnpm vitest run --coverage",
+    "init:web": "chmod +x ./scripts/setup-web.sh && ./scripts/setup-web.sh"
   },
   "dependencies": {
     "@mantine/core": "^7.13.2",
