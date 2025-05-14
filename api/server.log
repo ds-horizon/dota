@@ -10,7 +10,7 @@ clusterEnabledWithDoubleEqual false
 clusterEnabledWithTrippleEqual false
 Redis config since no cluster enabled: { host: 'localhost', port: 6379 }
 API listening at http://localhost:3010
-(node:97393) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
+(node:67906) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
  SDK releases are limited to address critical bug fixes and security issues only.
 
 Please migrate your code to use AWS SDK for JavaScript (v3).
@@ -29,4 +29,46 @@ Sequelize models synced
   AppPointer: AppPointer,
   collaborator: collaborator,
   apps: apps
+}
+Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'mock-google-token' LIMIT 1;
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747140000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-03T06:20:41.000Z,
+  updatedAt: 2025-05-13T13:53:04.000Z
+}
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747140000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-03T06:20:41.000Z,
+  updatedAt: 2025-05-13T13:53:04.000Z
+}
+Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'mock-google-token' LIMIT 1;
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747140000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-03T06:20:41.000Z,
+  updatedAt: 2025-05-13T13:53:04.000Z
+}
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747140000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-03T06:20:41.000Z,
+  updatedAt: 2025-05-13T13:53:04.000Z
 }

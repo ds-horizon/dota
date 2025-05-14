@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+api/server.log
 
 # Runtime data
 pids
@@ -30,6 +31,8 @@ node_modules
 # Build specific exclusions
 */bin/
 */bin/*
+api/bin
+api/bin/**
 
 # Environment variables
 *.env

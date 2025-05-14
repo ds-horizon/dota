@@ -199,39 +199,126 @@ cp .env.example .env</code>
 
         <h3 className="text-xl font-semibold mb-3">AWS S3 Storage</h3>
         <p className="mb-4">
-          For development with AWS S3 storage, set the following environment variables:
-        </p>
-        <p className="mb-4">
-          <code>STORAGE_PROVIDER=s3</code>
-          <br />
-          <code>EMULATED=TRUE</code>
-          <br />
-          <code>S3_BUCKET=your-dota-bucket</code>
-          <br />
-          <code>S3_REGION=your-aws-region</code>
-          <br />
-          <code>AWS_ACCESS_KEY_ID=your-access-key</code>
-          <br />
-          <code>AWS_SECRET_ACCESS_KEY=your-secret-key</code>
-        </p>
-        <p className="mb-4">Then start the development server:</p>
-        <pre className="code-block mb-4">
-          <code>npm run dev</code>
-        </pre>
-
-        <p className="mb-2">
-          Make sure you have created an S3 bucket and have the necessary permissions configured in
-          your AWS account.
+          For local development with AWS S3 storage, you can use the provided setup script that handles
+          environment configuration and service management.
         </p>
 
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4 mb-6">
-          <div className="flex">
-            <div>
-              <p className="text-sm text-blue-800">
-                <span className="font-bold">Security Note:</span> For production environments, use
-                IAM roles instead of hardcoded credentials. Store sensitive information in a secure
-                way and not directly in environment variables or code.
-              </p>
+        <div className="space-y-6">
+          <div>
+            <h4 className="text-lg font-medium mb-2">Available Commands</h4>
+            <div className="space-y-4">
+              <div>
+                <p className="mb-2">Complete setup and run:</p>
+                <pre className="code-block">
+                  <code>npm run aws:setup-run</code>
+                </pre>
+                <p className="mt-2 text-sm text-gray-600">
+                  This is the recommended command for first-time setup and development.
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2">Setup only:</p>
+                <pre className="code-block">
+                  <code>npm run aws:setup</code>
+                </pre>
+                <p className="mt-2 text-sm text-gray-600">
+                  Useful for CI/CD pipelines or when you want to set up the environment separately.
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2">Run server only:</p>
+                <pre className="code-block">
+                  <code>npm run aws:run</code>
+                </pre>
+                <p className="mt-2 text-sm text-gray-600">
+                  Use this when you've already set up the environment and just need to start the server.
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2">Clean up:</p>
+                <pre className="code-block">
+                  <code>npm run aws:clean</code>
+                </pre>
+                <p className="mt-2 text-sm text-gray-600">
+                  Stops and removes Docker containers and volumes. Useful when you need to start fresh.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-medium mb-2">Environment Configuration</h4>
+            <p className="mb-4">
+              The setup process uses environment variables for configuration. You can set these in a <code>.env</code> file
+              or pass them directly to the commands.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <h5 className="font-medium mb-2">Required Environment Variables</h5>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li><code>PORT</code> - Server port (default: 3010)</li>
+                  <li><code>DB_HOST</code> - Database host (default: localhost)</li>
+                  <li><code>DB_USER</code> - Database user (default: root)</li>
+                  <li><code>DB_PASS</code> - Database password (default: root)</li>
+                  <li><code>DB_NAME</code> - Database name (default: codepushdb)</li>
+                </ul>
+              </div>
+
+              <div>
+                <h5 className="font-medium mb-2">AWS Configuration</h5>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li><code>STORAGE_PROVIDER</code> - Set to "aws" for AWS storage</li>
+                  <li><code>AWS_ACCESS_KEY_ID</code> - AWS access key</li>
+                  <li><code>AWS_SECRET_ACCESS_KEY</code> - AWS secret key</li>
+                  <li><code>S3_ENDPOINT</code> - S3 endpoint URL</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-medium mb-2">Node.js Version</h4>
+            <p className="mb-4">
+              The setup process automatically ensures you're using Node.js version 20. If you don't have it installed,
+              the script will attempt to install it using nvm.
+            </p>
+            <div className="alert-note mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="alert-icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <div className="alert-content">
+                <strong>Note:</strong>
+                <p>Make sure you have nvm installed for automatic Node.js version management.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-medium mb-2">Troubleshooting</h4>
+            <div className="space-y-4">
+              <div>
+                <h5 className="font-medium mb-2">Common Issues</h5>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li>If the server fails to start, check the <code>server.log</code> file for details</li>
+                  <li>Ensure Docker is running before starting the setup</li>
+                  <li>Check if the required ports are available</li>
+                  <li>Verify your AWS credentials are correct</li>
+                </ul>
+              </div>
+
+              <div>
+                <h5 className="font-medium mb-2">Clean Start</h5>
+                <p className="mb-2">If you encounter issues, try cleaning up and starting fresh:</p>
+                <pre className="code-block">
+                  <code>npm run aws:clean && npm run aws:setup-run</code>
+                </pre>
+              </div>
             </div>
           </div>
         </div>
