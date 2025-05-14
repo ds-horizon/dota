@@ -327,17 +327,13 @@ cp .env.example .env</code>
         <p className="mb-4">
           For development with Azure Blob Storage, set the following environment variables:
         </p>
-        <p className="mb-4">
-          <code>STORAGE_PROVIDER=azure</code>
-          <br />
-          <code>EMULATED=TRUE</code>
-          <br />
-          <code>AZURE_STORAGE_ACCOUNT=your-storage-account-name</code>
-          <br />
-          <code>AZURE_STORAGE_ACCESS_KEY=your-storage-access-key</code>
-          <br />
-          <code>AZURE_STORAGE_CONTAINER=your-container-name</code>
-        </p>
+        <pre className="code-block mb-4">
+          <code>{`STORAGE_PROVIDER=azure
+EMULATED=TRUE
+AZURE_STORAGE_ACCOUNT=your-storage-account-name
+AZURE_STORAGE_ACCESS_KEY=your-storage-access-key
+AZURE_STORAGE_CONTAINER=your-container-name`}</code>
+        </pre>
         <p className="mb-4">Then start the development server:</p>
         <pre className="code-block mb-4">
           <code>npm run dev</code>
@@ -374,13 +370,13 @@ cp .env.example .env</code>
           <li>
             <p>Set the following environment variables in your <code>.env</code> file:</p>
             <pre className="code-block">
-              <code>STORAGE_PROVIDER=s3
+              <code>{`STORAGE_PROVIDER=s3
 EMULATED=TRUE
 S3_BUCKET=your-dota-bucket
 S3_REGION=us-east-1
 AWS_ACCESS_KEY_ID=test
 AWS_SECRET_ACCESS_KEY=test
-AWS_ENDPOINT=http://localhost:4566</code>
+AWS_ENDPOINT=http://localhost:4566`}</code>
             </pre>
           </li>
           <li>

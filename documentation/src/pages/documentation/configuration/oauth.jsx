@@ -51,20 +51,19 @@ export default function OAuthConfig() {
                 For <strong>Application type</strong>, select <strong>Web application</strong>.
               </li>
               <li>
-                Add your DOTA/CodePush server URL(s) under{' '}
+                Add your DOTA server URL(s) under{' '}
                 <strong>Authorized JavaScript origins</strong>. For example:{' '}
-                <code>https://codepush-&lt;project-suffix&gt;.azurewebsites.net</code> or{' '}
+                <code>https://dota-&lt;project-suffix&gt;.net</code> or{' '}
                 <code>http://localhost:3000</code> for local development.
               </li>
               <li>
                 Add the following URI under <strong>Authorized redirect URIs</strong>:
                 <code>
-                  https://codepush-&lt;project-suffix&gt;.azurewebsites.net/auth/callback/google
+                  https://dota-&lt;project-suffix&gt;.net/auth/google/callback
                 </code>
                 <p className="text-sm text-muted-foreground mt-1">
                   (For local development, add{' '}
-                  <code>http://localhost:3000/auth/callback/google</code> or{' '}
-                  <code>https://localhost:8443/auth/callback/google</code> depending on your setup).
+                  <code>http://localhost:3000/auth/google/callback</code> depending on your setup).
                 </p>
               </li>
               <li>
