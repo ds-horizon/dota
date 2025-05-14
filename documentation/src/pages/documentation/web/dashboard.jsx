@@ -27,28 +27,28 @@ export default function WebDashboard() {
           <div className="mb-8" id="features-overview">
             <h2 className="text-2xl font-bold mb-4">Features Overview</h2>
             
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">🔐 Authentication</h3>
-                <ul className="list-disc pl-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">🔐 Authentication</h3>
+                <ul className="list-disc pl-5 text-sm">
                   <li>Google OAuth integration</li>
                   <li>Secure session management</li>
                   <li>Role-based access control</li>
                 </ul>
               </div>
               
-              <div>
-                <h3 className="text-xl font-semibold mb-2">🏢 Organization Management</h3>
-                <ul className="list-disc pl-6">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">🏢 Organization Management</h3>
+                <ul className="list-disc pl-5 text-sm">
                   <li>Create and manage organizations</li>
                   <li>Organization-specific settings</li>
                   <li>Team collaboration features</li>
                 </ul>
               </div>
               
-              <div>
-                <h3 className="text-xl font-semibold mb-2">📱 Application Management</h3>
-                <ul className="list-disc pl-6">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">📱 Application Management</h3>
+                <ul className="list-disc pl-5 text-sm">
                   <li>Create and manage applications</li>
                   <li>View application details and metrics</li>
                   <li>Manage app deployments</li>
@@ -56,9 +56,9 @@ export default function WebDashboard() {
                 </ul>
               </div>
               
-              <div>
-                <h3 className="text-xl font-semibold mb-2">🚀 Deployment Features</h3>
-                <ul className="list-disc pl-6">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">🚀 Deployment Features</h3>
+                <ul className="list-disc pl-5 text-sm">
                   <li>Create and manage deployments</li>
                   <li>Promote deployments between environments</li>
                   <li>Manage deployment tokens</li>
@@ -66,9 +66,9 @@ export default function WebDashboard() {
                 </ul>
               </div>
               
-              <div>
-                <h3 className="text-xl font-semibold mb-2">🔌 API Integration</h3>
-                <ul className="list-disc pl-6">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">🔌 API Integration</h3>
+                <ul className="list-disc pl-5 text-sm">
                   <li>RESTful API endpoints</li>
                   <li>Access key management</li>
                   <li>Tenant management</li>
@@ -90,6 +90,22 @@ export default function WebDashboard() {
             <p className="mb-4">
               All new apps automatically come with two deployments (Staging and Production).
             </p>
+
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-3">Creating an App</h3>
+              <p className="mb-4">
+                To create an app:
+              </p>
+              <ol className="list-decimal pl-6 mb-4">
+                <li>Log in to DOTA Dashboard.</li>
+                <li>Click the <strong>Add new app</strong> in the upper-right corner of the page.</li>
+                <li>Populate the panel that appears with information about the new app.</li>
+              </ol>
+              <figure className="mb-4">
+                <img src="/src/images/createapp.gif" alt="Creating a new app in DOTA Dashboard" className="rounded-md shadow-md" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Creating a new app in DOTA Dashboard</p>
+              </figure>
+            </div>
 
             <div className="alert-note mb-6">
               <svg
@@ -131,6 +147,19 @@ export default function WebDashboard() {
               You can view all organizations associated with your account, manage organization settings,
               and control access to organization resources.
             </p>
+            
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-3">Accessing Organizations</h3>
+              <p className="mb-4">
+                All of your organizations are accessible in the left navigation panel of the DOTA Dashboard.
+                Organizations are the owners of apps, so when you create an app in a different organization,
+                that organization is automatically created if it doesn't already exist.
+              </p>
+              <figure className="mb-4">
+                <img src="/src/images/orgcreate.gif" alt="Creating a new organization in DOTA Dashboard" className="rounded-md shadow-md" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Creating a new organization via app creation</p>
+              </figure>
+            </div>
           </div>
 
           {/* -------------------------------------------------------------
@@ -147,39 +176,43 @@ export default function WebDashboard() {
               <li>Removing collaborators from your app</li>
               <li>Viewing and managing all collaborators for your app</li>
             </ul>
+            
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-3">Adding Users to an Organization</h3>
+              <p className="mb-4">
+                You can add users to an organization indirectly through an app. Here's how:
+              </p>
+              <ol className="list-decimal pl-6 mb-4">
+                <li>Select an app within an organization</li>
+                <li>Click on "Go to app" and select "Collaborators" from the top toggle-tab options</li>
+                <li>Select "Add collaborator"</li>
+                <li>Type the user's email address to add the user</li>
+              </ol>
+              <figure className="mb-4">
+                <img src="/src/images/addcollab.gif" alt="Adding collaborators to an app in DOTA Dashboard" className="rounded-md shadow-md" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Adding collaborators to an app</p>
+              </figure>
+            </div>
           </div>
 
           {/* -------------------------------------------------------------
               ACCESS KEY MANAGEMENT
           ------------------------------------------------------------- */}
           <div className="mb-8" id="access-key-management">
-            <h2 className="text-2xl font-bold mb-4">Access Key Management</h2>
+            <h2 className="text-2xl font-bold mb-4">Token Management</h2>
             <p className="mb-4">
-              Access keys enable you to authenticate with the DOTA service without needing to use
+              Tokens enable you to authenticate with the DOTA service without needing to use
               your Google credentials. The dashboard provides interfaces for:
             </p>
             <ul className="list-disc pl-6 mb-4">
-              <li>Creating new access keys with optional time-to-live (TTL) values</li>
-              <li>Updating existing access keys</li>
-              <li>Removing access keys that are no longer needed</li>
-              <li>Viewing all access keys associated with your account</li>
+              <li>Creating new tokens</li>
+              <li>Removing tokens that are no longer needed</li>
+              <li>Viewing all tokens associated with your account</li>
             </ul>
-          </div>
-
-          {/* -------------------------------------------------------------
-              SESSION MANAGEMENT
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="session-management">
-            <h2 className="text-2xl font-bold mb-4">Session Management</h2>
-            <p className="mb-4">
-              The session management interface allows you to view and manage your current login sessions.
-              You can:
-            </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li>View all active sessions across different devices</li>
-              <li>Remove sessions for specific devices</li>
-              <li>Monitor when and where your account is being accessed</li>
-            </ul>
+            <figure className="mb-4">
+              <img src="/src/images/tokensave.gif" alt="Creating and saving tokens in DOTA Dashboard" className="rounded-md shadow-md" />
+              <p className="text-gray-600 italic text-sm text-center mt-2">Creating and saving tokens for authentication</p>
+            </figure>
           </div>
 
           {/* -------------------------------------------------------------
@@ -201,9 +234,8 @@ export default function WebDashboard() {
                 These deployments are ready to use immediately after app creation.
               </p>
               <figure className="mb-4">
-                <div className="bg-gray-800 p-4 rounded-md">
-                  <p className="text-gray-300 italic text-sm text-center">Image: Default deployments (Production and Staging) shown in the deployment search dialog</p>
-                </div>
+                <img src="/src/images/defaultdeployment.png" alt="Default deployments (Production and Staging) shown in the deployment search dialog" className="rounded-md shadow-md border border-gray-200" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Default deployments (Production and Staging) shown in the deployment search dialog</p>
               </figure>
             </div>
 
@@ -217,10 +249,9 @@ export default function WebDashboard() {
                 <li><strong>Search</strong> - Find specific deployments from the dropdown menu</li>
                 <li><strong>Delete</strong> - Remove deployments that are no longer needed</li>
               </ul>
-              <figure className="mb-4">
-                <div className="bg-gray-800 p-4 rounded-md">
-                  <p className="text-gray-300 italic text-sm text-center">Image: Deployment management dropdown showing Create, Search, and Delete options</p>
-                </div>
+              <figure className="mb-4 flex flex-col items-center">
+                <img src="/src/images/deploymentmanage.png" alt="Deployment management dropdown showing Create, Search, and Delete options" className="rounded-md shadow-md border border-gray-200" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Deployment management dropdown showing Create, Search, and Delete options</p>
               </figure>
             </div>
 
@@ -231,9 +262,8 @@ export default function WebDashboard() {
                 You can easily copy any deployment key directly from the dashboard using the "Copy Deployment Key" button.
               </p>
               <figure className="mb-4">
-                <div className="bg-gray-800 p-4 rounded-md">
-                  <p className="text-gray-300 italic text-sm text-center">Image: Copy Deployment Key button with the deployment key</p>
-                </div>
+                <img src="/src/images/copy.png" alt="Copy Deployment Key button with the deployment key" className="rounded-md shadow-md border border-gray-200" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Copy Deployment Key button with the deployment key</p>
               </figure>
             </div>
 
@@ -252,10 +282,9 @@ export default function WebDashboard() {
                 <li>Rollout - Percentage of users receiving this update</li>
                 <li>Released At - Timestamp of the release</li>
               </ul>
-              <figure className="mb-4">
-                <div className="bg-gray-800 p-4 rounded-md">
-                  <p className="text-gray-300 italic text-sm text-center">Image: Deployment management table</p>
-                </div>
+              <figure className="mb-4 flex flex-col items-center">
+                <img src="/src/images/deploymenttable.png" alt="Deployment management table showing release information" className="rounded-md shadow-md border border-gray-200" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Deployment management table showing release information</p>
               </figure>
             </div>
 
