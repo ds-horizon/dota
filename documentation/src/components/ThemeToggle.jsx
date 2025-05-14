@@ -12,6 +12,19 @@ export default function ThemeToggle() {
       setIsDarkMode(true);
       document.documentElement.classList.add('dark-mode');
     }
+
+    // Add CSS variables for dark mode
+    document.head.insertAdjacentHTML(
+      'beforeend',
+      `<style>
+        .dark-mode .dark-mode\\:bg-gray-800 {
+          background-color: #1f2937;
+        }
+        .dark-mode .dark-mode\\:text-gray-200 {
+          color: #e5e7eb;
+        }
+      </style>`
+    );
   }, []);
 
   const toggleTheme = () => {

@@ -28,7 +28,7 @@ export default function WebDashboard() {
             <h2 className="text-2xl font-bold mb-4">Features Overview</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-gray-50 dark-mode:bg-gray-800 p-4 rounded-lg dark-mode:text-gray-200">
                 <h3 className="text-lg font-semibold mb-2">🔐 Authentication</h3>
                 <ul className="list-disc pl-5 text-sm">
                   <li>Google OAuth integration</li>
@@ -37,7 +37,7 @@ export default function WebDashboard() {
                 </ul>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-gray-50 dark-mode:bg-gray-800 p-4 rounded-lg dark-mode:text-gray-200">
                 <h3 className="text-lg font-semibold mb-2">🏢 Organization Management</h3>
                 <ul className="list-disc pl-5 text-sm">
                   <li>Create and manage organizations</li>
@@ -46,7 +46,7 @@ export default function WebDashboard() {
                 </ul>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-gray-50 dark-mode:bg-gray-800 p-4 rounded-lg dark-mode:text-gray-200">
                 <h3 className="text-lg font-semibold mb-2">📱 Application Management</h3>
                 <ul className="list-disc pl-5 text-sm">
                   <li>Create and manage applications</li>
@@ -56,7 +56,7 @@ export default function WebDashboard() {
                 </ul>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-gray-50 dark-mode:bg-gray-800 p-4 rounded-lg dark-mode:text-gray-200">
                 <h3 className="text-lg font-semibold mb-2">🚀 Deployment Features</h3>
                 <ul className="list-disc pl-5 text-sm">
                   <li>Create and manage deployments</li>
@@ -66,7 +66,7 @@ export default function WebDashboard() {
                 </ul>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-gray-50 dark-mode:bg-gray-800 p-4 rounded-lg dark-mode:text-gray-200">
                 <h3 className="text-lg font-semibold mb-2">🔌 API Integration</h3>
                 <ul className="list-disc pl-5 text-sm">
                   <li>RESTful API endpoints</li>
