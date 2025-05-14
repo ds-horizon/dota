@@ -319,36 +319,43 @@ export default function WebDashboard() {
               RELEASING UPDATES
           ------------------------------------------------------------- */}
           <div className="mb-8" id="releasing-updates">
-            <h2 className="text-2xl font-bold mb-4">Releasing Updates</h2>
+            <h2 className="text-2xl font-bold mb-4">Releasing and Managing Updates</h2>
             <p className="mb-4">
-              The dashboard provides a user-friendly interface for releasing updates to your apps.
-              You can:
+              The dashboard provides a user-friendly interface for releasing and managing updates to your apps.
             </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li>Upload update packages</li>
-              <li>Specify target binary versions</li>
-              <li>Set update descriptions (changelog)</li>
-              <li>Configure mandatory updates</li>
-              <li>Control rollout percentages</li>
-              <li>Enable/disable specific releases</li>
-            </ul>
-          </div>
-
-          {/* -------------------------------------------------------------
-              PATCHING UPDATE METADATA
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="patching-update-metadata">
-            <h2 className="text-2xl font-bold mb-4">Patching Update Metadata</h2>
-            <p className="mb-4">
-              After releasing an update, there may be scenarios where you need to modify one or more
-              of the metadata attributes. The dashboard allows you to:
-            </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li>Mark an update as mandatory</li>
-              <li>Change the rollout percentage</li>
-              <li>Enable or disable specific releases</li>
-              <li>Update the release description</li>
-            </ul>
+            
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-3">Creating Releases</h3>
+              <p className="mb-4">
+                When creating a new release, you can:
+              </p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Upload update packages</li>
+                <li>Specify target binary versions</li>
+                <li>Set update descriptions (changelog)</li>
+                <li>Configure mandatory updates</li>
+                <li>Control rollout percentages</li>
+                <li>Enable/disable specific releases</li>
+              </ul>
+              <figure className="mb-4 flex flex-col items-center">
+                <img src="/src/images/release.gif" alt="Managing release metadata in the DOTA Dashboard" className="rounded-md shadow-md border border-gray-200" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Managing release metadata in the DOTA Dashboard</p>
+              </figure>
+            </div>
+            
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-3">Patching Update Metadata</h3>
+              <p className="mb-4">
+                After releasing an update, you may need to modify one or more of the metadata attributes.
+                The dashboard allows you to:
+              </p>
+              <ul className="list-disc pl-6 mb-4">
+                <li>Mark an update as mandatory</li>
+                <li>Change the rollout percentage</li>
+                <li>Enable or disable specific releases</li>
+                <li>Update the release description</li>
+              </ul>
+            </div>
           </div>
 
           {/* -------------------------------------------------------------
@@ -366,6 +373,10 @@ export default function WebDashboard() {
               When promoting an update, you can override certain properties like description, rollout 
               percentage, and whether the update is mandatory.
             </p>
+            <figure className="mb-4 flex flex-col items-center">
+              <img src="/src/images/promotedeploy.gif" alt="Promoting an update from Staging to Production" className="rounded-md shadow-md border border-gray-200" />
+              <p className="text-gray-600 italic text-sm text-center mt-2">Promoting an update from one deployment to another</p>
+            </figure>
           </div>
 
           {/* -------------------------------------------------------------

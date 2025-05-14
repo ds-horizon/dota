@@ -26,7 +26,7 @@ export function Intro() {
             <span className={classes.highlight}>Dota</span> Interface <br />{" "}
           </Title>
           <Text c="dimmed" mt="md">
-            Instantly update your mobile apps with ease – Dota by Dream11
+            Instantly update your mobile apps with ease – Dota by Dream Sports Labs
             lets you deploy real-time updates for React Native with support for
             code, images, and assets to keep your app agile and up-to-date in
             any scenario.
