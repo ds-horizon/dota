@@ -44,7 +44,7 @@ export default function Hello() {
               size="sm"
             />
             <Group justify="space-between">
-              <Image src={cpIcon} alt="CodePush" fit="contain" height={44}/>
+              <Image src={cpIcon} alt="DOTA" fit="contain" height={44}/>
               <Logo style={{ width: rem(80) }} />
               {/* <Code fw={700}>v{config.version}</Code> */}
             </Group>

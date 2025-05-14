@@ -42,7 +42,7 @@ import {
 
 class Codepush {
   private __client = axios.create({
-    baseURL: env.CODEPUSH_SERVER_URL,
+    baseURL: env.DOTA_SERVER_URL,
     timeout: 10000,
   });
 
@@ -83,7 +83,7 @@ class Codepush {
     }
     
     // If API URL is not configured, return dummy user
-    if (!env.CODEPUSH_SERVER_URL.length) {
+    if (!env.DOTA_SERVER_URL.length) {
       return Promise.resolve({
         authenticated: true,
         user: {

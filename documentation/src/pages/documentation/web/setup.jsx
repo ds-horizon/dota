@@ -125,7 +125,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 SESSION_SECRET=your_session_secret
 
 # API Configuration
-API_URL=your_api_url`}</code>
+DOTA_SERVER_URL`}</code>
               </pre>
               <div className="alert-note mb-4">
                 <svg
@@ -163,7 +163,7 @@ NODE_ENV=development
 SESSION_SECRET=any_random_string_for_development
 
 # API Configuration
-API_URL=your_local_api_url`}</code>
+DOTA_SERVER_URL='your_local_api_url'`}</code>
               </pre>
               <p className="mb-4">
                 Using the <code>LOCAL_GOOGLE_TOKEN</code> variable allows you to bypass the Google OAuth authentication 

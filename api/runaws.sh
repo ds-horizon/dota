@@ -241,7 +241,7 @@ setup_web() {
         # Use existing environment variables if set, otherwise use mock values
         G_CLIENT_ID=${PREV_GOOGLE_CLIENT_ID:-"mock-client-id"}
         G_CLIENT_SECRET=${PREV_GOOGLE_CLIENT_SECRET:-"mock-client-secret"}
-        S_URL=${CODEPUSH_SERVER_URL:-"http://localhost:$PORT"}
+        S_URL=${DOTA_SERVER_URL:-"http://localhost:$PORT"}
         S3_BUCKET=${AWS_S3_BUCKET:-"local-bucket"}
         AWS_SECRET=${aws_secret_access_key:-"test"}
         AWS_KEY=${aws_access_key_id:-"test"}
@@ -249,7 +249,7 @@ setup_web() {
         cat > .env << EOL
 GOOGLE_CLIENT_ID=$G_CLIENT_ID
 GOOGLE_CLIENT_SECRET=$G_CLIENT_SECRET
-CODEPUSH_SERVER_URL=$S_URL
+DOTA_SERVER_URL=$S_URL
 AWS_S3_BUCKET=$S3_BUCKET
 aws_secret_access_key=$AWS_SECRET
 aws_access_key_id=$AWS_KEY
