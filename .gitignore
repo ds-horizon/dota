@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+api/server.log
 
 # Runtime data
 pids

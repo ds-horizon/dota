@@ -19,10 +19,13 @@
     "azure:seed": "npx ts-node -r dotenv/config script/storage/seedDataAzure.ts",
     "azure:dev": "npm run azure:seed && npm run build && npm run start:env",
 
-    "aws:setup": "./setup-aws.sh",
+    "aws:setup": "./runaws.sh --setup-only",
+    "aws:run": "./runaws.sh --run-only",
+    "aws:setup-run": "./runaws.sh",
     "aws:init": "docker compose up",
     "aws:seed": "npx ts-node -r dotenv/config script/storage/seedData.ts",
     "aws:dev": "npm run aws:seed && npm run build && npm run start:env",
+    "aws:clean": "docker compose down -v",
 
     "json:setup": "./runlocal.sh",
     "dev": "node -r dotenv/config ./runsetup.sh"
