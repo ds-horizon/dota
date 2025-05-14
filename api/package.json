@@ -13,12 +13,10 @@
     "lint": "npx eslint ./script/**/*.ts",
     "lint:fix": "npx eslint ./script/**/*.ts --fix",
     "test": "jest --testPathIgnorePatterns='test/management-new.test.ts' 'test/utils.test.ts'",
-
     "azure:setup": "./runazure.sh",
     "azure:init": "npx azurite -s -l $AZURITE_DIR --tableHost $AZURITE_TABLE_HOST --tablePort $AZURITE_TABLE_PORT --queueHost $AZURITE_QUEUE_HOST --queuePort $AZURITE_QUEUE_PORT --blobHost $AZURITE_BLOB_HOST --blobPort $AZURITE_BLOB_PORT",
     "azure:seed": "npx ts-node -r dotenv/config script/storage/seedDataAzure.ts",
     "azure:dev": "npm run azure:seed && npm run build && npm run start:env",
-
     "aws:setup": "./runaws.sh --setup-only",
     "aws:run": "./runaws.sh --run-only",
     "aws:setup-run": "./runaws.sh",
@@ -26,7 +24,6 @@
     "aws:seed": "npx ts-node -r dotenv/config script/storage/seedData.ts",
     "aws:dev": "npm run aws:seed && npm run build && npm run start:env",
     "aws:clean": "docker compose down -v",
-
     "json:setup": "./runlocal.sh",
     "dev": "node -r dotenv/config ./runsetup.sh"
   },
@@ -97,6 +94,7 @@
     "shx": "^0.3.4",
     "supertest": "^6.3.3",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.0.4"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

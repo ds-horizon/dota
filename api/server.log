@@ -10,7 +10,7 @@ clusterEnabledWithDoubleEqual false
 clusterEnabledWithTrippleEqual false
 Redis config since no cluster enabled: { host: 'localhost', port: 6379 }
 API listening at http://localhost:3010
-(node:67906) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
+(node:53060) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
  SDK releases are limited to address critical bug fixes and security issues only.
 
 Please migrate your code to use AWS SDK for JavaScript (v3).
@@ -34,41 +34,98 @@ Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`
 Fetching account for accountId: id_0
 Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
 Fetched account: {
-  createdTime: 1747140000000,
+  createdTime: 1747230000000,
   name: 'User One',
   email: 'user1@example.com',
   id: 'id_0',
-  createdAt: 2025-02-03T06:20:41.000Z,
-  updatedAt: 2025-05-13T13:53:04.000Z
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
 }
 Fetching account for accountId: id_0
 Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
 Fetched account: {
-  createdTime: 1747140000000,
+  createdTime: 1747230000000,
   name: 'User One',
   email: 'user1@example.com',
   id: 'id_0',
-  createdAt: 2025-02-03T06:20:41.000Z,
-  updatedAt: 2025-05-13T13:53:04.000Z
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
 }
 Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'mock-google-token' LIMIT 1;
 Fetching account for accountId: id_0
 Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
 Fetched account: {
-  createdTime: 1747140000000,
+  createdTime: 1747230000000,
   name: 'User One',
   email: 'user1@example.com',
   id: 'id_0',
-  createdAt: 2025-02-03T06:20:41.000Z,
-  updatedAt: 2025-05-13T13:53:04.000Z
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
 }
 Fetching account for accountId: id_0
 Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
 Fetched account: {
-  createdTime: 1747140000000,
+  createdTime: 1747230000000,
   name: 'User One',
   email: 'user1@example.com',
   id: 'id_0',
-  createdAt: 2025-02-03T06:20:41.000Z,
-  updatedAt: 2025-05-13T13:53:04.000Z
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
 }
+Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'mock-google-token' LIMIT 1;
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747230000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
+}
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747230000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
+}
+Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'mock-google-token' LIMIT 1;
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747230000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
+}
+Fetching account for accountId: id_0
+Executing (default): SELECT `createdTime`, `name`, `email`, `id`, `createdAt`, `updatedAt` FROM `accounts` AS `account` WHERE `account`.`id` = 'id_0';
+Fetched account: {
+  createdTime: 1747230000000,
+  name: 'User One',
+  email: 'user1@example.com',
+  id: 'id_0',
+  createdAt: 2025-02-24T12:42:28.000Z,
+  updatedAt: 2025-05-14T12:40:41.000Z
+}
+Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImUxNGMzN2Q2ZTVjNzU2ZThiNzJmZGI1MDA0YzBjYzM1NjMzNzkyNGUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI5MTI4OTExOTA5MzMtcGJ0OWdzMXBvdm80MWJwa2lqdHIyMDA4NmRybWFlaHUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI5MTI4OTExOTA5MzMtcGJ0OWdzMXBvdm80MWJwa2lqdHIyMDA4NmRybWFlaHUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDg0MTQxNTc1MTI5MzEwNzU1MDkiLCJoZCI6ImRyZWFtMTEuY29tIiwiZW1haWwiOiJhc2hpc2guYW5hbmRAZHJlYW0xMS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlczMnQ5RVdCcTFlcjBQbkNhWElMdkEiLCJuYW1lIjoiQXNoaXNoIEFuYW5kIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0puMTJzNXhoa3ZHQWVxa1ViM2ItZEE5ZmtkLXdEVGNSSXdvbVVRcWNQcVBOWUhLZz1zOTYtYyIsImdpdmVuX25hbWUiOiJBc2hpc2giLCJmYW1pbHlfbmFtZSI6IkFuYW5kIiwiaWF0IjoxNzQ3MjI2NDg5LCJleHAiOjE3NDcyMzAwODl9.QRl1jqljtbvACMN8RyfrfRGZruXYzT0B04RlrZmOHvHYTQc_WxonMrhpGBa9FsV1JMyWL7Z26cMvlq9YzoTUgYR0fFuL9RsL2dV-_gTOftDgY8bZbKybxhzA-xQAwIY6bGggUTy1HEwOwPTley9wDUOO2nRyBwGVOTOURnRCAaNLb54ja7o-gq0_NmGB7VelUTRMYetWC86_yCVSo3DHXqolU_yAUamRxEgZZ9rbxmoBCdpc1j9UIDHm6MCNeRHCDZrc_nhfUbK0miiHloLmr397TsUXUd9oT0xeScHndHoEI_WRv4g1DqKLnR7NjZ1J26eUzZMCj0ISdL1veQywoA' LIMIT 1;
+Error retrieving account: Error: Access key not found
+    at /Users/ashishanand/work/dota/api/bin/script/storage/aws-storage.js:1303:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Authentication.authenticate (/Users/ashishanand/work/dota/api/bin/script/routes/authentication.js:108:30)
+Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImUxNGMzN2Q2ZTVjNzU2ZThiNzJmZGI1MDA0YzBjYzM1NjMzNzkyNGUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI5MTI4OTExOTA5MzMtcGJ0OWdzMXBvdm80MWJwa2lqdHIyMDA4NmRybWFlaHUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI5MTI4OTExOTA5MzMtcGJ0OWdzMXBvdm80MWJwa2lqdHIyMDA4NmRybWFlaHUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDg0MTQxNTc1MTI5MzEwNzU1MDkiLCJoZCI6ImRyZWFtMTEuY29tIiwiZW1haWwiOiJhc2hpc2guYW5hbmRAZHJlYW0xMS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IndKbDZkUk1DQU5QcXpkSGZRODllckEiLCJuYW1lIjoiQXNoaXNoIEFuYW5kIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0puMTJzNXhoa3ZHQWVxa1ViM2ItZEE5ZmtkLXdEVGNSSXdvbVVRcWNQcVBOWUhLZz1zOTYtYyIsImdpdmVuX25hbWUiOiJBc2hpc2giLCJmYW1pbHlfbmFtZSI6IkFuYW5kIiwiaWF0IjoxNzQ3MjI2NTMzLCJleHAiOjE3NDcyMzAxMzN9.ldXjnjcT_sJfsBj0_yPT5Tk-pMTxw3PH2ke_m5mEdOMweUb0y3YMXxXn_5JqLqVMsv0TIx7avtkgWB7dEw8jgPZ2AuBCx3UUwjxTgTWSkcy8IE98q-dFWnt4kD9DVnRsODIfJ79L6gRW0DXvoBp7j5rQ2UlH_WaqWgVcDPzUiFTso4OTdvi-fehF5WNVHTpcK-RXlCnh8oHD57YfYaNAcUSCUZy84GG-5GYSzkSoitedqD5JVt6Jr2wK2JV1vRc-ujlyIPmhIdBz3A_n5SKwGN_zNEt51_m_lqc9Mazl2ELi-lf8ii-qjEzJvLUu1oKzSkFx8xb_iMl3P-vPg1-lzw' LIMIT 1;
+Error retrieving account: Error: Access key not found
+    at /Users/ashishanand/work/dota/api/bin/script/storage/aws-storage.js:1303:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Authentication.authenticate (/Users/ashishanand/work/dota/api/bin/script/routes/authentication.js:108:30)
+Executing (default): SELECT `createdBy`, `createdTime`, `expires`, `description`, `friendlyName`, `name`, `id`, `isSession`, `scope`, `accountId`, `createdAt`, `updatedAt` FROM `accessKeys` AS `accessKey` WHERE `accessKey`.`name` = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImUxNGMzN2Q2ZTVjNzU2ZThiNzJmZGI1MDA0YzBjYzM1NjMzNzkyNGUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI5MTI4OTExOTA5MzMtcGJ0OWdzMXBvdm80MWJwa2lqdHIyMDA4NmRybWFlaHUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI5MTI4OTExOTA5MzMtcGJ0OWdzMXBvdm80MWJwa2lqdHIyMDA4NmRybWFlaHUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDg0MTQxNTc1MTI5MzEwNzU1MDkiLCJoZCI6ImRyZWFtMTEuY29tIiwiZW1haWwiOiJhc2hpc2guYW5hbmRAZHJlYW0xMS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Im1MNWwyNE5aUGxSVWk2M25WeUsyZnciLCJuYW1lIjoiQXNoaXNoIEFuYW5kIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0puMTJzNXhoa3ZHQWVxa1ViM2ItZEE5ZmtkLXdEVGNSSXdvbVVRcWNQcVBOWUhLZz1zOTYtYyIsImdpdmVuX25hbWUiOiJBc2hpc2giLCJmYW1pbHlfbmFtZSI6IkFuYW5kIiwiaWF0IjoxNzQ3MjI2NTM5LCJleHAiOjE3NDcyMzAxMzl9.COpJq2YAsAeOvI337hCwsWmr1pnof4SIgKo9sziHgaR4Yw7Wzyj0qfDMhG7ed02e7zyKVSzOay6Xg0Rr_OhOvjZG09Ll88ziGXl6MR0e_JUinuZrblQ0ZWFXxXv7Ok9Hi4tEP2l_jtU8BU_h_hPl6WOqHW83jmVTzA5BT7eRqkNglF6N6wBzvC6JZvZ_y7Y0BcJZnGsBgswcXxLFPwolrpZjg2AiHMhFaot2Hu-76iOxdwv4PozWyBdtbppBcs2HPgG_AdWtQJk2U8eN_UckT7vSJDCeVxQH9-POorY5g1SuyTUv7wvikPYwUNLm2QWBHJV4_RoKvUd4M7ZPv01MXg' LIMIT 1;
+Error retrieving account: Error: Access key not found
+    at /Users/ashishanand/work/dota/api/bin/script/storage/aws-storage.js:1303:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Authentication.authenticate (/Users/ashishanand/work/dota/api/bin/script/routes/authentication.js:108:30)

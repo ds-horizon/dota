@@ -47,6 +47,42 @@ class Codepush {
   });
 
   async getUser(token: string): Promise<User> {
+    // If token is mock-google-token, always try to use LOCAL_GOOGLE_TOKEN first, then fallback to dummy user
+    if (token === "mock-google-token") {
+      // If LOCAL_GOOGLE_TOKEN is set and in development, try to use it first
+      if (process.env.NODE_ENV === "development" && env.LOCAL_GOOGLE_TOKEN) {
+        try {
+          // Use the actual token to authenticate via the API
+          const { data } = await this.__client.get<
+            null,
+            { status: number; data: User }
+          >("/authenticated", {
+            headers: {
+              authorization: `Bearer cli-${env.LOCAL_GOOGLE_TOKEN}`,
+            },
+          });
+          return data;
+        } catch (error) {
+          console.error("Error authenticating with mock token:", error);
+          // Fall through to dummy user
+        }
+      }
+      
+      // Return a dummy user as fallback for mock-google-token
+      return Promise.resolve({
+        authenticated: true,
+        user: {
+          createdTime: Date.now(),
+          name: "Dummy User",
+          email: "dummy_user@gmail.com",
+          id: "mock-user-id",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      });
+    }
+    
+    // If API URL is not configured, return dummy user
     if (!env.CODEPUSH_SERVER_URL.length) {
       return Promise.resolve({
         authenticated: true,
@@ -61,16 +97,21 @@ class Codepush {
       });
     }
 
-    const { data } = await this.__client.get<
-      null,
-      { status: number; data: User }
-    >("/authenticated", {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
-
-    return data;
+    try {
+      // Forward the original token to the API
+      const { data } = await this.__client.get<
+        null,
+        { status: number; data: User }
+      >("/authenticated", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return data;
+    } catch (error) {
+      console.error("Error authenticating with token:", error);
+      throw error;
+    }
   }
 
   getUserByAccessKey(key: string) {

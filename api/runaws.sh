@@ -3,15 +3,39 @@
 # Function to load environment variables
 load_env() {
   # Check for .env file, fallback to .env.example
+  local env_file=""
   if [ -f .env ]; then
     echo "📝 Loading environment from .env file..."
-    export $(cat .env | grep -v '^#' | xargs)
+    env_file=".env"
   elif [ -f .env.example ]; then
     echo "📝 Loading environment from .env.example file..."
-    export $(cat .env.example | grep -v '^#' | xargs)
+    env_file=".env.example"
   else
     echo "⚠️  No .env or .env.example file found, using default values"
+    return
   fi
+
+  # Read file line by line, preserving all content exactly as is
+  while IFS= read -r line || [ -n "$line" ]; do
+    # Skip comments and empty lines
+    [[ "$line" =~ ^[[:space:]]*# || -z "$line" ]] && continue
+    
+    # Check if line contains an equals sign
+    if [[ "$line" == *"="* ]]; then
+      # Extract variable name (everything before the first =)
+      local var_name="${line%%=*}"
+      # Trim whitespace
+      var_name="$(echo "$var_name" | xargs)"
+      
+      # Extract variable value (everything after the first =)
+      local var_value="${line#*=}"
+      
+      # Only set if the variable isn't already in the environment
+      if [ -n "$var_name" ] && [ -z "${!var_name+x}" ]; then
+        export "$var_name=$var_value"
+      fi
+    fi
+  done < "$env_file"
 }
 
 # Function to setup Node.js environment
@@ -30,15 +54,29 @@ setup_node() {
 
 # Function to handle cleanup on exit
 cleanup() {
+  echo "Cleaning up..."
   # Find and kill any process using the configured port
   lsof -ti:$PORT | xargs kill -9 2>/dev/null || true
   exit 0
 }
 
+# Function to display error messages and exit
+error_exit() {
+    echo "Error: $1" >&2
+    exit 1
+}
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 # Function to check if dota CLI is installed
 check_dota_cli() {
-  # Store current directory
+  # Store current directory and important environment variables
   local CURRENT_DIR=$(pwd)
+  local PREV_GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"
+  local PREV_GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET"
   
   # Change to CLI directory
   pwd
@@ -52,19 +90,38 @@ check_dota_cli() {
     echo "   3. Ensure the cli directory is in your PATH"
     # Return to original directory
     cd "$CURRENT_DIR"
+    
+    # Restore environment variables
+    if [ -n "$PREV_GOOGLE_CLIENT_ID" ]; then
+      export GOOGLE_CLIENT_ID="$PREV_GOOGLE_CLIENT_ID"
+    fi
+    if [ -n "$PREV_GOOGLE_CLIENT_SECRET" ]; then
+      export GOOGLE_CLIENT_SECRET="$PREV_GOOGLE_CLIENT_SECRET"
+    fi
+    
     exit 1
   fi
   
   # Return to original directory
   cd "$CURRENT_DIR"
+  
+  # Restore environment variables
+  if [ -n "$PREV_GOOGLE_CLIENT_ID" ]; then
+    export GOOGLE_CLIENT_ID="$PREV_GOOGLE_CLIENT_ID"
+  fi
+  if [ -n "$PREV_GOOGLE_CLIENT_SECRET" ]; then
+    export GOOGLE_CLIENT_SECRET="$PREV_GOOGLE_CLIENT_SECRET"
+  fi
 }
 
 # Function to handle login
 handle_login() {
   echo "🔑 Attempting to login to CLI..."
   
-  # Store current directory
+  # Store current directory and important environment variables
   local CURRENT_DIR=$(pwd)
+  local PREV_GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"
+  local PREV_GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET"
   
   # Change to CLI directory and ensure PATH is set
   cd ../cli
@@ -75,6 +132,15 @@ handle_login() {
     echo "ℹ️  Already logged in. Current user:"
     dota whoami
     cd "$CURRENT_DIR"
+    
+    # Restore environment variables
+    if [ -n "$PREV_GOOGLE_CLIENT_ID" ]; then
+      export GOOGLE_CLIENT_ID="$PREV_GOOGLE_CLIENT_ID"
+    fi
+    if [ -n "$PREV_GOOGLE_CLIENT_SECRET" ]; then
+      export GOOGLE_CLIENT_SECRET="$PREV_GOOGLE_CLIENT_SECRET"
+    fi
+    
     return 0
   fi
   
@@ -86,6 +152,15 @@ handle_login() {
     echo "   2. You have proper permissions"
     echo "   3. No conflicting sessions"
     cd "$CURRENT_DIR"
+    
+    # Restore environment variables
+    if [ -n "$PREV_GOOGLE_CLIENT_ID" ]; then
+      export GOOGLE_CLIENT_ID="$PREV_GOOGLE_CLIENT_ID"
+    fi
+    if [ -n "$PREV_GOOGLE_CLIENT_SECRET" ]; then
+      export GOOGLE_CLIENT_SECRET="$PREV_GOOGLE_CLIENT_SECRET"
+    fi
+    
     exit 1
   fi
   
@@ -94,6 +169,14 @@ handle_login() {
   
   # Return to original directory
   cd "$CURRENT_DIR"
+  
+  # Restore environment variables
+  if [ -n "$PREV_GOOGLE_CLIENT_ID" ]; then
+    export GOOGLE_CLIENT_ID="$PREV_GOOGLE_CLIENT_ID"
+  fi
+  if [ -n "$PREV_GOOGLE_CLIENT_SECRET" ]; then
+    export GOOGLE_CLIENT_SECRET="$PREV_GOOGLE_CLIENT_SECRET"
+  fi
 }
 
 # Function to setup AWS environment
@@ -103,7 +186,21 @@ setup_aws() {
   # Inflate .env file if setup script exists
   if [ -f "scripts/setup-aws-env.js" ]; then
     echo "📝 Inflating .env file..."
+    # Save all environment variables before running the setup script
+    if [ -f .env ]; then
+      cp .env .env.backup
+    fi
+    
+    # Run the setup script
     node scripts/setup-aws-env.js
+    
+    # Reload environment variables, keeping existing ones
+    load_env
+    
+    # Restore backup if it exists
+    if [ -f .env.backup ]; then
+      mv .env.backup .env
+    fi
   fi
   
   # Install dependencies
@@ -125,12 +222,73 @@ setup_aws() {
   fi
 }
 
+# Function to setup web environment
+setup_web() {
+    echo "Setting up web environment..."
+    
+    # Store current environment variables
+    local PREV_GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"
+    local PREV_GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET"
+    
+    cd ../web
+
+    # Create .env file with mock values for development, preserving existing values
+    # First check if .env already exists
+    if [ -f .env ]; then
+        echo "Using existing .env file in web directory"
+    else
+        echo "Creating new .env file in web directory"
+        # Use existing environment variables if set, otherwise use mock values
+        G_CLIENT_ID=${PREV_GOOGLE_CLIENT_ID:-"mock-client-id"}
+        G_CLIENT_SECRET=${PREV_GOOGLE_CLIENT_SECRET:-"mock-client-secret"}
+        S_URL=${CODEPUSH_SERVER_URL:-"http://localhost:$PORT"}
+        S3_BUCKET=${AWS_S3_BUCKET:-"local-bucket"}
+        AWS_SECRET=${aws_secret_access_key:-"test"}
+        AWS_KEY=${aws_access_key_id:-"test"}
+        
+        cat > .env << EOL
+GOOGLE_CLIENT_ID=$G_CLIENT_ID
+GOOGLE_CLIENT_SECRET=$G_CLIENT_SECRET
+CODEPUSH_SERVER_URL=$S_URL
+AWS_S3_BUCKET=$S3_BUCKET
+aws_secret_access_key=$AWS_SECRET
+aws_access_key_id=$AWS_KEY
+EOL
+    fi
+
+    # Install dependencies and start web
+    if command_exists pnpm; then
+        pnpm install
+        pnpm dev
+    else
+        npm install
+        npm run dev
+    fi
+
+    # Restore environment variables
+    export GOOGLE_CLIENT_ID="$PREV_GOOGLE_CLIENT_ID"
+    export GOOGLE_CLIENT_SECRET="$PREV_GOOGLE_CLIENT_SECRET"
+    
+    cd ../api
+}
+
+# Create logs directory if it doesn't exist
+ensure_logs_directory() {
+  if [ ! -d "logs" ]; then
+    echo "Creating logs directory..."
+    mkdir -p logs
+  fi
+}
+
 # Main script starts here
 # Trap Ctrl+C (SIGINT) and call cleanup
 trap cleanup SIGINT SIGTERM EXIT
 
 # Change to api directory
 cd "$(dirname "$0")"
+
+# Create logs directory
+ensure_logs_directory
 
 # Load environment variables
 load_env
@@ -192,7 +350,7 @@ export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-localstack}
 export S3_ENDPOINT=${S3_ENDPOINT:-http://localhost:4566}
 
 # Other settings
-export PORT=$PORT
+export PORT=${PORT:-$DEFAULT_PORT}
 export EMULATED=${EMULATED:-true}
 export NODE_ENV=${NODE_ENV:-development}
 export LOCAL_GOOGLE_TOKEN=${LOCAL_GOOGLE_TOKEN:-"mock-google-token"}
@@ -226,7 +384,11 @@ npm run build > /dev/null 2>&1
 
 # Start server with AWS configuration in detached mode
 echo "🛜 Starting server with AWS storage on port $PORT..."
-nohup npm start aws:env > server.log 2>&1 &
+LOG_FILE="logs/server_api.log"
+# Ensure the log file exists
+touch "$LOG_FILE"
+# Start the server and redirect output to log file
+nohup npm start aws:env > "$LOG_FILE" 2>&1 &
 SERVER_PID=$!
 
 # Wait for server to be ready (checking if port is listening)
@@ -238,12 +400,12 @@ while ! lsof -i:$PORT -sTCP:LISTEN >/dev/null 2>&1; do
   COUNTER=$((COUNTER + 1))
   # Check if server is still running
   if ! kill -0 $SERVER_PID 2>/dev/null; then
-    echo "❌ Server failed to start. Check server.log for details."
+    echo "❌ Server failed to start. Check $LOG_FILE for details."
     exit 1
   fi
   # Add timeout
   if [ $COUNTER -ge $TIMEOUT ]; then
-    echo "❌ Server failed to start within $TIMEOUT seconds. Check server.log for details."
+    echo "❌ Server failed to start within $TIMEOUT seconds. Check $LOG_FILE for details."
     kill $SERVER_PID 2>/dev/null
     exit 1
   fi
@@ -251,137 +413,40 @@ done
 
 echo "🚀 Server started with AWS storage on port $PORT (PID: $SERVER_PID)"
 
-# Clean up before login
-echo "🧹 Cleaning environment before login..."
-pwd
-cd ../cli
-pwd
-npm run exec > /dev/null 2>&1
-
-# Check if DOTA CLI is installed and setup PATH
-check_dota_cli
-
-# Handle login with error checking
-handle_login
-
-echo "📝 Server log available at: $(pwd)/server.log"
-echo "ℹ️  Server is running in background with PID: $SERVER_PID"
-echo "ℹ️  To stop the server, run: kill $SERVER_PID"
-echo "✅ Setup complete! You can now use the CLI."
-
-# Function to display error messages and exit
-error_exit() {
-    echo "Error: $1" >&2
-    exit 1
-}
-
-# Function to check if a command exists
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-# Function to check if the dota CLI is installed
-check_dota_cli() {
-    if ! command_exists dota; then
-        echo "⚠️  DOTA CLI not found in PATH"
-        echo "Installing CLI dependencies..."
-        cd ../cli
-        npm install
-        npm run build
-        cd ../api
-    fi
-}
-
-# Function to handle login
-handle_login() {
-    echo "Checking login status..."
-    if dota whoami >/dev/null 2>&1; then
-        echo "✅ Already logged in. Current user:"
-        dota whoami
-    else
-        echo "Logging in..."
-        if dota login http://localhost:$PORT; then
-            echo "✅ Successfully logged in. Current user:"
-            dota whoami
-        else
-            error_exit "Failed to login. Please check your credentials and try again."
-        fi
-    fi
-}
-
-# Function to setup web environment
-setup_web() {
-    echo "Setting up web environment..."
-    cd ../web
-
-    # Create .env file with mock values for development
-    cat > .env << EOL
-GOOGLE_CLIENT_ID=mock-client-id
-GOOGLE_CLIENT_SECRET=mock-client-secret
-CODEPUSH_SERVER_URL=http://localhost:$PORT
-AWS_S3_BUCKET=local-bucket
-aws_secret_access_key=test
-aws_access_key_id=test
-EOL
-
-    # Install dependencies and start web
-    if command_exists pnpm; then
-        pnpm install
-        pnpm dev
-    else
-        npm install
-        npm run dev
-    fi
-
-    cd ../api
-}
-
-# Function to cleanup processes
-cleanup() {
-    echo "Cleaning up..."
-    # Kill any process using the configured port
-    lsof -ti:$PORT | xargs kill -9 2>/dev/null || true
-}
-
-# Set up cleanup on script exit
-trap cleanup EXIT
-
-# Check if port is in use
-if lsof -ti:$PORT >/dev/null 2>&1; then
+# Check if port is in use (skip if we've already started the server)
+if [ "$RUN_ONLY" = true ] && [ -z "$SERVER_PID" ] && lsof -ti:$PORT >/dev/null 2>&1; then
     error_exit "Port $PORT is already in use. Please free up the port or use a different one."
 fi
 
-# Check for dota CLI
-check_dota_cli
-
-# Handle login
-handle_login
-
-# Export PORT for the server
-export PORT=$PORT
-
-# Start the server
-echo "Starting server on port $PORT..."
-npm run dev &
-
-# Wait for server to be ready
-echo "Waiting for server to be ready..."
-for i in {1..30}; do
-    if curl -s http://localhost:$PORT/health >/dev/null; then
-        echo "✅ Server is ready!"
-        break
-    fi
-    if [ $i -eq 30 ]; then
-        error_exit "Server failed to start within 30 seconds"
-    fi
-    echo "Waiting... ($i/30)"
-    sleep 1
-done
+# Start the server (only if in run-only mode and server isn't already running)
+if [ "$RUN_ONLY" = true ] && [ -z "$SERVER_PID" ]; then
+    echo "Starting server on port $PORT..."
+    npm run dev >> "$LOG_FILE" 2>&1 &
+    
+    # Wait for server to be ready
+    echo "Waiting for server to be ready..."
+    for i in {1..30}; do
+        if curl -s http://localhost:$PORT/health >/dev/null; then
+            echo "✅ Server is ready!"
+            break
+        fi
+        if [ $i -eq 30 ]; then
+            error_exit "Server failed to start within 30 seconds. Check $LOG_FILE for details."
+        fi
+        echo "Waiting... ($i/30)"
+        sleep 1
+    done
+fi
 
 # Setup web if --web flag is provided
 if [ "$1" = "--web" ]; then
     setup_web
 fi
+
+echo "📝 Server log available at: $(pwd)/$LOG_FILE"
+echo "ℹ️  Server is running in background with PID: $SERVER_PID"
+echo "ℹ️  To stop the server, run: kill $SERVER_PID"
+echo "✅ Setup complete! You can now use the CLI."
 
 # Keep the script running
 wait
