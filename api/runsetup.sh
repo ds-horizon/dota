@@ -10,6 +10,10 @@ const fs = require('fs');
 // Load environment variables
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
+// Parse command line arguments
+const args = process.argv.slice(2);
+const withWeb = args.includes('--web');
+
 // Print current directory and environment information
 console.log('Current directory:', process.cwd());
 console.log('Environment variables:');
@@ -29,17 +33,20 @@ const provider = process.env.STORAGE_PROVIDER;
 
 console.log(`🔍 Using storage provider: ${provider}`);
 
+// Create the command with web flag if specified
+const webFlag = withWeb ? ' --web' : '';
+
 // Run the appropriate setup script
 try {
   switch (provider) {
     case 'azure':
-      execSync('./runazure.sh', { stdio: 'inherit', cwd: __dirname });
+      execSync(`./runazure.sh${webFlag}`, { stdio: 'inherit', cwd: __dirname });
       break;
     case 'aws':
-      execSync('./runaws.sh', { stdio: 'inherit', cwd: __dirname });
+      execSync(`./runaws.sh${webFlag}`, { stdio: 'inherit', cwd: __dirname });
       break;
     default:
-      execSync('./runlocal.sh', { stdio: 'inherit', cwd: __dirname });
+      execSync(`./runlocal.sh${webFlag}`, { stdio: 'inherit', cwd: __dirname });
       break;
   }
 } catch (error) {

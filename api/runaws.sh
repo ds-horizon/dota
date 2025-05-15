@@ -57,6 +57,13 @@ cleanup() {
   echo "Cleaning up..."
   # Find and kill any process using the configured port
   lsof -ti:$PORT | xargs kill -9 2>/dev/null || true
+  
+  # Find and kill the web process if it exists
+  if [ -n "$WEB_PID" ]; then
+    echo "Stopping web server..."
+    kill $WEB_PID 2>/dev/null || true
+  fi
+  
   exit 0
 }
 
@@ -224,12 +231,14 @@ setup_aws() {
 
 # Function to setup web environment
 setup_web() {
-    echo "Setting up web environment..."
+    echo "🌐 Setting up web environment..."
     
-    # Store current environment variables
+    # Store current environment variables and directory
     local PREV_GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID"
     local PREV_GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET"
+    local CURRENT_DIR=$(pwd)
     
+    # Change to web directory
     cd ../web
 
     # Create .env file with mock values for development, preserving existing values
@@ -257,19 +266,39 @@ EOL
     fi
 
     # Install dependencies and start web
+    echo "🚀 Starting web server..."
     if command_exists pnpm; then
         pnpm install
-        pnpm dev
+        pnpm dev > ../api/logs/web_server.log 2>&1 &
     else
         npm install
-        npm run dev
+        npm run dev > ../api/logs/web_server.log 2>&1 &
+    fi
+    WEB_PID=$!
+    
+    # Wait a moment for the web server to start
+    echo "⏳ Waiting for web server to start..."
+    sleep 5
+    
+    # Open browser to login page
+    echo "🔗 Opening browser to login page..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        open http://localhost:3000/login
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        xdg-open http://localhost:3000/login
+    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+        start http://localhost:3000/login
+    else
+        echo "⚠️ Could not automatically open browser. Please visit http://localhost:3000/login"
     fi
 
-    # Restore environment variables
+    # Restore environment variables and return to original directory
     export GOOGLE_CLIENT_ID="$PREV_GOOGLE_CLIENT_ID"
     export GOOGLE_CLIENT_SECRET="$PREV_GOOGLE_CLIENT_SECRET"
     
-    cd ../api
+    cd "$CURRENT_DIR"
+    
+    echo "✅ Web setup complete!"
 }
 
 # Create logs directory if it doesn't exist
@@ -299,6 +328,7 @@ setup_node
 # Parse command line arguments
 SETUP_ONLY=false
 RUN_ONLY=false
+WITH_WEB=false
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -308,6 +338,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --run-only)
       RUN_ONLY=true
+      shift
+      ;;
+    --web)
+      WITH_WEB=true
       shift
       ;;
     *)
@@ -439,11 +473,15 @@ if [ "$RUN_ONLY" = true ] && [ -z "$SERVER_PID" ]; then
 fi
 
 # Setup web if --web flag is provided
-if [ "$1" = "--web" ]; then
+if [ "$WITH_WEB" = true ]; then
     setup_web
 fi
 
+# Keep the script running
 echo "📝 Server log available at: $(pwd)/$LOG_FILE"
+if [ "$WITH_WEB" = true ]; then
+  echo "📝 Web server log available at: $(pwd)/logs/web_server.log"
+fi
 echo "ℹ️  Server is running in background with PID: $SERVER_PID"
 echo "ℹ️  To stop the server, run: kill $SERVER_PID"
 echo "✅ Setup complete! You can now use the CLI."

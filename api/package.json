@@ -25,7 +25,8 @@
     "aws:dev": "npm run aws:seed && npm run build && npm run start:env",
     "aws:clean": "docker compose down -v",
     "json:setup": "./runlocal.sh",
-    "dev": "node -r dotenv/config ./runsetup.sh"
+    "dev": "node -r dotenv/config ./runsetup.sh",
+    "dev:web": "node -r dotenv/config ./runsetup.sh --web"
   },
   "engines": {
     "node": ">=18.0.0",
