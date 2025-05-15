@@ -2,7 +2,7 @@
 
 # DOTA - Over-the-Air Updates for React Native Apps
 
-DOTA enables React Native developers to deploy mobile app updates directly to their users' devices. It consists of two parts: DOTA Server where developers publish app updates (JS, HTML, CSS or image changes), and [DOTA React Native Client SDK](https://github.com/microsoft/react-native-code-push) that enables querying for updates from within an app.
+DOTA enables React Native developers to deploy mobile app updates directly to their users' devices. It consists of two parts: DOTA Server where developers publish app updates (JS, HTML, CSS or image changes), and [Microsoft React Native Client SDK](https://github.com/microsoft/react-native-code-push) that enables querying for updates from within an app.
 
 ## 🚀 Overview
 
@@ -14,6 +14,13 @@ DOTA provides a complete solution for React Native over-the-air updates, allowin
 - Make updates mandatory when critical
 - Monitor deployment metrics
 - Manage multiple deployment environments (Staging, Production)
+
+## 🔗 Quick Links
+
+- [Detailed Documentation](https://dota.dreamsportslabs.com/)
+- [Installation Guide](https://dota.dreamsportslabs.com/documentation/cli/installation)
+- [Product Guide](https://dota.dreamsportslabs.com/documentation/web/dashboard)
+- [Connect with us on discord](https://discord.gg/W67bA8j8)
 
 ## 📦 Getting Started
 

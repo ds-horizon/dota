@@ -98,7 +98,7 @@ export default function WebDashboard() {
               </p>
               <ol className="list-decimal pl-6 mb-4">
                 <li>Log in to DOTA Dashboard.</li>
-                <li>Click the <strong>Add new app</strong> in the upper-right corner of the page.</li>
+                <li>Click the <strong>Add new app</strong> in the upper-right corner of the page (or press the <kbd>C</kbd> key).</li>
                 <li>Populate the panel that appears with information about the new app.</li>
               </ol>
               <figure className="mb-4">
@@ -249,6 +249,9 @@ export default function WebDashboard() {
                 <li><strong>Search</strong> - Find specific deployments from the dropdown menu</li>
                 <li><strong>Delete</strong> - Remove deployments that are no longer needed</li>
               </ul>
+              <p className="mb-4">
+                You can quickly access deployment actions by pressing <kbd>⌘</kbd>+<kbd>K</kbd> (Command+K) to open the command menu for creating and searching deployments.
+              </p>
               <figure className="mb-4 flex flex-col items-center">
                 <img src="/src/images/deploymentmanage.png" alt="Deployment management dropdown showing Create, Search, and Delete options" className="rounded-md shadow-md border border-gray-200" />
                 <p className="text-gray-600 italic text-sm text-center mt-2">Deployment management dropdown showing Create, Search, and Delete options</p>
@@ -321,22 +324,49 @@ export default function WebDashboard() {
           <div className="mb-8" id="releasing-updates">
             <h2 className="text-2xl font-bold mb-4">Releasing and Managing Updates</h2>
             <p className="mb-4">
-              The dashboard provides a user-friendly interface for releasing and managing updates to your apps.
+              The dashboard provides a user-friendly interface for managing updates to your apps, while the actual creation of releases is done through the CLI.
             </p>
             
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-3">Creating Releases</h3>
               <p className="mb-4">
-                When creating a new release, you can:
+                Creating releases is performed exclusively through the DOTA CLI, not through the dashboard. For detailed instructions on how to create releases, please refer to the <a href="/documentation/cli/commands" className="text-dota-600 hover:underline">CLI Commands Reference</a>.
+              </p>
+              <p className="mb-4">
+                When creating a release using the CLI, you can specify:
               </p>
               <ul className="list-disc pl-6 mb-4">
-                <li>Upload update packages</li>
-                <li>Specify target binary versions</li>
-                <li>Set update descriptions (changelog)</li>
-                <li>Configure mandatory updates</li>
-                <li>Control rollout percentages</li>
-                <li>Enable/disable specific releases</li>
+                <li>Target deployment environment</li>
+                <li>Update packages to upload</li>
+                <li>Target binary versions</li>
+                <li>Update descriptions (changelog)</li>
+                <li>Mandatory update flags</li>
+                <li>Rollout percentages</li>
               </ul>
+              <div className="alert-note mb-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="alert-icon"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <div className="alert-content">
+                  <strong>Note:</strong>
+                  <p>
+                    While releases are created via CLI, you can view and manage them through the dashboard after they're created.
+                  </p>
+                </div>
+              </div>
               <figure className="mb-4 flex flex-col items-center">
                 <img src="/src/images/release.gif" alt="Managing release metadata in the DOTA Dashboard" className="rounded-md shadow-md border border-gray-200" />
                 <p className="text-gray-600 italic text-sm text-center mt-2">Managing release metadata in the DOTA Dashboard</p>
@@ -346,8 +376,7 @@ export default function WebDashboard() {
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-3">Patching Update Metadata</h3>
               <p className="mb-4">
-                After releasing an update, you may need to modify one or more of the metadata attributes.
-                The dashboard allows you to:
+                After releasing an update via CLI, you can modify one or more of the metadata attributes through the dashboard:
               </p>
               <ul className="list-disc pl-6 mb-4">
                 <li>Mark an update as mandatory</li>
@@ -391,8 +420,7 @@ export default function WebDashboard() {
             <ul className="list-disc pl-6 mb-4">
               <li>Disable the current release</li>
               <li>Re-enable the previous working release</li>
-              <li>Prevent users from downloading the problematic update</li>
-              <li>Optionally target a specific release to roll back to</li>
+              <li>Use the CLI to roll back to a specific release</li>
             </ul>
           </div>
 
@@ -415,43 +443,6 @@ export default function WebDashboard() {
           </div>
 
           {/* -------------------------------------------------------------
-              CLEARING RELEASE HISTORY
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="clearing-release-history">
-            <h2 className="text-2xl font-bold mb-4">Clearing Release History</h2>
-            <p className="mb-4">
-              You can clear the release history associated with a deployment through the dashboard.
-              After clearing the history, client devices configured to use that deployment key will
-              no longer receive any of the cleared updates.
-            </p>
-            <div className="alert-warning mb-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="alert-icon"
-              >
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                <line x1="12" y1="9" x2="12" y2="13"></line>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-              <div className="alert-content">
-                <strong>Caution:</strong>
-                <p>
-                  Use this feature with caution as it will affect all users configured to use this
-                  deployment.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* -------------------------------------------------------------
               ANALYTICS AND REPORTING
           ------------------------------------------------------------- */}
           <div className="mb-8" id="analytics-and-reporting">
@@ -465,7 +456,7 @@ export default function WebDashboard() {
               <li>Active user counts</li>
               <li>Device and OS distribution</li>
               <li>Update adoption rates</li>
-              <li>Rollback occurrences and reasons</li>
+              <li>Rollback occurrences</li>
             </ul>
             <p className="mb-4">
               These analytics can help guide your deployment strategy and identify potential issues
@@ -473,44 +464,6 @@ export default function WebDashboard() {
             </p>
           </div>
 
-          {/* -------------------------------------------------------------
-              API ENDPOINTS
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="api-endpoints">
-            <h2 className="text-2xl font-bold mb-4">API Endpoints</h2>
-            <p className="mb-4">
-              The dashboard provides the following main API endpoints:
-            </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li><code>/api/v1/tenants</code> - Tenant management</li>
-              <li><code>/api/v1/access-keys</code> - Access key management</li>
-              <li><code>/api/v1/:org/apps</code> - Application management</li>
-              <li><code>/api/v1/:app/deployments</code> - Deployment management</li>
-              <li><code>/api/v1/:app/collaborators</code> - Collaborator management</li>
-            </ul>
-          </div>
-
-          {/* -------------------------------------------------------------
-              PROJECT STRUCTURE
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="project-structure">
-            <h2 className="text-2xl font-bold mb-4">Project Structure</h2>
-            <p className="mb-4">
-              The DOTA Web Dashboard follows this structure:
-            </p>
-            <pre className="code-block mb-6">
-              <code>{`web/
-├── app/
-│   ├── components/     # Reusable UI components
-│   ├── routes/        # Application routes and pages
-│   ├── utils/         # Utility functions and helpers
-│   ├── assets/        # Static assets
-│   └── root.tsx       # Root layout component
-├── public/            # Public static files
-├── scripts/           # Build and utility scripts
-└── server.mjs         # Production server entry`}</code>
-            </pre>
-          </div>
         </div>
       </div>
     </div>

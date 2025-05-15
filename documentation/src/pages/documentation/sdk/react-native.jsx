@@ -68,30 +68,75 @@ export default function ReactNativeConfig() {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Android</h2>
-          <p className="mb-4">
-            In <code>strings.xml</code>, add following line, replacing <code>server-url</code> with
-            your server:
-          </p>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Android</h2>
+        <p className="mb-4">
+          In <code>strings.xml</code>, add following lines, replacing <code>server-url</code> with
+          your server and <code>deployment-key</code> with your deployment key:
+        </p>
 
-          <pre className="code-block">
-            <code>{`<string moduleConfig="true" name="CodePushServerUrl">server-url</string>`}</code>
-          </pre>
+        <pre className="code-block">
+          <code>{`<string moduleConfig="true" name="CodePushServerUrl">server-url</string>
+<string moduleConfig="true" name="CodePushDeploymentKey">deployment-key</string>`}</code>
+        </pre>
+
+        <div className="alert-tip mt-4 mb-8">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="alert-icon"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <div className="alert-content">
+            <strong>Note:</strong>
+            <p>You can find your deployment key in the DOTA server dashboard under your app's settings.</p>
+          </div>
         </div>
 
-        <div>
-          <h2 className="text-2xl font-bold mb-4">iOS</h2>
-          <p className="mb-4">
-            In <code>Info.plist</code> file, add following lines, replacing <code>server-url</code>{' '}
-            with your server:
-          </p>
+        <h2 className="text-2xl font-bold mb-4">iOS</h2>
+        <p className="mb-4">
+          In <code>Info.plist</code> file, add following lines, replacing <code>server-url</code>{' '}
+          with your server and <code>deployment-key</code> with your deployment key:
+        </p>
 
-          <pre className="code-block">
-            <code>{`<key>CodePushServerURL</key>
-<string>server-url</string>`}</code>
-          </pre>
+        <pre className="code-block">
+          <code>{`<key>CodePushServerURL</key>
+<string>server-url</string>
+<key>CodePushDeploymentKey</key>
+<string>deployment-key</string>`}</code>
+        </pre>
+
+        <div className="alert-tip mt-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="alert-icon"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <div className="alert-content">
+            <strong>Note:</strong>
+            <p>Different deployment environments (Staging, Production) may use different deployment keys.</p>
+          </div>
         </div>
       </div>
 

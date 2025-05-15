@@ -390,7 +390,7 @@ function App() {
                   <span className="text-primary">Instantly.</span>
                 </h1>
                 <p className="text-lg text-text-secondary mb-10 max-w-xl">
-                Deliver updates to your React Native apps quickly without waiting for App Store approval.Gain complete control over your deployment pipeline and user data.
+                Deliver updates to your React Native apps quickly without waiting for App Store approval. Gain complete control over your deployment pipeline and user data.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
@@ -422,12 +422,12 @@ function App() {
                   <div className="bg-gray-800 rounded-b-lg p-4 font-mono text-sm text-gray-300 overflow-x-auto">
                     <pre>
                       <code>
-                        <span className="text-sky-400">$</span> npm install dota-cli -g
+                        <span className="text-sky-400">$</span> npm run dota:cli
                         <br />
-                        <span className="text-emerald-400">✓</span> Installed successfully!
+                        <span className="text-emerald-400">✓</span> Setup complete! You can now use the CLI.
                         <br />
                         <br />
-                        <span className="text-sky-400">$</span> dota deploy --channel production
+                        <span className="text-sky-400">$</span> dota release MyApp-iOS ./bundle 1.0.0
                         <br />
                         <span className="text-emerald-400">✓</span> Building JS bundle...
                         <br />
@@ -532,39 +532,29 @@ function App() {
                     <pre className="text-sm">
                       <code className="language-javascript">
                         {`import React from 'react';
-import { AppRegistry } from 'react-native';
-import { Dota } from 'react-native-dota';
+import codePush from "react-native-code-push";
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
-// Configure DOTA client
-Dota.configure({
-  serverUrl: 'https://your-dota-server.com',
-  appKey: 'YOUR_APP_KEY',
-  channel: 'production' // e.g., staging, production
-});
-
-// Check for updates on app launch
-const checkForAppUpdates = async () => {
-  try {
-    const update = await Dota.checkForUpdates();
-  if (update.available) {
-      await update.download();
-      // Apply update next time the app is launched or immediately
-      update.applyUpdate();
+class MyApp extends Component {
+    onButtonPress() {
+        codePush.sync({
+            updateDialog: true,
+            installMode: codePush.InstallMode.IMMEDIATE
+        });
     }
-  } catch (error) {
-    console.error("DOTA update error:", error);
-  }
-};
 
-checkForAppUpdates();
+    render() {
+        return (
+            <View>
+                <TouchableOpacity onPress={this.onButtonPress}>
+                    <Text>Check for updates</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+}
 
-// Your main App component
-const App = () => {
-  // ... your app logic
-  return null; /* Or your main app view */
-};
-
-AppRegistry.registerComponent('YourAppName', () => App);`}
+MyApp = codePush(codePushOptions)(MyApp);`}
                       </code>
                     </pre>
                   </div>

@@ -21,11 +21,6 @@ export default function Sidebar() {
               Introduction
             </Link>
           </li>
-          <li className="sidebar-item">
-            <Link to="/documentation/installation" style={isActive('/documentation/installation')}>
-              Installation
-            </Link>
-          </li>
 
           <li className="sidebar-section">
             <h4 className="sidebar-heading">Deployment</h4>

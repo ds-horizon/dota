@@ -21,6 +21,59 @@ export default function WebSetup() {
           </div>
 
           {/* -------------------------------------------------------------
+              QUICKSTART
+          ------------------------------------------------------------- */}
+          <div className="mb-8" id="quickstart">
+            <h2 className="text-2xl font-bold mb-4">Quickstart</h2>
+            <p className="mb-4">
+              If you want to quickly initialize the web dashboard, you can use the provided setup script. This will automatically set up the required environment and dependencies.
+            </p>
+            
+            <div className="bg-accent border rounded-lg p-6 mb-4">
+              <h3 className="text-xl font-semibold mb-3">Quick Setup Command</h3>
+              <p className="mb-3">Navigate to the DOTA project root directory and run:</p>
+              <pre className="code-block">
+                <code>{`npm run init:web`}</code>
+              </pre>
+            </div>
+            
+            <p className="mb-4">
+              This command will:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>Verify and install the correct Node.js version</li>
+              <li>Install required dependencies</li>
+              <li>Set up basic environment configuration</li>
+              <li>Initialize the web dashboard for development</li>
+            </ul>
+            
+            <div className="alert-tip mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="alert-icon"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              <div className="alert-content">
+                <strong>Tip:</strong>
+                <p>
+                  For more customized setup options or advanced configuration, refer to the detailed instructions below.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* -------------------------------------------------------------
               PREREQUISITES
           ------------------------------------------------------------- */}
           <div className="mb-8" id="prerequisites">
@@ -67,10 +120,7 @@ echo "18.18.0" > .nvmrc`}</code>
                 <p className="font-semibold">Navigate to the web directory and clean up any existing package manager configurations:</p>
                 <pre className="code-block mb-4">
                   <code>{`# Navigate to web directory
-cd /path/to/dota/web
-
-# Remove any existing Yarn configuration files
-rm -rf .yarn .pnp.cjs .yarnrc.yml`}</code>
+cd /path/to/dota/web`}</code>
                 </pre>
                 <div className="alert-note mb-4">
                   <svg

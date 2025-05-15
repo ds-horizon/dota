@@ -19,7 +19,7 @@
     "azure:dev": "npm run azure:seed && npm run build && npm run start:env",
     "aws:setup": "./runaws.sh --setup-only",
     "aws:run": "./runaws.sh --run-only",
-    "aws:setup-run": "./runaws.sh",
+    "dota:cli": "./runaws.sh",
     "aws:init": "docker compose up",
     "aws:seed": "npx ts-node -r dotenv/config script/storage/seedData.ts",
     "aws:dev": "npm run aws:seed && npm run build && npm run start:env",

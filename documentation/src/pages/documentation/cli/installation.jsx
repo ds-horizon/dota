@@ -10,7 +10,7 @@ export default function CLIInstallation() {
           where they can be tested or deployed to users as needed.
         </p>
 
-        <div className="alert-tip mb-6">
+        {/* <div className="alert-tip mb-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -34,7 +34,7 @@ export default function CLIInstallation() {
               and consistent for all team members.
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="mb-8">
@@ -57,7 +57,7 @@ export default function CLIInstallation() {
           <div>
             <p className="font-medium mb-2">Using npm:</p>
             <pre className="code-block">
-              <code>npm run cli:setup</code>
+              <code>npm run dota:cli</code>
             </pre>
           </div>
         </div>
