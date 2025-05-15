@@ -112,7 +112,7 @@ export default function CLIInstallation() {
             href="/documentation/cli/commands"
             className="text-dota-600 hover:underline"
           >
-            CLI Commands Reference
+            CLI Usage Guide
           </a>{" "}
           to get started creating, managing, and deploying your apps and updates with DOTA.
         </p>

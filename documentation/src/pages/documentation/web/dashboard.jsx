@@ -6,12 +6,12 @@ export default function WebDashboard() {
         <span className="mx-2">/</span>
         <span>Web Dashboard</span>
         <span className="mx-2">/</span>
-        <span>Dashboard</span>
+        <span>Usage Guide</span>
       </div>
 
       <div className="flex flex-col">
         <div className="w-full">
-          <h1 className="text-4xl font-bold mb-6">Web Dashboard</h1>
+          <h1 className="text-4xl font-bold mb-6">Web Dashboard Usage Guide</h1>
 
           <div className="mb-8">
             <p className="mb-4">
@@ -330,7 +330,7 @@ export default function WebDashboard() {
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-3">Creating Releases</h3>
               <p className="mb-4">
-                Creating releases is performed exclusively through the DOTA CLI, not through the dashboard. For detailed instructions on how to create releases, please refer to the <a href="/documentation/cli/commands" className="text-dota-600 hover:underline">CLI Commands Reference</a>.
+                Creating releases is performed exclusively through the DOTA CLI, not through the dashboard. For detailed instructions on how to create releases, please refer to the <a href="/documentation/cli/commands" className="text-dota-600 hover:underline">CLI Usage Guide</a>.
               </p>
               <p className="mb-4">
                 When creating a release using the CLI, you can specify:

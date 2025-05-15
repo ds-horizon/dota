@@ -20,7 +20,7 @@ DOTA provides a complete solution for React Native over-the-air updates, allowin
 - [Detailed Documentation](https://dota.dreamsportslabs.com/)
 - [Installation Guide](https://dota.dreamsportslabs.com/documentation/cli/installation)
 - [Product Guide](https://dota.dreamsportslabs.com/documentation/web/dashboard)
-- [Connect with us on discord](https://discord.gg/W67bA8j8)
+- [Connect with us on discord](https://discord.gg/Sa6a5Scj)
 
 ## 📦 Getting Started
 
@@ -37,6 +37,10 @@ For detailed information about the DOTA server, including installation instructi
 ### DOTA CLI
 
 The DOTA CLI, located in the `cli` subdirectory, is a command-line tool that allows developers to interact with the DOTA server. For detailed information about the DOTA CLI, including installation instructions and usage details, please refer to the [DOTA CLI README](./cli/README.md).
+
+### DOTA Web
+
+The DOTA Web Dashboard, located in the `web` subdirectory, is a web-based management interface that provides a user-friendly way to manage your deployments, monitor metrics, and configure your DOTA environment. For detailed information about the DOTA Web Dashboard, including installation instructions and usage details, please refer to the [DOTA Web README](https://dota.dreamsportslabs.com/documentation/web/dashboard).
 
 ## 🛠️ Deployment Options
 

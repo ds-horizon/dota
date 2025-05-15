@@ -35,14 +35,14 @@ const navigationItems = [
     title: 'CLI',
     children: [
       { path: '/documentation/cli/installation', title: 'Installation' },
-      { path: '/documentation/cli/commands', title: 'Commands Reference' },
+      { path: '/documentation/cli/commands', title: 'CLI Usage Guide' },
     ],
   },
   {
     title: 'Web Dashboard',
     children: [
       { path: '/documentation/web/setup', title: 'Setup' },
-      { path: '/documentation/web/dashboard', title: 'Dashboard' },
+      { path: '/documentation/web/dashboard', title: 'Usage Guide' },
     ],
   },
   {

@@ -6,12 +6,12 @@ export default function CLICommands() {
         <span className="mx-2">/</span>
         <span>CLI</span>
         <span className="mx-2">/</span>
-        <span>Commands Reference</span>
+        <span>CLI Usage Guide</span>
       </div>
 
       <div className="flex flex-col">
         <div className="w-full">
-          <h1 className="text-4xl font-bold mb-6">CLI Commands Reference</h1>
+          <h1 className="text-4xl font-bold mb-6">CLI Usage Guide</h1>
 
           <div className="mb-8">
             <p className="mb-4">

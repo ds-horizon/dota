@@ -112,7 +112,7 @@ export default function Sidebar() {
                   to="/documentation/cli/commands"
                   style={isActive('/documentation/cli/commands')}
                 >
-                  Commands Reference
+                  CLI Usage Guide
                 </Link>
               </li>
             </ul>
@@ -134,7 +134,7 @@ export default function Sidebar() {
                   to="/documentation/web/dashboard"
                   style={isActive('/documentation/web/dashboard')}
                 >
-                  Dashboard
+                  Usage Guide
                 </Link>
               </li>
             </ul>
