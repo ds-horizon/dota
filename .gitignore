@@ -33,6 +33,7 @@ node_modules
 */bin/*
 api/bin
 api/bin/**
+cli/bin/**
 
 # Environment variables
 *.env
