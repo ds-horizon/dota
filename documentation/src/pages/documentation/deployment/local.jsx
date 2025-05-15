@@ -1,336 +1,356 @@
 export default function LocalDeployment() {
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-8" id="local-deployment">
+      <h1 className="text-4xl font-bold mb-8">
         Local Deployment
       </h1>
 
+      {/* Common Setup Section */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4" id="prerequisites">
-          Prerequisites
+        <h2 className="text-2xl font-bold mb-4">
+          Initial Setup
         </h2>
-        <p className="mb-4">
-          The DOTA Server requires storage to operate. For the local setup, there is an option to
-          use emulated local storage with Azurite.
-        </p>
-        <p className="mb-4">
-          Please follow Azurite{' '}
-          <a
-            href="https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite"
-            className="text-dota-600 hover:underline"
-          >
-            official documentation
-          </a>{' '}
-          to{' '}
-          <a
-            href="https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#install-azurite"
-            className="text-dota-600 hover:underline"
-          >
-            install
-          </a>{' '}
-          and{' '}
-          <a
-            href="https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#running-azurite-from-the-command-line"
-            className="text-dota-600 hover:underline"
-          >
-            run
-          </a>{' '}
-          it locally.
-        </p>
-        <p className="mb-4">
-          Additionally, you need to specify <code>EMULATED</code> flag equals true in the
-          environmental variables.
-        </p>
-      </div>
-
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4" id="deployment-steps">
-          Steps
-        </h2>
-        <p className="mb-2">To run the DOTA Server locally, follow these steps:</p>
-
-        <ol className="list-decimal pl-6 space-y-4 mb-6">
+        <ol className="list-decimal pl-6 space-y-4">
           <li>
-            <p>Clone the repository to your local machine.</p>
-          </li>
-
-          <li>
-            <p>
-              Copy the <code>.env.example</code> file to a new file named <code>.env</code> in the
-              api directory:
-            </p>
+            <p className="mb-2">Clone the repository:</p>
             <pre className="code-block">
-              <code>cd api
-cp .env.example .env</code>
+              <code>git clone https://github.com/dream-sports-labs/dota.git</code>
+            </pre>
+          </li>
+          <li>
+            <p className="mb-2">Navigate to the project folder:</p>
+            <pre className="code-block">
+              <code>cd dota</code>
+            </pre>
+          </li>
+          <li>
+            <p className="mb-2">Enter the API directory:</p>
+            <pre className="code-block">
+              <code>cd api</code>
+            </pre>
+          </li>
+          <li>
+            <p className="mb-2">Create an environment file:</p>
+            <pre className="code-block">
+              <code>cp .env.example .env</code>
             </pre>
             <p className="mt-2">
-              Fill in the values for each environment variable in the <code>.env</code> file
-              according to your development or production setup.
+              Configure the <code>.env</code> file based on your storage provider choice below.
+              For detailed information on all environment variables, see the{" "}
+              <a href="/documentation/configuration/environment" className="text-dota-600 hover:underline">
+                Environment Variables
+              </a>{" "}
+              documentation.
             </p>
-          </li>
-
-          <li>
-            <p>Install all necessary dependencies:</p>
-            <pre className="code-block">
-              <code>npm install</code>
-            </pre>
-          </li>
-
-          <li>
-            <p>Compile the server code:</p>
-            <pre className="code-block">
-              <code>npm run build</code>
-            </pre>
-          </li>
-
-          <li>
-            <p>Launch the server with the environment-specific start command:</p>
-            <pre className="code-block">
-              <code>npm run dev</code>
-            </pre>
           </li>
         </ol>
       </div>
 
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4" id="https-configuration">
-          HTTPS Configuration
+        <h2 className="text-2xl font-bold mb-4">
+          Prerequisites
         </h2>
-        <p className="mb-4">
-          By default, local DOTA server runs on HTTP. To run DOTA Server on HTTPS:
-        </p>
-
-        <ol className="list-decimal pl-6 space-y-2 mb-4">
-          <li>
-            Create a <code>certs</code> directory and place <code>cert.key</code> (private key) and{' '}
-            <code>cert.crt</code> (certificate) files there.
-          </li>
-          <li>
-            Set environment variable <code>HTTPS</code> to true.
-          </li>
-        </ol>
-
-        <div className="alert-warning">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="alert-icon"
-          >
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-            <line x1="12" y1="9" x2="12" y2="13"></line>
-            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-          </svg>
-          <div className="alert-content">
-            <strong>Warning!</strong>
-            <p>
-              When hosting DOTA on AWS or Azure App Service, HTTPS is typically enabled by default.
-            </p>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Required</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Node.js 20.x or later</li>
+              <li>npm or pnpm package manager</li>
+              <li>Git for version control</li>
+              <li>Docker (for containerized storage options)</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Optional</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>nvm for Node.js version management</li>
+              <li>Docker Compose for local development</li>
+              <li>AWS CLI (for AWS S3 storage)</li>
+              <li>Azure CLI (for Azure Blob storage)</li>
+            </ul>
           </div>
         </div>
       </div>
 
       <div className="mb-8">
-        <p>
-          For more detailed instructions and configuration options, please refer to the{' '}
-          <a href="/configuration/environment" className="text-dota-600 hover:underline">
-            Environment Variables
-          </a>{' '}
-          documentation.
-        </p>
-      </div>
-
-      <div className="mt-12 p-6 bg-dota-600/5 border border-dota-600/20 rounded-lg">
-        <h2 className="text-2xl font-bold mb-4" id="quickstart">
-          Quickstart Options
+        <h2 className="text-2xl font-bold mb-4">
+          Storage Options
         </h2>
 
-        <h3 className="text-xl font-semibold mb-3">JSON File Storage</h3>
-        <p className="mb-4">
-          For a quick local development setup using JSON file-based storage, set the following
-          environment variables:
-        </p>
-        <p className="mb-4">
-          <code>STORAGE_PROVIDER=json</code>
-          <br />
-          <code>EMULATED=TRUE</code>
-        </p>
-        <p className="mb-4">Then start the development server:</p>
-        <pre className="code-block mb-4">
-          <code>npm run dev</code>
-        </pre>
-
-        <p className="mb-2">
-          This configuration will use JSON files for storage instead of Azure Blob Storage, making
-          it easy to get started without external dependencies.
-        </p>
-
-        <div className="alert-note mt-4 mb-6">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="alert-icon"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-          </svg>
-          <div className="alert-content">
-            <strong>Note:</strong>
-            <p>
-              JSON file-based storage is recommended for development and testing purposes only. For
-              production environments, use Azure Blob Storage or AWS S3.
-            </p>
-          </div>
-        </div>
-
-        <h3 className="text-xl font-semibold mb-3">AWS S3 Storage</h3>
-        <p className="mb-4">
-          For development with AWS S3 storage, set the following environment variables:
-        </p>
-        <p className="mb-4">
-          <code>STORAGE_PROVIDER=s3</code>
-          <br />
-          <code>EMULATED=TRUE</code>
-          <br />
-          <code>S3_BUCKET=your-dota-bucket</code>
-          <br />
-          <code>S3_REGION=your-aws-region</code>
-          <br />
-          <code>AWS_ACCESS_KEY_ID=your-access-key</code>
-          <br />
-          <code>AWS_SECRET_ACCESS_KEY=your-secret-key</code>
-        </p>
-        <p className="mb-4">Then start the development server:</p>
-        <pre className="code-block mb-4">
-          <code>npm run dev</code>
-        </pre>
-
-        <p className="mb-2">
-          Make sure you have created an S3 bucket and have the necessary permissions configured in
-          your AWS account.
-        </p>
-
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4 mb-6">
-          <div className="flex">
-            <div>
-              <p className="text-sm text-blue-800">
-                <span className="font-bold">Security Note:</span> For production environments, use
-                IAM roles instead of hardcoded credentials. Store sensitive information in a secure
-                way and not directly in environment variables or code.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <h3 className="text-xl font-semibold mb-3">Azure Blob Storage</h3>
-        <p className="mb-4">
-          For development with Azure Blob Storage, set the following environment variables:
-        </p>
-        <p className="mb-4">
-          <code>STORAGE_PROVIDER=azure</code>
-          <br />
-          <code>EMULATED=TRUE</code>
-          <br />
-          <code>AZURE_STORAGE_ACCOUNT=your-storage-account-name</code>
-          <br />
-          <code>AZURE_STORAGE_ACCESS_KEY=your-storage-access-key</code>
-          <br />
-          <code>AZURE_STORAGE_CONTAINER=your-container-name</code>
-        </p>
-        <p className="mb-4">Then start the development server:</p>
-        <pre className="code-block mb-4">
-          <code>npm run dev</code>
-        </pre>
-
-        <p className="mb-2">
-          Make sure you have created an Azure Storage account and container, and have the necessary
-          connection details.
-        </p>
-
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mt-4">
-          <div className="flex">
-            <div>
-              <p className="text-sm text-blue-800">
-                <span className="font-bold">Security Note:</span> For production environments,
-                consider using Azure Key Vault to store your storage access keys securely, and using
-                managed identities for authentication instead of access keys where possible.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <h3 className="text-xl font-semibold mb-3">Local AWS Via LocalStack</h3>
-        <p className="mb-4">
-          For local development with AWS S3 using LocalStack, follow these steps:
-        </p>
-        <ol className="list-decimal pl-6 space-y-4 mb-6">
-          <li>
-            <p>Start the LocalStack container using Docker Compose:</p>
+        {/* JSON Storage Option */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-3">
+            JSON File Storage
+          </h3>
+          <p className="mb-4">
+            Perfect for development and testing. Uses local JSON files for storage.
+          </p>
+          
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">Environment Variables:</div>
             <pre className="code-block">
-              <code>docker-compose up -d localstack</code>
-            </pre>
-          </li>
-          <li>
-            <p>Set the following environment variables in your <code>.env</code> file:</p>
-            <pre className="code-block">
-              <code>STORAGE_PROVIDER=s3
+              <code>{`# .env file configuration for JSON storage
+STORAGE_PROVIDER=json
 EMULATED=TRUE
-S3_BUCKET=your-dota-bucket
+
+# Other common settings
+PORT=3010
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=root
+DB_NAME=dotadb`}</code>
+            </pre>
+          </div>
+
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">Available Commands:</div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr className="bg-muted">
+                    <th className="border border-border-color py-2 px-4 text-left">Command</th>
+                    <th className="border border-border-color py-2 px-4 text-left">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run json:setup</td>
+                    <td className="border border-border-color py-2 px-4">Complete setup for JSON storage</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run dev</td>
+                    <td className="border border-border-color py-2 px-4">Start server with configured storage</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="alert-note">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="alert-icon">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <div className="alert-content">
+              <strong>Note:</strong>
+              <p>JSON storage is for development only. Use Azure Blob Storage or AWS S3 for production.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* AWS Storage Option */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-3">
+            AWS S3 Storage
+          </h3>
+          <p className="mb-4">
+            Use AWS S3 for storage with LocalStack for local development.
+          </p>
+          
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">Environment Variables:</div>
+            <pre className="code-block">
+              <code>{`# .env file configuration for AWS S3 storage
+STORAGE_PROVIDER=s3
+EMULATED=TRUE
+
+S3_BUCKET=dota-bundles
 S3_REGION=us-east-1
 AWS_ACCESS_KEY_ID=test
 AWS_SECRET_ACCESS_KEY=test
-AWS_ENDPOINT=http://localhost:4566</code>
+AWS_ENDPOINT=http://localhost:4566
+
+# Other common settings
+PORT=3010
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=root
+DB_NAME=dotadb`}</code>
             </pre>
-          </li>
-          <li>
-            <p>Run the AWS setup script to create the necessary resources:</p>
+          </div>
+
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">Available Commands:</div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr className="bg-muted">
+                    <th className="border border-border-color py-2 px-4 text-left">Command</th>
+                    <th className="border border-border-color py-2 px-4 text-left">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run dota:cli</td>
+                    <td className="border border-border-color py-2 px-4">Complete setup and run (recommended)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run aws:setup</td>
+                    <td className="border border-border-color py-2 px-4">Setup only</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run aws:run</td>
+                    <td className="border border-border-color py-2 px-4">Run server only</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run aws:dev</td>
+                    <td className="border border-border-color py-2 px-4">Development mode with seeding</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run aws:clean</td>
+                    <td className="border border-border-color py-2 px-4">Clean up Docker containers</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">LocalStack Setup:</div>
+            <p className="mb-2">Start LocalStack before running the commands:</p>
             <pre className="code-block">
-              <code>npm run aws:setup</code>
+              <code>docker-compose up -d localstack</code>
             </pre>
-          </li>
-          <li>
-            <p>Start the development server:</p>
+          </div>
+        </div>
+
+        {/* Azure Storage Option */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-3">
+            Azure Blob Storage
+          </h3>
+          <p className="mb-4">
+            Use Azure Blob Storage with Azurite for local development.
+          </p>
+          
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">Environment Variables:</div>
             <pre className="code-block">
-              <code>npm run dev</code>
+              <code>{`# .env file configuration for Azure Blob storage
+STORAGE_PROVIDER=azure
+EMULATED=TRUE
+
+AZURE_STORAGE_ACCOUNT=devstoreaccount1
+AZURE_STORAGE_ACCESS_KEY=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
+AZURE_STORAGE_CONTAINER=dota-bundles
+
+# Other common settings
+PORT=3010
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=root
+DB_NAME=dotadb`}</code>
             </pre>
-          </li>
-        </ol>
-        <div className="alert-note mt-4 mb-6">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="alert-icon"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-          </svg>
-          <div className="alert-content">
-            <strong>Note:</strong>
-            <p>
-              LocalStack provides a fully functional local AWS cloud stack. This setup is ideal for development and testing without incurring AWS costs.
+          </div>
+
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">Available Commands:</div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr className="bg-muted">
+                    <th className="border border-border-color py-2 px-4 text-left">Command</th>
+                    <th className="border border-border-color py-2 px-4 text-left">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run azure:setup</td>
+                    <td className="border border-border-color py-2 px-4">Complete setup</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run azure:init</td>
+                    <td className="border border-border-color py-2 px-4">Initialize Azurite</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run azure:dev</td>
+                    <td className="border border-border-color py-2 px-4">Development mode with seeding</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-border-color py-2 px-4 font-mono text-sm">npm run azure:seed</td>
+                    <td className="border border-border-color py-2 px-4">Seed initial data</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <div className="font-medium mb-2 text-base">Azurite Setup:</div>
+            <p className="mb-2">Install and run Azurite:</p>
+            <pre className="code-block">
+              <code>npm install -g azurite
+azurite --silent --location ./azurite-data --debug ./azurite-debug.log</code>
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">
+          HTTPS Configuration (Optional)
+        </h2>
+        <div>
+          <p className="mb-4">
+            To run DOTA Server with HTTPS locally:
+          </p>
+          <ol className="list-decimal pl-6 space-y-2">
+            <li>Create a <code>certs</code> directory in the api folder</li>
+            <li>Add your SSL certificate files:
+              <ul className="list-disc pl-6 mt-2">
+                <li><code>cert.key</code> - Private key</li>
+                <li><code>cert.crt</code> - Certificate</li>
+              </ul>
+            </li>
+            <li>Set <code>HTTPS=true</code> in your <code>.env</code> file</li>
+          </ol>
+          <div className="alert-warning mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="alert-icon">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <div className="alert-content">
+              <strong>Note:</strong>
+              <p>HTTPS is typically enabled by default when deploying to AWS or Azure App Service.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">
+          Next Steps
+        </h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Configure Authentication</h3>
+            <p className="mb-4">
+              Set up authentication providers in your <code>.env</code> file:
             </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>GitHub OAuth</li>
+              <li>Microsoft OAuth</li>
+              <li>Google OAuth</li>
+            </ul>
+            <a href="/documentation/configuration/oauth" className="text-dota-600 hover:underline">
+              Learn more about OAuth configuration →
+            </a>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Production Deployment</h3>
+            <p className="mb-4">
+              When ready for production, consider these deployment options:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>AWS EC2 with S3 storage</li>
+              <li>Azure App Service with Blob Storage</li>
+              <li>Self-hosted with your preferred cloud provider</li>
+            </ul>
+            <a href="/documentation/deployment/aws" className="text-dota-600 hover:underline">
+              View deployment guides →
+            </a>
           </div>
         </div>
       </div>

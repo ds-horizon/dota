@@ -53,7 +53,7 @@ export default function Header() {
 
           <div className="header-icons">
             <a
-              href="https://github.com/microsoft/react-native-code-push"
+              href="https://github.com/dream-sports-labs/dota"
               target="_blank"
               rel="noopener noreferrer"
               className="github-link"

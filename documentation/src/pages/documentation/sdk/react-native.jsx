@@ -59,41 +59,84 @@ export default function ReactNativeConfig() {
 
       <div className="mb-8">
         <p className="mb-4">
-          In order for{' '}
-          <a
-            href="https://github.com/microsoft/react-native-code-push"
-            className="text-dota-600 hover:underline"
-          >
-            react-native-code-push
-          </a>{' '}
-          to use your server, additional configuration value is needed.
+          In order for your react-native application to use your server, additional configuration value is needed.
+        </p>
+        <p className="mb-4">
+          This configuration is essential for your React Native app to connect to your DOTA server for receiving updates. 
+          Without this configuration, your application would not be able to find and download the updates you deploy, 
+          preventing your over-the-air updates from reaching your users.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Android</h2>
-          <p className="mb-4">
-            In <code>strings.xml</code>, add following line, replacing <code>server-url</code> with
-            your server:
-          </p>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Android</h2>
+        <p className="mb-4">
+          In <code>strings.xml</code>, add following lines, replacing <code>server-url</code> with
+          your server and <code>deployment-key</code> with your deployment key:
+        </p>
 
-          <pre className="code-block">
-            <code>{`<string moduleConfig="true" name="CodePushServerUrl">server-url</string>`}</code>
-          </pre>
+        <pre className="code-block">
+          <code>{`<string moduleConfig="true" name="CodePushServerUrl">server-url</string>
+<string moduleConfig="true" name="CodePushDeploymentKey">deployment-key</string>`}</code>
+        </pre>
+
+        <div className="alert-tip mt-4 mb-8">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="alert-icon"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <div className="alert-content">
+            <strong>Note:</strong>
+            <p>You can find your deployment key in the DOTA server dashboard under your app's settings.</p>
+          </div>
         </div>
 
-        <div>
-          <h2 className="text-2xl font-bold mb-4">iOS</h2>
-          <p className="mb-4">
-            In <code>Info.plist</code> file, add following lines, replacing <code>server-url</code>{' '}
-            with your server:
-          </p>
+        <h2 className="text-2xl font-bold mb-4">iOS</h2>
+        <p className="mb-4">
+          In <code>Info.plist</code> file, add following lines, replacing <code>server-url</code>{' '}
+          with your server and <code>deployment-key</code> with your deployment key:
+        </p>
 
-          <pre className="code-block">
-            <code>{`<key>CodePushServerURL</key>
-<string>server-url</string>`}</code>
-          </pre>
+        <pre className="code-block">
+          <code>{`<key>CodePushServerURL</key>
+<string>server-url</string>
+<key>CodePushDeploymentKey</key>
+<string>deployment-key</string>`}</code>
+        </pre>
+
+        <div className="alert-tip mt-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="alert-icon"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <div className="alert-content">
+            <strong>Note:</strong>
+            <p>Different deployment environments (Staging, Production) may use different deployment keys.</p>
+          </div>
         </div>
       </div>
 
@@ -244,27 +287,27 @@ const checkForUpdates = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50 border rounded-lg p-6">
+      <div className="bg-accent border rounded-lg p-6">
         <h3 className="text-xl font-semibold mb-3">Next Steps</h3>
         <p className="mb-4">After configuring your React Native application:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>
             Set up{' '}
-            <a href="/cli/installation" className="text-dota-600 hover:underline">
+            <a href="/documentation/cli/installation" className="text-dota-600 hover:underline">
               DOTA CLI
             </a>{' '}
             for managing your deployments
           </li>
           <li>
             Learn how to use the{' '}
-            <a href="/documentation/sdk/integration" className="text-dota-600 hover:underline">
+            <a href="/documentation/cli/commands" className="text-dota-600 hover:underline">
               CLI commands
             </a>{' '}
             to publish updates
           </li>
           <li>
             Review{' '}
-            <a href="/advanced/metrics" className="text-dota-600 hover:underline">
+            <a href="/documentation/advanced/metrics" className="text-dota-600 hover:underline">
               Metrics
             </a>{' '}
             to monitor your deployments

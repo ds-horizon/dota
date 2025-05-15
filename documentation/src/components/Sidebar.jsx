@@ -21,11 +21,6 @@ export default function Sidebar() {
               Introduction
             </Link>
           </li>
-          <li className="sidebar-item">
-            <Link to="/documentation/installation" style={isActive('/documentation/installation')}>
-              Installation
-            </Link>
-          </li>
 
           <li className="sidebar-section">
             <h4 className="sidebar-heading">Deployment</h4>
@@ -35,7 +30,7 @@ export default function Sidebar() {
                   to="/documentation/deployment/local"
                   style={isActive('/documentation/deployment/local')}
                 >
-                  Local Development
+                  Local Deployment
                 </Link>
               </li>
               <li className="sidebar-subitem">
@@ -118,6 +113,28 @@ export default function Sidebar() {
                   style={isActive('/documentation/cli/commands')}
                 >
                   Commands Reference
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li className="sidebar-section">
+            <h4 className="sidebar-heading">Web Dashboard</h4>
+            <ul className="sidebar-subnav">
+              <li className="sidebar-subitem">
+                <Link
+                  to="/documentation/web/setup"
+                  style={isActive('/documentation/web/setup')}
+                >
+                  Setup
+                </Link>
+              </li>
+              <li className="sidebar-subitem">
+                <Link
+                  to="/documentation/web/dashboard"
+                  style={isActive('/documentation/web/dashboard')}
+                >
+                  Dashboard
                 </Link>
               </li>
             </ul>

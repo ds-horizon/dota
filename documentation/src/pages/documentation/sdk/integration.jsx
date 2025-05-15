@@ -42,14 +42,14 @@ export default function SDKIntegration() {
       <div className="mb-8" id="ios-setup">
         <h2 className="text-2xl font-bold mb-4">iOS Setup</h2>
         <p className="text-lg">
-          The setup for iOS can be followed from the official CodePush documentation here.
+          The setup for iOS can be followed from the official CodePush documentation <a href="https://github.com/microsoft/react-native-code-push/blob/master/docs/setup-ios.md#ios-setup">here</a>.
         </p>
       </div>
 
       <div className="mb-8" id="android-setup">
         <h2 className="text-2xl font-bold mb-4">Android Setup</h2>
         <p className="text-lg">
-          The setup for Android can be followed from the official CodePush documentation here.
+          The setup for Android can be followed from the official CodePush documentation <a href="https://github.com/microsoft/react-native-code-push/blob/master/docs/setup-android.md#android-setup">here</a>.
         </p>
       </div>
 

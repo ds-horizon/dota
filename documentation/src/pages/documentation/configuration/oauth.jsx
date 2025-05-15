@@ -21,7 +21,7 @@ export default function OAuthConfig() {
       </div>
 
       <div className="flex flex-col md:flex-row gap-12">
-        <div className="md:w-2/3">
+        <div className="w-full">
           <div className="mb-8" id="google-oauth">
             <h2 className="text-2xl font-bold mb-4">Google OAuth</h2>
 
@@ -51,20 +51,19 @@ export default function OAuthConfig() {
                 For <strong>Application type</strong>, select <strong>Web application</strong>.
               </li>
               <li>
-                Add your DOTA/CodePush server URL(s) under{' '}
+                Add your DOTA server URL(s) under{' '}
                 <strong>Authorized JavaScript origins</strong>. For example:{' '}
-                <code>https://codepush-&lt;project-suffix&gt;.azurewebsites.net</code> or{' '}
+                <code>https://dota-&lt;project-suffix&gt;.net</code> or{' '}
                 <code>http://localhost:3000</code> for local development.
               </li>
               <li>
                 Add the following URI under <strong>Authorized redirect URIs</strong>:
                 <code>
-                  https://codepush-&lt;project-suffix&gt;.azurewebsites.net/auth/callback/google
+                  https://dota-&lt;project-suffix&gt;.net/auth/google/callback
                 </code>
                 <p className="text-sm text-muted-foreground mt-1">
                   (For local development, add{' '}
-                  <code>http://localhost:3000/auth/callback/google</code> or{' '}
-                  <code>https://localhost:8443/auth/callback/google</code> depending on your setup).
+                  <code>http://localhost:3000/auth/google/callback</code> depending on your setup).
                 </p>
               </li>
               <li>
@@ -180,8 +179,8 @@ NODE_ENV=development # or NODE_ENV=test`}</code>
 
             <ol className="list-decimal pl-6 space-y-2">
               <li>Restart your DOTA server to apply the environment variable changes</li>
-              <li>Navigate to your DOTA server login page</li>
-              <li>Attempt to log in using Google authentication</li>
+              <li>Generate an access key from your DOTA server</li>
+              <li>Try logging into CLI with the generated access key as your authentication token</li>
               <li>Verify that you can successfully authenticate and access protected resources</li>
             </ol>
           </div>

@@ -1,3 +1,5 @@
+import metricsGif from '../../../images/metrics.gif';
+
 export default function Metrics() {
   return (
     <div>
@@ -103,8 +105,8 @@ REDIS_TLS=true`}</code>
                 </td>
               </tr>
               <tr>
-                <td className="border px-4 py-2">Device Distribution</td>
-                <td className="border px-4 py-2">Breakdown of device types and OS versions</td>
+                <td className="border px-4 py-2">Rollbacks</td>
+                <td className="border px-4 py-2">Number of unique devices that have rolled back to a previous version</td>
               </tr>
             </tbody>
           </table>
@@ -115,19 +117,27 @@ REDIS_TLS=true`}</code>
         <h2 className="text-2xl font-bold mb-4">Accessing Metrics</h2>
 
         <p className="mb-4">
-          You can access metrics through the CLI or directly through the DOTA Dashboard.
+          You can access metrics directly through the DOTA Dashboard.
         </p>
 
-        <h3 className="text-xl font-semibold mb-3">Via CLI</h3>
+        {/* <h3 className="text-xl font-semibold mb-3">Via CLI</h3>
         <pre className="code-block">
           <code>npx dota metrics --upload-path=my-org/my-project/my-bucket</code>
-        </pre>
+        </pre> */}
 
         <h3 className="text-xl font-semibold mb-3 mt-6">Via Dashboard</h3>
         <p className="mb-4">
           Navigate to your bucket in the DOTA Dashboard and select the "Metrics" tab to view
           graphical representations of your release performance.
         </p>
+        
+        <div className="border rounded-lg overflow-hidden mb-6">
+          <img 
+            src={metricsGif} 
+            alt="DOTA Metrics Dashboard" 
+            className="w-full" 
+          />
+        </div>
       </div>
 
       <div className="alert-tip mb-8">
@@ -181,21 +191,6 @@ save 900 1
 save 300 10
 save 60 10000`}</code>
         </pre>
-      </div>
-
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Data Retention</h2>
-
-        <p className="mb-4">
-          By default, DOTA retains metrics data for 90 days. You can adjust this retention period by
-          modifying the following environment variable:
-        </p>
-
-        <pre className="code-block">
-          <code>METRICS_RETENTION_DAYS=180</code>
-        </pre>
-
-        <p className="mt-4">This would set the retention period to 180 days.</p>
       </div>
     </div>
   );

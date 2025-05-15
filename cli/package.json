@@ -10,7 +10,7 @@
     "lint": "npx eslint ./script/**/*.ts",
     "lint:fix": "npx eslint ./script/**/*.ts --fix",
     "debug": "node --inspect-brk ./bin/script/cli.js",
-    "exec:clean": "npm cache clean --force && rm -rf node_modules package-lock.json && npm install && npm run build && npm install -g .",
+    "cli:setup": "npm cache clean --force && rm -rf node_modules package-lock.json && npm install && npm run build && npm install -g .",
     "exec": "npm run build && npm run build && npm install -g"
   },
   "bin": {
