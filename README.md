@@ -18,8 +18,6 @@ DOTA provides a complete solution for React Native over-the-air updates, allowin
 ## 🔗 Quick Links
 
 - [Detailed Documentation](https://dota.dreamsportslabs.com/)
-- [Installation Guide](https://dota.dreamsportslabs.com/documentation/cli/installation)
-- [Product Guide](https://dota.dreamsportslabs.com/documentation/web/dashboard)
 - [Connect with us on discord](https://discord.gg/Sa6a5Scj)
 
 ## 📦 Getting Started
