@@ -58,7 +58,7 @@ app.get("/healthcheck", (_, res) => {
   res.sendStatus(200);
 });
 
-const port = parseInt(process.env.PORT || "", 10) || 3000;
+const port = parseInt(process.env.WEB_PORT || "", 10) || 3000;
 
 httpServer.listen(port, async () => {
   if (!isProd) {

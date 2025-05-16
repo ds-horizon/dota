@@ -12,31 +12,37 @@ DOTA Server can be deployed in multiple ways: locally for development, on AWS fo
 
 #### Prerequisites
 
-The DOTA Server requires storage to operate. For the local setup, please follow the documentation
+The DOTA Server requires storage to operate. For local setup, you have the following options:
+- **Authentication**: You can use a mock token or GCP secret (if set up)
+- **Storage Options**: AWS S3, Azure Blob Storage, JSON storage, or just spawn a server
+
+To set up your local environment:
+1. Ensure you have Node.js installed
+2. Configure authentication using either mock token or GCP secret
+3. Choose and configure your preferred storage option
 
 #### Steps
 To run the DOTA Server locally, follow these steps:
 
 1. Clone the repository to your local machine.
-
 2. Copy the `.env.example` file to a new file named `.env` in the api directory:
-   ````bash
+   ```bash
    cd api
    cp .env.example .env
-   ````
-   Fill in the values for each environment variable in the `.env` file according to your development or production setup.
+   ```
+   Fill in the values for each environment variable in the `.env` file according to your development or production setup. See [ENVIRONMENT.md](./ENVIRONMENT.md) for details.
 3. Install all necessary dependencies:
-   ````bash
+   ```bash
    npm install
-   ````
+   ```
 4. Compile the server code:
-   ````bash
+   ```bash
    npm run build
-   ````
+   ```
 5. Launch the server with the environment-specific start command:
-   ````bash
+   ```bash
    npm run dev
-   ````
+   ```
 
 By default, local DOTA server runs on HTTP. To run DOTA Server on HTTPS:
 
@@ -47,17 +53,39 @@ By default, local DOTA server runs on HTTP. To run DOTA Server on HTTPS:
 
 For more detailed instructions and configuration options, please refer to the [ENVIRONMENT.md](./ENVIRONMENT.md) file.
 
+### Production
+
+For production deployments, GCP-based OAuth authentication is supported. You can deploy to:
+- AWS (follow the [AWS setup documentation](https://dota.dreamsportslabs.com/documentation/deployment/aws))
+- Azure App Service (follow the [Azure setup documentation](https://dota.dreamsportslabs.com/documentation/deployment/azure))
+- Custom server deployment
+
+#### Authentication
+Production environments should use GCP-based OAuth for secure user authentication. This provides:
+- Secure identity verification
+- Managed user sessions
+- Integration with Google authentication systems
+
+Configure GCP OAuth by following these steps:
+1. Set up a GCP OAuth client in the Google Cloud Console
+2. Configure the redirect URIs for your application
+3. Add the client ID and secret to your environment variables
+
+#### Deployment Options
+Choose the deployment option that best fits your infrastructure:
+
+1. **AWS**: Best for teams already using AWS infrastructure
+2. **Azure**: Optimized for Microsoft cloud environments
+3. **Custom Server**: For self-managed infrastructure
+
 ### AWS
 
-DOTA Server can be deployed to AWS using services like:
-- AWS EC2 for compute
-- Amazon S3 for storage
-- AWS Elastic Beanstalk for PaaS deployment
-
-When deploying to AWS, you'll need to:
-1. Set up appropriate IAM roles and permissions
-2. Configure a storage backend (Amazon S3 recommended)
-3. Set up your networking and security groups
+To deploy on AWS:
+1. Set up IAM roles and permissions.
+2. Configure S3 for storage.
+3. Set environment variables in `.env` for AWS credentials and S3 bucket.
+4. Use the provided [schema.sql](./schema.sql) and [migration.sql](./migration.sql) files to set up and migrate your database.
+5. Follow [AWS Setup Guide](https://dota.dreamsportslabs.com/documentation/deployment/aws) for step-by-step instructions.
 
 ### Azure
 
@@ -72,8 +100,8 @@ During the deployment process, the included bicep script will create bare minimu
 2. App Service
 3. Storage account
 
-Additionally, for user authentication, a GitHub or Microsoft OAuth application is needed. 
-More detailed instructions on how to set up one can be found in the section [OAuth Apps](#oauth-apps).
+Additionally, for user authentication, a Google OAuth application is needed. 
+You may also use a mock token for development. See [ENVIRONMENT.md](./ENVIRONMENT.md) for details.
 
 #### Steps
 
@@ -82,12 +110,14 @@ More detailed instructions on how to set up one can be found in the section [OAu
 1. Login to your Azure account: `az login`
 2. Select subscription for deployment: `az account set --subscription <subscription-id>`
 3. Create resource group for DOTA resources: `az group create --name <resource-group-name> --location <az-location eg. eastus>`
-4. Deploy infrastructure with the next command: `az deployment group create --resource-group <resource-group-name> --template-file ./dota-infrastructure.bicep --parameters project_suffix=<project-suffix> az_location=<az-location eg. eastus> github_client_id=<github-client-id> github_client_secret=<github-client-secret> microsoft_client_id=<microsoft-client-id> microsoft_client_secret=<microsoft-client-secret>`. OAuth parameters (both GitHub and Microsoft) are optional. It is possible to specify them after the deployment in environment settings of Azure WebApp.
+4. Deploy infrastructure with the next command: `az deployment group create --resource-group <resource-group-name> --template-file ./dota-infrastructure.bicep --parameters project_suffix=<project-suffix> az_location=<az-location eg. eastus> google_client_id=<google-client-id> google_client_secret=<google-client-secret>`. OAuth parameters are optional. It is possible to specify them after the deployment in environment settings of Azure WebApp.
 5. Deploy DOTA to the Azure WebApp created during infrastructure deployment. Follow the Azure WebApp [official documentation](https://learn.microsoft.com/en-us/azure/app-service/) "Deployment and configuration" section for detailed instructions.
 
 > **Warning!** The created Azure Blob Storage has default access settings. 
 > This means that all users within the subscription can access the storage account tables. 
 > Adjusting the storage account access settings to ensure proper security is the responsibility of the owner.
+
+> For more detailed deployment instructions, visit the [Azure setup documentation](https://dota.dreamsportslabs.com/documentation/deployment/azure).
 
 ## Configure react-native-code-push
 
@@ -110,22 +140,11 @@ in `Info.plist` file, add following lines, replacing `server-url` with your serv
 <string>server-url</string>
 ```
 
+## Database Schema & Migrations
 
-## Naming limitations
+- See [schema.sql](./schema.sql) for the initial schema.
+- See [migration.sql](./migration.sql) for example migrations.
 
-### project-suffix
+## License
 
-1. Only letters are allowed.
-1. Maximum 15 characters.
-
-## Metrics
-
-Installation metrics allow monitoring release activity via the CLI. For detailed usage instructions, please refer to the [CLI documentation](../cli/README.md#development-parameter).
-
-Redis is required for Metrics to work.
-
-### Steps
-
-1. Install Redis by following [official installation guide](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/).
-1. TLS is required. Follow [official Redis TLS run guide](https://redis.io/docs/latest/operate/oss_and_stack/management/security/encryption/#running-manually).
-1. Set the necessary environment variables for [Redis](./ENVIRONMENT.md#redis).
+MIT

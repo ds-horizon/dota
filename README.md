@@ -2,58 +2,173 @@
 
 # DOTA - Over-the-Air Updates for React Native Apps
 
-DOTA enables React Native developers to deploy mobile app updates directly to their users' devices. It consists of two parts: DOTA Server where developers publish app updates (JS, HTML, CSS or image changes), and [Microsoft React Native Client SDK](https://github.com/microsoft/react-native-code-push) that enables querying for updates from within an app.
+DOTA is a self-hostable, modular toolchain that empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices—bypassing app store delays and enabling rapid adoption. Deploy locally or on your preferred cloud, use the full stack or just the components you need, and extend easily with plugins for storage, auth, and metrics.
 
-## 🚀 Overview
+### Why DOTA?
+- 🚀 Instantly push updates—no app store or distribution delays.
+- 🏗️ Full control: run locally or on any supported cloud.
+- 🔌 Flexible and extensible: mix, match, and extend with plugins.
+- 🧑‍🤝‍🧑 **Cohorting**: Target updates by deployment key, app version, tenant, or RBAC.
+- ⚡ **Force Update**: Instantly require users to update by enabling mandatory updates.
+- 🗂️ **Version Control**: Multi-version, partitioned, and semantic versioning support.
 
-DOTA provides a complete solution for React Native over-the-air updates, allowing you to:
+## ✨ Features
 
-- Deploy app updates without going through app stores
-- Target updates to specific app versions
-- Control the rollout percentage of updates
-- Make updates mandatory when critical
-- Monitor deployment metrics
-- Manage multiple deployment environments (Staging, Production)
+- 🔄 **OTA Updates** for React Native apps
+- 🏗️ **Self-hostable**: Run locally, on-prem, or in your cloud
+- 🔌 **Pluggable Provider System**: Easily switch between Local, AWS, Azure, or custom storage backends
+- 🐳 **Docker-First**: Emulated environments with LocalStack, MySQL, and more
+- 🛡️ **Secure Auth**: Google OAuth or mock token for local/dev
+- 📊 **Metrics & Monitoring**: Optional Redis integration for advanced analytics
+- 🛠️ **CLI, Web Dashboard, and API**: Full toolchain for devs and ops
+
+---
 
 ## 🔗 Quick Links
 
-- [Detailed Documentation](https://dota.dreamsportslabs.com/)
-- [Connect with us on discord](https://discord.gg/Sa6a5Scj)
+- [Quickstart Guide](https://dota.dreamsportslabs.com/documentation/quickstart)
+- [Deployment Techniques](https://dota.dreamsportslabs.com/documentation/deployment)
+- [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
+- [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
+- [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
+- [Ask a Question (Discord)](https://discord.gg/Sa6a5Scj)
+- [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
 
-## 📦 Getting Started
+---
 
-### DOTA Server
+## 📦 Installation
 
-The DOTA server, located in the `api` subdirectory, allows you to build, deploy and manage DOTA updates yourself. You can deploy the server in multiple ways:
+### Prerequisites
 
-- **AWS** - Deploy to your own AWS infrastructure
-- **Azure** - Run as an Azure App Service
-- **Local** - Run on your own servers or development environment
+- 🐳 **Docker Desktop** (must be running)
+- 🟢 **Node.js** (v18+ recommended)
+- 🛠️ **Git**
+- (Optional) Google OAuth credentials or use a mock token for local login
 
-For detailed information about the DOTA server, including installation instructions and usage details, please refer to the [DOTA Server README](./api/README.md).
+### ⚡ Quickstart
 
-### DOTA CLI
+Spin up the **entire DOTA toolchain** (API, Web, CLI) in seconds with a single command:
 
-The DOTA CLI, located in the `cli` subdirectory, is a command-line tool that allows developers to interact with the DOTA server. For detailed information about the DOTA CLI, including installation instructions and usage details, please refer to the [DOTA CLI README](./cli/README.md).
+```bash
+./launchdota.sh {directory}
+# Example:
+./launchdota.sh .
+```
 
-### DOTA Web
+- 🌐 API server: [http://localhost:3010](http://localhost:3010)
+- 🖥️ Web dashboard: [http://localhost:3000](http://localhost:3000)
+- 🕹️ CLI: Open a new shell and run:
+  ```bash
+  dota --version
+  dota whoami
+  ```
 
-The DOTA Web Dashboard, located in the `web` subdirectory, is a web-based management interface that provides a user-friendly way to manage your deployments, monitor metrics, and configure your DOTA environment. For detailed information about the DOTA Web Dashboard, including installation instructions and usage details, please refer to the [DOTA Web README](https://dota.dreamsportslabs.com/documentation/web/dashboard).
+> **Note:** By default, this launches a **mock local deployment** (no GCP secret required), using emulated Docker components:
+> - S3 (via LocalStack)
+> - EC2
+> - MySQL (sandboxed)
+>
+> You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.example` and running the script accordingly.
 
-## 🛠️ Deployment Options
+![Quickstart Demo](documentation/src/images/quickstart.gif)
 
-### Local Deployment
+For a step-by-step installation guide, see the [Quickstart Documentation](https://dota.dreamsportslabs.com/documentation/quickstart).
 
-For development or self-hosted environments, DOTA can be run locally. The server requires storage support (Azure Blob Storage or Azurite emulator locally).
+#### Option 2: Manual Local Deployment (Step-by-Step)
 
-### AWS Deployment
+If you prefer a step-by-step approach instead of the one-line quickstart, follow these instructions:
 
-DOTA can be deployed to AWS using your preferred AWS services for computing and storage(docker emulator locally).
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/dream-sports-labs/dota
+   ```
+2. **Create Environment Files**
+   ```bash
+   ./env.dev.sh
+   ```
+   (Copies `env.web.dev` to `.env` files in `api` and `web` directories)
+3. **Navigate to API Directory**
+   ```bash
+   cd api
+   ```
+4. **Start Development Server**
+   ```bash
+   npm run dev:web
+   ```
 
-### Azure Deployment
+For more details and troubleshooting, see the [Quickstart Documentation](https://dota.dreamsportslabs.com/documentation/quickstart).
 
-DOTA is designed to run as an Azure App Service with Azure Blob Storage for backend storage needs.
+---
+
+## 🚀 Deployment Techniques & Provider Integration
+
+DOTA supports a flexible, plugin-based provider system. You can deploy and scale your update server in any environment:
+
+| Mode         | Providers/Plugins                | Use Case                |
+|--------------|----------------------------------|-------------------------|
+| **Local**    | JSON, LocalStack (S3, EC2), MySQL| Dev, CI, sandbox        |
+| **AWS**      | S3, EC2, RDS                     | Production, scale       |
+| **Azure**    | Blob Storage, App Service        | Production, enterprise  |
+| **Custom**   | Bring your own plugin            | Advanced, hybrid cloud  |
+
+- **Switch providers** by editing your `.env` and running the setup script.
+- **Plugin system**: Easily add new storage or auth backends.
+- **Metrics**: Enable Redis for advanced analytics.
+
+See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentation/deployment) for detailed guides and configuration examples.
+
+## 🔌 Plugin System & Extensibility
+
+DOTA's plugin system lets you extend or replace core features:
+- **Storage Plugins**: S3, Azure Blob, local, or custom.
+- **Auth Plugins**: Google OAuth, mock, Guardian (future).
+- **Metrics Plugins**: Redis, custom analytics.
+- **Cohorting Plugins**: Target by deployment key, app version/range, environment, platform, or tenant.
+- **RBAC Plugins**: Inbuilt, configurable (future, e.g. [Casbin](https://github.com/casbin/casbin) support).
+
+> **Impact:** Adapt DOTA to any workflow, compliance need, or infrastructure—just like hot-updater's build, storage, and database plugins.
+
+Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/documentation/plugins).
+
+---
+
+## 📖 API Documentation
+
+- [API Reference](https://dota.dreamsportslabs.com/documentation/api)
+- [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
+- [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
+- [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
+
+---
+
+## ⚙️ Tech Stack
+
+- Node.js (>=18.0.0)
+- TypeScript
+- React (Web Dashboard)
+- Docker (for containerization)
+- Redis (optional, for metrics)
+
+---
+
+## 🏢 Created by DreamSportsLabs
+
+DreamSportsLabs is committed to building open-source tools that empower developers and businesses. Learn more about us at our [website](https://dreamsportslabs.com/).
+
+---
+
+## 🤝 Contribute to DOTA
+
+DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](https://dota.dreamsportslabs.com/CONTRIBUTING.md).
+
+---
 
 ## ⚖️ License
 
 This code is provided under the MIT License, see the [LICENSE](./LICENSE) to learn more.
+
+---
+
+## ✉️ Contact
+
+If you need feedback or support, reach out via the [Issue Tracker](https://github.com/dream-sports-labs/dota/issues) or [Discord](https://discord.gg/Sa6a5Scj).
