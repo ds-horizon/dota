@@ -36,21 +36,11 @@ Before you begin, ensure you have the following installed:
 git clone https://github.com/dream-sports-labs/dota
 ```
 
-2. Create environment files:
+2. Run the launch script:
 ```bash
-./env.dev.sh
+./launchdota.sh /path/to/your/directory
 ```
-This script copies `env.web.dev` from the root directory into `.env` files in both `api` and `web` directories.
-
-3. Navigate to the API directory:
-```bash
-cd api
-```
-
-4. Start the development server:
-```bash
-npm run dev:web
-```
+This will install DOTA in the specified directory. The directory will be automatically added to .gitignore if it's a git repository.
 
 After successful installation, you should see:
 - Server running at `http://localhost:3010`

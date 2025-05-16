@@ -29,31 +29,11 @@ export default function Quickstart() {
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center font-semibold">2</div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">Create Environment Files</h3>
+            <h3 className="text-lg font-semibold mb-2">Run the Launch Script</h3>
             <div className="bg-muted p-3 rounded-lg">
-              <code className="text-sm">./env.dev.sh</code>
+              <code className="text-sm">./launchdota.sh /path/to/your/directory</code>
             </div>
-            <p className="mt-2 text-sm text-muted-foreground">Copies env.web.dev to .env files in api and web directories</p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center font-semibold">3</div>
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Navigate to API Directory</h3>
-            <div className="bg-muted p-3 rounded-lg">
-              <code className="text-sm">cd api</code>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center font-semibold">4</div>
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Start Development Server</h3>
-            <div className="bg-muted p-3 rounded-lg">
-              <code className="text-sm">npm run dev:web</code>
-            </div>
+            <p className="mt-2 text-sm text-muted-foreground">This will install DOTA in the specified directory. The directory will be automatically added to .gitignore if it's a git repository.</p>
           </div>
         </div>
       </div>
