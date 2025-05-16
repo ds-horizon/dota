@@ -93,6 +93,56 @@ DOTA can be deployed to AWS using your preferred AWS services for computing and 
 
 DOTA is designed to run as an Azure App Service with Azure Blob Storage for backend storage needs.
 
+## 🛠️ Tech Stack
+
+### Backend (API)
+- **Runtime**: Node.js (>=18.0.0)
+- **Language**: TypeScript
+- **Framework**: Express.js
+- **Database**: 
+  - MySQL (via Sequelize ORM)
+  - Redis for caching
+- **Authentication**: 
+  - Google OAuth
+- **Cloud Services**:
+  - AWS SDK for S3 and CloudFront
+  - Azure Storage (Blob, Queue, Tables)
+- **Testing**: Jest
+- **Monitoring**: 
+  - Application Insights
+  - Datadog APM
+
+### Frontend (Web Dashboard)
+- **Framework**: Remix.js
+- **UI Library**: Mantine UI
+- **State Management**: React Query
+- **Styling**: 
+  - Tailwind CSS
+  - PostCSS
+- **Testing**: 
+  - Vitest
+  - React Testing Library
+- **Build Tools**: 
+  - Vite
+  - TypeScript
+  - ESLint
+
+### CLI Tool
+- **Language**: TypeScript
+- **Build System**: Node.js
+- **Package Manager**: npm/pnpm
+
+### Infrastructure
+- **Containerization**: Docker
+- **Storage Options**:
+  - Local JSON storage
+  - AWS S3
+  - Azure Blob Storage
+- **Development Tools**:
+  - ESLint
+  - Prettier
+  - TypeScript
+
 ## ⚖️ License
 
 This code is provided under the MIT License, see the [LICENSE](./LICENSE) to learn more.

@@ -46,6 +46,18 @@ cd "$TARGET_DIR" || {
     exit 1
 }
 
+# Check if .git exists and add to .gitignore if it does
+if [ -d ".git" ]; then
+    print_status "Git repository detected in target directory"
+    if [ ! -f ".gitignore" ]; then
+        touch .gitignore
+    fi
+    if ! grep -q "^dota$" .gitignore; then
+        echo "dota" >> .gitignore
+        print_success "Added 'dota' to .gitignore"
+    fi
+fi
+
 # Clone the repository
 print_status "Cloning the repository..."
 if [ -d "dota" ]; then
