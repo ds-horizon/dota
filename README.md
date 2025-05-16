@@ -4,36 +4,6 @@
 
 DOTA empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices, bypassing app store delays and enabling rapid iteration. DOTA is a self-hostable OTA update server that can be deployed locally or on any cloud provider, giving you full control over your update pipeline and user data.
 
-## 🚀 Quickstart (Self-Host in Minutes!)
-
-Get up and running with your own DOTA server in just a few steps. **Clone, run, and launch your own over-the-air update service—no cloud lock-in, no complex setup!**
-
-![DOTA Quickstart](./quickstart.gif)
-
-### 1. Clone the repository (HTTP or SSH)
-```bash
-# Using HTTPS
-git clone https://github.com/dream-sports-labs/dota.git
-# Or using SSH
-git clone git@github.com:dream-sports-labs/dota.git
-cd dota
-```
-
-### 2. Run the setup script
-```bash
-./launchdota.sh
-```
-
-That's it! The script will:
-- Set up all dependencies
-- Configure your environment
-- Start the API and Web Dashboard
-- Log you in with a mock or real Google token
-- Open the dashboard in your browser
-
-**How crazy is that?** With just two commands, you get a full, production-ready, self-hostable OTA update solution—no vendor lock-in, no hidden steps. Use DOTA as your own private CodePush server, on your terms.
-
-> **Unique Selling Point:** DOTA is the only open-source solution that lets you go from zero to a fully working OTA update server in minutes, with a single script. Perfect for teams, enterprises, and indie devs who want control, privacy, and speed.
 
 ## 🚀 Overview
 
@@ -54,40 +24,49 @@ DOTA provides a complete solution for React Native over-the-air updates, allowin
 
 ## 📦 Getting Started
 
+## ⚡ Installation & QuickGuide
+
 ### Prerequisites
 
-Before you begin, ensure you have the following installed:
-- Docker Desktop (must be running)
-- npm (Node Package Manager)
-- Google OAuth configuration (optional)
+- 🐳 **Docker Desktop** (must be running)
+- 🟢 **Node.js** (v18+ recommended)
+- 🛠️ **Git**
+- (Optional) Google OAuth credentials or use a mock token for local login
 
-### Installation Steps
+---
 
-1. Clone the repository:
+### 🚀 QuickGuide: One-Line Self-Hosting
+
+Spin up the **entire DOTA toolchain** (API, Web, CLI) in seconds with a single command:
+
 ```bash
-git clone https://github.com/dream-sports-labs/dota
+./launchdota.sh {directory}
+# Example:
+./launchdota.sh .
 ```
 
-2. Create environment files:
-```bash
-./env.dev.sh
-```
-This script copies `env.web.dev` from the root directory into `.env` files in both `api` and `web` directories.
+- 🌐 API server: [http://localhost:3010](http://localhost:3010)
+- 🖥️ Web dashboard: [http://localhost:3000](http://localhost:3000)
+- 🕹️ CLI: Open a new shell and run:
+  ```bash
+  dota --version
+  dota whoami
+  ```
+- 🔑 Local authentication and Docker integration with AWS-like components are included by default.
 
-3. Navigate to the API directory:
-```bash
-cd api
-```
+> **This will spawn the full end-to-end toolchain in seconds.**
 
-4. Start the development server:
-```bash
-npm run dev:web
-```
+![Quickstart Demo](documentation/src/images/quickstart.gif)
 
-After successful installation, you should see:
-- Server running at `http://localhost:3010`
-- CLI logged in (verify with `dota --version` and `dota whoami`)
-- Web server running at `http://localhost:3000`
+---
+
+### 📚 Local Deployment & Advanced Modes
+
+DOTA supports multiple storage and cloud providers:
+- **Local:** AWS, Azure, JSON
+- **Remote:** AWS, Azure
+
+See the [Local Deployment documentation](/documentation/deployment/local) for advanced installation modes, cloud integration plugins, and configuration (including GCP/Mock token setup).
 
 ## 🤝 Contribute to DOTA
 
