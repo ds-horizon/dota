@@ -134,7 +134,8 @@ Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/do
 
 ## 📖 API Documentation
 
-- [API Reference](https://dota.dreamsportslabs.com/documentation/api)
+- [API Reference (WIP)]
+- For a detailed breakdown of the REST API Layer, see the [DeepWiki documentation](https://deepwiki.com/dream-sports-labs/code-push-server/2.2-rest-api-layer#rest-api-layer).
 - [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
 - [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
 - [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)

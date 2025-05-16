@@ -358,48 +358,6 @@ export default function CLICommands() {
           </div>
 
           {/* -------------------------------------------------------------
-              SESSION MANAGEMENT
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="session-management">
-            <h2 className="text-2xl font-bold mb-4">Session Management</h2>
-
-            <p className="mb-4">
-              You can view and manage your current login sessions using the following commands.
-            </p>
-
-            <p className="mb-4">To list all your current login sessions:</p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota session list [options]
-  dota session ls [options]`}
-              </code>
-            </pre>
-            <p className="mb-2">Examples:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota session ls
-  dota session ls --format json`}
-              </code>
-            </pre>
-
-            <p className="mb-4">To remove a login session:</p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota session remove <machineName>
-  dota session rm <machineName>`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota session rm "John's PC"`}
-              </code>
-            </pre>
-          </div>
-
-          {/* -------------------------------------------------------------
               DEPLOYMENT MANAGEMENT
           ------------------------------------------------------------- */}
           <div className="mb-8" id="deployment-management">
@@ -662,6 +620,37 @@ export default function CLICommands() {
               <code>dota release</code>, such as <code>--deploymentName</code>, <code>--description</code>, 
               <code>--rollout</code>, etc.
             </p>
+
+            <p className="mb-4">
+              To release an update, use the `release` command. You must specify the content path (file or directory), the target binary version, and the deployment.
+            </p>
+
+            <p className="mb-2">Usage:</p>
+            <pre className="code-block mb-6">
+              <code>
+{`  dota release <ownerName>/<appName> <updateContentsPath> <targetBinaryVersion> [options]`}
+              </code>
+            </pre>
+            <p className="mb-2">Example:</p>
+            <pre className="code-block mb-6">
+              <code>
+{`  dota release OrgName/MyApp ./platforms/ios/www 1.0.3 -d Production`}
+              </code>
+            </pre>
+            <p className="mb-4">
+              - `./platforms/ios/www` is the content path to your update files.
+            </p>
+
+            <p className="mb-4">
+              **Using Hermes:**
+              To enable Hermes bytecode compilation, use the `--useHermes` flag:
+            </p>
+            <p className="mb-2">Usage:</p>
+            <pre className="code-block mb-6">
+              <code>
+{`  dota release-react OrgName/MyApp android -d Production --useHermes`}
+              </code>
+            </pre>
           </div>
 
           {/* -------------------------------------------------------------
@@ -765,172 +754,6 @@ export default function CLICommands() {
               <code>
 {`  dota deployment history <ownerName>/<appName> <deploymentName> [options]
   dota deployment h <ownerName>/<appName> <deploymentName> [options]`}
-              </code>
-            </pre>
-            <p className="mb-2">Examples:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota deployment history OrgName/MyApp Production
-  dota deployment history OrgName/MyApp Production --format json
-  dota deployment history OrgName/MyApp Production --displayAuthor`}
-              </code>
-            </pre>
-            <p className="mb-4">
-              By default, it shows label, mandatory/disabled flags, release time, description, etc.
-              You can also show the release author with the <code>--displayAuthor</code> flag.
-            </p>
-          </div>
-
-          {/* -------------------------------------------------------------
-              CLEARING RELEASE HISTORY
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="clearing-release-history">
-            <h2 className="text-2xl font-bold mb-4">Clearing Release History</h2>
-
-            <p className="mb-4">
-              You can clear the release history associated with a deployment using the following
-              command:
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota deployment clear <ownerName>/<appName> <deploymentName>`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota deployment clear OrgName/MyApp Production`}
-              </code>
-            </pre>
-            <p className="mb-4">
-              After running this command, client devices configured to use that deployment key will
-              no longer receive any of the cleared updates.
-            </p>
-          </div>
-
-          {/* -------------------------------------------------------------
-              DEBUGGING CODEPUSH INTEGRATION
-          ------------------------------------------------------------- */}
-          <div className="mb-8" id="debugging-codepush">
-            <h2 className="text-2xl font-bold mb-4">Debugging CodePush Integration</h2>
-
-            <p className="mb-4">
-              To debug the CodePush update discovery experience, you can run the following command
-              to filter logs from the CodePush plugin:
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota debug <platform>`}
-              </code>
-            </pre>
-            <p className="mb-2">Examples:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`# View logs from Android emulator/device
-  dota debug android
-
-# View logs from iOS simulator
-  dota debug ios`}
-              </code>
-            </pre>
-            <p className="mb-4">
-              Under the covers, this simply automates usage of <code>ADB logcat</code> or 
-              the <code>iOS system logs</code>, providing a focused view of logs from the 
-              CodePush plugin.
-            </p>
-          </div>
-
-          {/* -------------------------------------------------------------
-              OTHER COMMON COMMANDS (LOGIN, LOGOUT, WHOAMI, REGISTER, LINK)
-          ------------------------------------------------------------- */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">Other Common Commands</h2>
-
-            <p className="mb-4">
-              <strong>Login:</strong> Authenticate with the DOTA server to manage your apps.
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota login [options]`}
-              </code>
-            </pre>
-            <p className="mb-2">Examples:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`# Logs into the DOTA server interactively
-  dota login
-
-# Logs in on behalf of the user who owns the given access key
-  dota login --accessKey <your-key>`}
-              </code>
-            </pre>
-
-            <p className="mb-4">
-              <strong>Logout:</strong> Log out of the current session.
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota logout`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota logout`}
-              </code>
-            </pre>
-
-            <p className="mb-4">
-              <strong>Whoami:</strong> Display account info for the current login session.
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota whoami`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota whoami`}
-              </code>
-            </pre>
-
-            <p className="mb-4">
-              <strong>Register:</strong> Register a new DOTA account.
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota register`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota register`}
-              </code>
-            </pre>
-
-            <p className="mb-4">
-              <strong>Link:</strong> Link an additional authentication provider (e.g. GitHub) to an
-              existing DOTA account.
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota link`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota link`}
-              </code>
             </pre>
           </div>
         </div>
