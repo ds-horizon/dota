@@ -68,7 +68,7 @@ Spin up the **entire DOTA toolchain** (API, Web, CLI) in seconds with a single c
 > - EC2
 > - MySQL (sandboxed)
 >
-> You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](documentation/environment).
+> You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](https://dota.dreamsportslabs.com/documentation/configuration/environment).
 
 ![Quickstart Demo](documentation/src/images/quickstart.gif)
 
