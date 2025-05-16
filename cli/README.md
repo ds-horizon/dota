@@ -2,6 +2,20 @@
 
 The DOTA CLI is a Node.js application that allows users to interact with DOTA Server.
 
+## Features
+
+The DOTA CLI provides powerful features to manage your over-the-air updates efficiently:
+
+- 🚀 **Instant Updates Delivery**: Push updates directly to user devices without app store review delays
+- 🧑‍🤝‍🧑 **Advanced Targeting & Cohorting**: Target updates by deployment key, app version, or tenant
+- ⚡ **Mandatory Updates**: Force critical updates by enabling the mandatory flag
+- 🗂️ **Semantic Versioning Support**: Target specific app versions using semver ranges
+- 📊 **Release Metrics**: View detailed analytics on update adoption and performance
+- 🔄 **Rollouts & Phased Releases**: Control update distribution with percentage-based rollouts
+- ⏪ **Instant Rollbacks**: Quickly revert to previous versions if issues are detected
+- 🔌 **Multi-Environment Support**: Manage deployments across development, staging, and production
+- 🔐 **Access Key Management**: Create and manage access keys for CI/CD integration
+
 ## Quick Start
 
 ```bash

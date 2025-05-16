@@ -23,31 +23,58 @@ See [Web Dashboard Documentation](https://dota.dreamsportslabs.com/documentation
 
 ## Features Overview
 
-The DOTA Web Dashboard is a comprehensive management interface for DOTA (Distributed Over-The-Air Updates), built with Remix and React. It provides a user-friendly interface for managing organizations, applications, deployments, and access control.
+The DOTA Web Dashboard is a comprehensive management interface for DOTA (Distributed Over-The-Air Updates), providing powerful features to help you manage your app deployments efficiently:
 
--   🔐 **Authentication**
-    -   Google OAuth integration
+-   🔐 **Authentication & Authorization**
+    -   Google OAuth integration for secure login
+    -   Mock token support for local development
+    -   Role-based access control with fine-grained permissions
     -   Secure session management
-    -   Role-based access control
+
 -   🏢 **Organization Management**
-    -   Create and manage organizations
-    -   Organization-specific settings
-    -   Team collaboration features
+    -   Create and manage multiple organizations
+    -   Organization-specific settings and configurations
+    -   Team collaboration features with shared access
+    -   Hierarchical structure for enterprise environments
+
 -   📱 **Application Management**
-    -   Create and manage applications
-    -   View application details and metrics
-    -   Manage app deployments
-    -   Handle app collaborators
+    -   Create and manage applications across multiple platforms
+    -   Multi-platform support (iOS, Android, Windows)
+    -   App metrics and health monitoring dashboards
+    -   Detailed version history tracking
+
 -   🚀 **Deployment Features**
-    -   Create and manage deployments
-    -   Promote deployments between environments
-    -   Manage deployment tokens
-    -   View deployment history and status
--   🔌 **API Integration**
-    -   RESTful API endpoints
-    -   Access key management
-    -   Tenant management
-    -   Deployment management
+    -   Visual deployment management across environments
+    -   One-click promotion between environments (dev → staging → production)
+    -   Phased rollouts with percentage-based targeting
+    -   Instant rollbacks to previous versions
+    -   Mandatory update flagging for critical releases
+    -   Deployment key management
+
+-   📊 **Analytics & Monitoring**
+    -   Real-time metrics on update adoption rates
+    -   Device and platform distribution analytics
+    -   Success/failure tracking for deployments
+    -   User engagement metrics with Redis integration (optional)
+    -   Historical performance data visualization
+
+-   🔌 **Infrastructure Integration**
+    -   Support for multiple storage backends (AWS S3, Azure Blob, local)
+    -   Visual configuration of provider settings
+    -   Infrastructure health monitoring
+    -   Seamless switching between environments
+
+-   🧑‍🤝‍🧑 **Advanced Targeting & Cohorting**
+    -   Target updates by app version using semantic versioning
+    -   User segmentation capabilities for gradual rollouts
+    -   A/B testing support through deployment targeting
+    -   Platform-specific update management
+
+-   ⚙️ **System Configuration**
+    -   Visual environment configuration
+    -   Plugin management and configuration
+    -   Storage provider settings management
+    -   Authentication provider configuration
 
 ## Web Dashboard Usage Guide
 
