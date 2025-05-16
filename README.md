@@ -4,6 +4,37 @@
 
 DOTA empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices, bypassing app store delays and enabling rapid iteration. DOTA is a self-hostable OTA update server that can be deployed locally or on any cloud provider, giving you full control over your update pipeline and user data.
 
+## 🚀 Quickstart (Self-Host in Minutes!)
+
+Get up and running with your own DOTA server in just a few steps. **Clone, run, and launch your own over-the-air update service—no cloud lock-in, no complex setup!**
+
+![DOTA Quickstart](./quickstart.gif)
+
+### 1. Clone the repository (HTTP or SSH)
+```bash
+# Using HTTPS
+git clone https://github.com/dream-sports-labs/dota.git
+# Or using SSH
+git clone git@github.com:dream-sports-labs/dota.git
+cd dota
+```
+
+### 2. Run the setup script
+```bash
+./launchdota.sh
+```
+
+That's it! The script will:
+- Set up all dependencies
+- Configure your environment
+- Start the API and Web Dashboard
+- Log you in with a mock or real Google token
+- Open the dashboard in your browser
+
+**How crazy is that?** With just two commands, you get a full, production-ready, self-hostable OTA update solution—no vendor lock-in, no hidden steps. Use DOTA as your own private CodePush server, on your terms.
+
+> **Unique Selling Point:** DOTA is the only open-source solution that lets you go from zero to a fully working OTA update server in minutes, with a single script. Perfect for teams, enterprises, and indie devs who want control, privacy, and speed.
+
 ## 🚀 Overview
 
 DOTA provides a complete solution for React Native over-the-air updates, allowing you to:
