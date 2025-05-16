@@ -754,6 +754,7 @@ export default function CLICommands() {
               <code>
 {`  dota deployment history <ownerName>/<appName> <deploymentName> [options]
   dota deployment h <ownerName>/<appName> <deploymentName> [options]`}
+              </code>
             </pre>
           </div>
         </div>
