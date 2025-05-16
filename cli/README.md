@@ -46,13 +46,6 @@ When you login from the CLI, your access key is persisted to disk for the durati
 dota logout
 ```
 
-If you forget to logout from a machine you'd prefer not to leave a running session on, you can use the following commands to list and remove any current login sessions.
-
-```shell
-dota session ls
-dota session rm <machineName>
-```
-
 ### Access Keys
 
 If you need to be able to authenticate against the DOTA service without launching a browser (e.g. in a CI environment), you can run the following command to create an "access key":
