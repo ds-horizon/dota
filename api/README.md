@@ -12,7 +12,14 @@ DOTA Server can be deployed in multiple ways: locally for development, on AWS fo
 
 #### Prerequisites
 
-The DOTA Server requires storage to operate. For the local setup, please follow the documentation
+The DOTA Server requires storage to operate. For local setup, you have the following options:
+- **Authentication**: You can use a mock token or GCP secret (if set up)
+- **Storage Options**: AWS S3, Azure Blob Storage, JSON storage, or just spawn a server
+
+To set up your local environment:
+1. Ensure you have Node.js installed
+2. Configure authentication using either mock token or GCP secret
+3. Choose and configure your preferred storage option
 
 #### Steps
 To run the DOTA Server locally, follow these steps:
@@ -46,6 +53,31 @@ By default, local DOTA server runs on HTTP. To run DOTA Server on HTTPS:
 
 For more detailed instructions and configuration options, please refer to the [ENVIRONMENT.md](./ENVIRONMENT.md) file.
 
+### Production
+
+For production deployments, GCP-based OAuth authentication is supported. You can deploy to:
+- AWS (follow the [AWS setup documentation](https://dota.dreamsportslabs.com/documentation/deployment/aws))
+- Azure App Service (follow the [Azure setup documentation](https://dota.dreamsportslabs.com/documentation/deployment/azure))
+- Custom server deployment
+
+#### Authentication
+Production environments should use GCP-based OAuth for secure user authentication. This provides:
+- Secure identity verification
+- Managed user sessions
+- Integration with Google authentication systems
+
+Configure GCP OAuth by following these steps:
+1. Set up a GCP OAuth client in the Google Cloud Console
+2. Configure the redirect URIs for your application
+3. Add the client ID and secret to your environment variables
+
+#### Deployment Options
+Choose the deployment option that best fits your infrastructure:
+
+1. **AWS**: Best for teams already using AWS infrastructure
+2. **Azure**: Optimized for Microsoft cloud environments
+3. **Custom Server**: For self-managed infrastructure
+
 ### AWS
 
 To deploy on AWS:
@@ -53,7 +85,7 @@ To deploy on AWS:
 2. Configure S3 for storage.
 3. Set environment variables in `.env` for AWS credentials and S3 bucket.
 4. Use the provided [schema.sql](./schema.sql) and [migration.sql](./migration.sql) files to set up and migrate your database.
-5. Follow [AWS Setup Guide](../documentation/src/pages/documentation/deployment/aws.jsx) for step-by-step instructions.
+5. Follow [AWS Setup Guide](https://dota.dreamsportslabs.com/documentation/deployment/aws) for step-by-step instructions.
 
 ### Azure
 
@@ -84,6 +116,8 @@ You may also use a mock token for development. See [ENVIRONMENT.md](./ENVIRONMEN
 > **Warning!** The created Azure Blob Storage has default access settings. 
 > This means that all users within the subscription can access the storage account tables. 
 > Adjusting the storage account access settings to ensure proper security is the responsibility of the owner.
+
+> For more detailed deployment instructions, visit the [Azure setup documentation](https://dota.dreamsportslabs.com/documentation/deployment/azure).
 
 ## Configure react-native-code-push
 
