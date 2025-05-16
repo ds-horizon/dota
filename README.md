@@ -2,7 +2,7 @@
 
 # DOTA - Over-the-Air Updates for React Native Apps
 
-DOTA is a self-hostable, modular toolchain that empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices—bypassing app store delays and enabling rapid adoption. Deploy locally or on your preferred cloud, use the full stack or just the components you need, and extend easily with plugins for storage, auth, and metrics.
+DOTA is a self-hostable, modular toolchain that empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices—bypassing app store delays and enabling rapid adoption. Deploy locally or on your preferred cloud, use the full stack or just the components you need, and extend easily with [supported plugins](documentation/plugins).
 
 ### Why DOTA?
 - 🚀 Instantly push updates—no app store or distribution delays.
@@ -16,7 +16,7 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 
 - 🔄 **OTA Updates** for React Native apps
 - 🏗️ **Self-hostable**: Run locally, on-prem, or in your cloud
-- 🔌 **Pluggable Provider System**: Easily switch between Local, AWS, Azure, or custom storage backends
+- 🔌 **Pluggable Provider System**: Multi-platform cloud plugin provider
 - 🐳 **Docker-First**: Emulated environments with LocalStack, MySQL, and more
 - 🛡️ **Secure Auth**: Google OAuth or mock token for local/dev
 - 📊 **Metrics & Monitoring**: Optional Redis integration for advanced analytics
@@ -68,7 +68,7 @@ Spin up the **entire DOTA toolchain** (API, Web, CLI) in seconds with a single c
 > - EC2
 > - MySQL (sandboxed)
 >
-> You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.example` and running the script accordingly.
+> You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](documentation/environment).
 
 ![Quickstart Demo](documentation/src/images/quickstart.gif)
 
@@ -104,16 +104,18 @@ For more details and troubleshooting, see the [Quickstart Documentation](https:/
 
 DOTA supports a flexible, plugin-based provider system. You can deploy and scale your update server in any environment:
 
-| Mode         | Providers/Plugins                | Use Case                |
-|--------------|----------------------------------|-------------------------|
-| **Local**    | JSON, LocalStack (S3, EC2), MySQL| Dev, CI, sandbox        |
-| **AWS**      | S3, EC2, RDS                     | Production, scale       |
-| **Azure**    | Blob Storage, App Service        | Production, enterprise  |
-| **Custom**   | Bring your own plugin            | Advanced, hybrid cloud  |
+You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](documentation/environment).
 
-- **Switch providers** by editing your `.env` and running the setup script.
-- **Plugin system**: Easily add new storage or auth backends.
-- **Metrics**: Enable Redis for advanced analytics.
+| Mode         | Storage/DB Plugins (Docker/Emulated)         | Cloud Providers (Production)         | Analytics/Other Plugins         | Notes/Custom Support           |
+|--------------|----------------------------------------------|--------------------------------------|---------------------------------|-------------------------------|
+| **Local**    | LocalStack (S3, EC2), MySQL, Redis, Azurite  | -                                    | Redis, custom                   | Run all in Docker; emulate AWS/Azure; switch DB dialect (MySQL/Postgres) |
+| **AWS**      | S3, EC2, RDS (MySQL/Postgres)                | AWS                                  | Redis, custom                   | Use real AWS creds; production scale |
+| **Azure**    | Blob Storage, App Service, Azurite           | Azure                                | Redis, custom                   | Use real Azure creds; production scale |
+| **Custom**   | Any plugin (e.g., Supabase, Cloudflare)      | Any                                  | Any                             | Bring your own plugin; hybrid/multi-cloud supported |
+
+- **Database plugin**: Switch between MySQL, Postgres, or other supported dialects via Sequelize.
+- **Analytics plugin**: Enable Redis or custom analytics.
+- **Full flexibility**: Mix and match plugins for storage, database, analytics, and more.
 
 See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentation/deployment) for detailed guides and configuration examples.
 
@@ -121,9 +123,10 @@ See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentatio
 
 DOTA's plugin system lets you extend or replace core features:
 - **Storage Plugins**: S3, Azure Blob, local, or custom.
+- **Database Plugins**: MySQL, Postgres, or custom (via Sequelize dialects).
 - **Auth Plugins**: Google OAuth, mock, Guardian (future).
 - **Metrics Plugins**: Redis, custom analytics.
-- **Cohorting Plugins**: Target by deployment key, app version/range, environment, platform, or tenant.
+- **Cohorting Plugins**: Rule-based targeting by attributes (deployment key, app version/range, environment, user cohort, platform, app, tenant, etc.)—fully configurable via plugins (see [Plugin Guide](/documentation/plugins)).
 - **RBAC Plugins**: Inbuilt, configurable (future, e.g. [Casbin](https://github.com/casbin/casbin) support).
 
 > **Impact:** Adapt DOTA to any workflow, compliance need, or infrastructure—just like hot-updater's build, storage, and database plugins.
@@ -141,25 +144,31 @@ Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/do
 
 ---
 
-## ⚙️ Tech Stack
+## ⚙️ TechStack Used:
 
-- Node.js (>=18.0.0)
-- TypeScript
-- React (Web Dashboard)
-- Docker (for containerization)
-- Redis (optional, for metrics)
+- <span style="display: flex; align-items: center;"><img src="app/assets/nodejs.png" alt="Node.js" style="width:16px; height:auto; margin-right:5px;"> <a href="https://nodejs.org/" target="_blank">Node.js</a></span>
+- <span style="display: flex; align-items: center;"><img src="app/assets/typescript.png" alt="TypeScript" style="width:16px; height:auto; margin-right:5px;"> <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a></span>
+- <span style="display: flex; align-items: center;"><img src="app/assets/react.png" alt="React" style="width:16px; height:auto; margin-right:5px;"> <a href="https://react.dev/" target="_blank">React</a></span>
+- <span style="display: flex; align-items: center;"><img src="app/assets/docker.png" alt="Docker" style="width:16px; height:auto; margin-right:5px;"> <a href="https://www.docker.com/" target="_blank">Docker</a></span>
+- <span style="display: flex; align-items: center;"><img src="app/assets/remix.png" alt="Remix" style="width:16px; height:auto; margin-right:5px;"> <a href="https://remix.run/" target="_blank">Remix</a></span>
+- <span style="display: flex; align-items: center;"><img src="app/assets/redis.png" alt="Redis" style="width:16px; height:auto; margin-right:5px;"> <a href="https://redis.io/" target="_blank">Redis</a></span>
+- <span style="display: flex; align-items: center;"><img src="app/assets/sequelize.png" alt="Sequelize" style="width:16px; height:auto; margin-right:5px;"> <a href="https://sequelize.org/" target="_blank">Sequelize</a></span>
 
 ---
 
-## 🏢 Created by DreamSportsLabs
+## <img src="app/assets/d11-logo.png" style="width:24px; height:auto; padding-top:8px;" /> Created by DreamSportsLabs
 
 DreamSportsLabs is committed to building open-source tools that empower developers and businesses. Learn more about us at our [website](https://dreamsportslabs.com/).
 
----
+## 🚀 Contribute to DOTA
 
+<<<<<<< HEAD
 ## 🤝 Contribute to DOTA
 
 DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](https://dota.dreamsportslabs.com/CONTRIBUTING.md).
+=======
+DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](reference/CONTRIBUTING.md).
+>>>>>>> 9a1ba27 (updated readme)
 
 ---
 
