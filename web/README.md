@@ -151,7 +151,7 @@ Installation metrics are displayed in the deployment view, showing active users,
 The dashboard provides a user-friendly interface for managing updates to your apps, while the actual creation of releases is done through the CLI.
 
 **Creating Releases**
-Creating releases is performed exclusively through the DOTA CLI, not through the dashboard. For detailed instructions on how to create releases, please refer to the [CLI Usage Guide](/documentation/cli/commands).
+Creating releases is performed exclusively through the DOTA CLI, not through the dashboard. For detailed instructions on how to create releases, please refer to the [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands).
 When creating a release using the CLI, you can specify:
 -   Target deployment environment
 -   Update packages to upload

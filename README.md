@@ -26,11 +26,11 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 
 ## 🔗 Quick Links
 
-- [Quickstart Guide](/documentation/quickstart)
-- [Deployment Techniques](/documentation/deployment)
-- [Web Dashboard](/documentation/web/dashboard)
-- [CLI Usage Guide](/documentation/cli/commands)
-- [Plugin System](/documentation/plugins)
+- [Quickstart Guide](https://dota.dreamsportslabs.com/documentation/quickstart)
+- [Deployment Techniques](https://dota.dreamsportslabs.com/documentation/deployment)
+- [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
+- [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
+- [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
 - [Ask a Question (Discord)](https://discord.gg/Sa6a5Scj)
 - [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
 
@@ -72,7 +72,7 @@ Spin up the **entire DOTA toolchain** (API, Web, CLI) in seconds with a single c
 
 ![Quickstart Demo](documentation/src/images/quickstart.gif)
 
-For a step-by-step installation guide, see the [Quickstart Documentation](/documentation/quickstart).
+For a step-by-step installation guide, see the [Quickstart Documentation](https://dota.dreamsportslabs.com/documentation/quickstart).
 
 #### Option 2: Manual Local Deployment (Step-by-Step)
 
@@ -96,7 +96,7 @@ If you prefer a step-by-step approach instead of the one-line quickstart, follow
    npm run dev:web
    ```
 
-For more details and troubleshooting, see the [Quickstart Documentation](/documentation/quickstart).
+For more details and troubleshooting, see the [Quickstart Documentation](https://dota.dreamsportslabs.com/documentation/quickstart).
 
 ---
 
@@ -115,7 +115,7 @@ DOTA supports a flexible, plugin-based provider system. You can deploy and scale
 - **Plugin system**: Easily add new storage or auth backends.
 - **Metrics**: Enable Redis for advanced analytics.
 
-See the [Deployment Documentation](/documentation/deployment) for detailed guides and configuration examples.
+See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentation/deployment) for detailed guides and configuration examples.
 
 ## 🔌 Plugin System & Extensibility
 
@@ -128,16 +128,16 @@ DOTA's plugin system lets you extend or replace core features:
 
 > **Impact:** Adapt DOTA to any workflow, compliance need, or infrastructure—just like hot-updater's build, storage, and database plugins.
 
-Want to add your own? See the [Plugin Guide](/documentation/plugins).
+Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/documentation/plugins).
 
 ---
 
 ## 📖 API Documentation
 
-- [API Reference](/documentation/api)
-- [CLI Usage Guide](/documentation/cli/commands)
-- [Web Dashboard](/documentation/web/dashboard)
-- [Plugin System](/documentation/plugins)
+- [API Reference](https://dota.dreamsportslabs.com/documentation/api)
+- [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
+- [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
+- [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
 
 ---
 
@@ -159,7 +159,7 @@ DreamSportsLabs is committed to building open-source tools that empower develope
 
 ## 🤝 Contribute to DOTA
 
-DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](/CONTRIBUTING.md).
+DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](https://dota.dreamsportslabs.com/CONTRIBUTING.md).
 
 ---
 
