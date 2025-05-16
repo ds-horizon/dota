@@ -33,7 +33,38 @@ export default function Quickstart() {
             <div className="bg-muted p-3 rounded-lg">
               <code className="text-sm">./launchdota.sh /path/to/your/directory</code>
             </div>
-            <p className="mt-2 text-sm text-muted-foreground">This will install DOTA in the specified directory. The directory will be automatically added to .gitignore if it's a git repository.</p>
+            
+            <div className="alert-note mt-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="alert-icon"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <div className="alert-content">
+                <strong>Note:</strong>
+                <p>This will install DOTA in the specified directory. The directory will be automatically added to .gitignore if it's a git repository.</p>
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <img 
+                src="/src/images/launchdota.gif" 
+                alt="DOTA Launch Script Demo" 
+                className="rounded-lg border border-border-color w-full shadow-md" 
+              />
+              <p className="mt-2 text-sm text-center text-muted-foreground">Demonstration of running the launchdota.sh script for a new DOTA installation</p>
+            </div>
           </div>
         </div>
       </div>

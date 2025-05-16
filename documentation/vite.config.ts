@@ -5,6 +5,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Set base to "/" for consistent asset paths whether deployed at root or subdirectory
+  base: mode === 'production' ? '/' : '/',
   server: {
     host: "::",
     port: 5173,
