@@ -35,17 +35,17 @@ load_env() {
         export "$var_name=$var_value"
       fi
     fi
-  done < "$env_file" > /dev/null 2>&1
+  done < "$env_file"
 }
 
 # Function to setup Node.js environment
 setup_node() {
   echo "🔄 Setting up Node.js environment..."
   export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" > /dev/null 2>&1
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load nvm
   
   # Use Node.js 20, install if not available
-  nvm use 20 > /dev/null 2>&1 || nvm install 20 > /dev/null 2>&1
+  nvm use 20 || nvm install 20
   
   # Verify Node.js version
   NODE_VERSION=$(node -v)
@@ -195,28 +195,28 @@ setup_aws() {
     echo "📝 Inflating .env file..."
     # Save all environment variables before running the setup script
     if [ -f .env ]; then
-      cp .env .env.backup > /dev/null 2>&1
+      cp .env .env.backup
     fi
     
     # Run the setup script
-    node scripts/setup-aws-env.js > /dev/null 2>&1
+    node scripts/setup-aws-env.js
     
     # Reload environment variables, keeping existing ones
     load_env
     
     # Restore backup if it exists
     if [ -f .env.backup ]; then
-      mv .env.backup .env > /dev/null 2>&1
+      mv .env.backup .env
     fi
   fi
   
   # Install dependencies
   echo "📦 Installing dependencies..."
-  npm install > /dev/null 2>&1
+  npm install
   
   # Initialize AWS (docker compose up)
   echo "🐳 Starting AWS services..."
-  docker compose up -d > /dev/null 2>&1
+  docker compose up -d
   
   # Wait for services to be ready
   echo "⏳ Waiting for services to be ready..."
@@ -267,13 +267,13 @@ EOL
 
     # Install dependencies and start web
     echo "🚀 Starting web server..."
-    if command_exists pnpm; then
-        pnpm install
-        pnpm dev > ../api/logs/web_server.log 2>&1 &
-    else
-        npm install
-        npm run dev > ../api/logs/web_server.log 2>&1 &
+    if ! command -v pnpm &> /dev/null; then
+      echo "❌ pnpm is required but not installed. Please install pnpm or use npm/yarn."
+      exit 1
     fi
+    pnpm install
+    pnpm build
+    pnpm dev > ../api/logs/web_server.log 2>&1 &
     WEB_PID=$!
     
     # Wait a moment for the web server to start
@@ -420,7 +420,7 @@ npm run build > /dev/null 2>&1
 echo "🛜 Starting server with AWS storage on port $PORT..."
 LOG_FILE="logs/server_api.log"
 # Ensure the log file exists
-touch "$LOG_FILE" > /dev/null 2>&1
+touch "$LOG_FILE"
 # Start the server and redirect output to log file
 nohup npm start aws:env > "$LOG_FILE" 2>&1 &
 SERVER_PID=$!
