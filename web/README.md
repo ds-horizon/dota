@@ -27,7 +27,7 @@ The DOTA Web Dashboard is a comprehensive management interface for DOTA (Distrib
 
 -   🔐 **Authentication & Authorization**
     -   Google OAuth integration for secure login
-    -   Mock token support for local development
+    -   Passwordless authentication mode support for local development
     -   Role-based access control with fine-grained permissions
     -   Secure session management
 

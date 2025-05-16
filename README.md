@@ -2,7 +2,7 @@
 
 # DOTA - Over-the-Air Updates for React Native Apps
 
-DOTA is a self-hostable, modular toolchain that empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices—bypassing app store delays and enabling rapid adoption. Deploy locally or on your preferred cloud, use the full stack or just the components you need, and extend easily with plugins for storage, auth, and metrics.
+DOTA is a self-hostable, modular toolchain that empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices—bypassing app store delays and enabling rapid adoption. Deploy locally or on your preferred cloud, use the full stack or just the components you need, and extend easily with [supported plugins](documentation/plugins).
 
 ### Why DOTA?
 - 🚀 Instantly push updates—no app store or distribution delays.
@@ -16,9 +16,9 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 
 - 🔄 **OTA Updates** for React Native apps
 - 🏗️ **Self-hostable**: Run locally, on-prem, or in your cloud
-- 🔌 **Pluggable Provider System**: Easily switch between Local, AWS, Azure, or custom storage backends
+- 🔌 **Pluggable Provider System**: Multi-platform cloud plugin provider
 - 🐳 **Docker-First**: Emulated environments with LocalStack, MySQL, and more
-- 🛡️ **Secure Auth**: Google OAuth or mock token for local/dev
+- 🛡️ **Secure Auth**: Google OAuth or passwordless authentication mode for local/dev
 - 📊 **Metrics & Monitoring**: Optional Redis integration for advanced analytics
 - 🛠️ **CLI, Web Dashboard, and API**: Full toolchain for devs and ops
 
@@ -43,7 +43,7 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 - 🐳 **Docker Desktop** (must be running)
 - 🟢 **Node.js** (v18+ recommended)
 - 🛠️ **Git**
-- (Optional) Google OAuth credentials or use a mock token for local login
+- (Optional) Google OAuth credentials or use passwordless authentication mode for local login
 
 ### ⚡ Quickstart
 
@@ -68,7 +68,7 @@ Spin up the **entire DOTA toolchain** (API, Web, CLI) in seconds with a single c
 > - EC2
 > - MySQL (sandboxed)
 >
-> You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.example` and running the script accordingly.
+> You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](documentation/environment).
 
 ![Quickstart Demo](documentation/src/images/quickstart.gif)
 
@@ -104,16 +104,17 @@ For more details and troubleshooting, see the [Quickstart Documentation](https:/
 
 DOTA supports a flexible, plugin-based provider system. You can deploy and scale your update server in any environment:
 
-| Mode         | Providers/Plugins                | Use Case                |
-|--------------|----------------------------------|-------------------------|
-| **Local**    | JSON, LocalStack (S3, EC2), MySQL| Dev, CI, sandbox        |
-| **AWS**      | S3, EC2, RDS                     | Production, scale       |
-| **Azure**    | Blob Storage, App Service        | Production, enterprise  |
-| **Custom**   | Bring your own plugin            | Advanced, hybrid cloud  |
+You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](documentation/environment).
+
+| Mode      | Storage/DB Plugins           | Cloud Provider | Analytics Plugins | Notes                        |
+|-----------|------------------------------|---------------|------------------|------------------------------|
+| **Local** | JSON, LocalStack (S3, EC2), MySQL, Postgres, Redis, Azurite | –             | Redis, custom      | All-in-Docker; emulate AWS/Azure; switch DB dialect |
+| **AWS**   | S3, EC2, RDS (MySQL/Postgres)| AWS           | Redis, custom      | Use real AWS credentials     |
+| **Azure** | Blob Storage, App Service, Azurite, MySQL, Postgres | Azure         | Redis, custom      | Use real Azure credentials   |
+| **Custom**| Any plugin (e.g., Supabase, Cloudflare, JSON, etc.) | Any           | Any               | Hybrid/multi-cloud supported |
 
 - **Switch providers** by editing your `.env` and running the setup script.
-- **Plugin system**: Easily add new storage or auth backends.
-- **Metrics**: Enable Redis for advanced analytics.
+- **Mix and match** storage, database, and analytics plugins as needed.
 
 See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentation/deployment) for detailed guides and configuration examples.
 
@@ -121,9 +122,10 @@ See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentatio
 
 DOTA's plugin system lets you extend or replace core features:
 - **Storage Plugins**: S3, Azure Blob, local, or custom.
+- **Database Plugins**: MySQL, Postgres, or custom (via Sequelize dialects).
 - **Auth Plugins**: Google OAuth, mock, Guardian (future).
 - **Metrics Plugins**: Redis, custom analytics.
-- **Cohorting Plugins**: Target by deployment key, app version/range, environment, platform, or tenant.
+- **Cohorting Plugins**: Rule-based targeting by attributes (deployment key, app version/range, environment, user cohort, platform, app, tenant, etc.)—fully configurable via plugins (see [Plugin Guide](/documentation/plugins)).
 - **RBAC Plugins**: Inbuilt, configurable (future, e.g. [Casbin](https://github.com/casbin/casbin) support).
 
 > **Impact:** Adapt DOTA to any workflow, compliance need, or infrastructure—just like hot-updater's build, storage, and database plugins.
@@ -141,31 +143,31 @@ Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/do
 
 ---
 
-## ⚙️ Tech Stack
+## ⚙️ TechStack Used:
 
-- Node.js (>=18.0.0)
-- TypeScript
-- React (Web Dashboard)
-- Docker (for containerization)
-- Redis (optional, for metrics)
-
----
-
-## 🏢 Created by DreamSportsLabs
-
-DreamSportsLabs is committed to building open-source tools that empower developers and businesses. Learn more about us at our [website](https://dreamsportslabs.com/).
+- [Node.js](https://nodejs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/)
+- [Docker](https://www.docker.com/)
+- [Remix](https://remix.run/)
+- [Redis](https://redis.io/)
+- [Sequelize](https://sequelize.org/)
 
 ---
 
-## 🤝 Contribute to DOTA
+## <img src="documentation/src/images/d11-logo.png" style="width:24px; height:auto; padding-top:8px;" /> Created by DreamSportsLabs
 
-DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](https://dota.dreamsportslabs.com/CONTRIBUTING.md).
+DreamSportsLabs is committed to building open-source tools that empower developers and businesses. Learn more about us at our [website](https://dota.dreamsportslabs.com/).
+
+## 🚀 Contribute to DOTA
+
+DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](CONTRIBUTING.md).
 
 ---
 
 ## ⚖️ License
 
-This code is provided under the MIT License, see the [LICENSE](./LICENSE) to learn more.
+This code is provided under the MIT License, see the [LICENSE](LICENSE.txt) to learn more.
 
 ---
 

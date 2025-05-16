@@ -84,7 +84,7 @@ export default function WebSetup() {
             <ul className="list-disc pl-6 space-y-2 mb-4">
               <li><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">Node Version Manager (nvm)</a> for managing Node.js versions</li>
               <li>pnpm package manager</li>
-              <li>Google OAuth credentials (for authentication) or you can use a mock token for development</li>
+              <li>Google OAuth credentials (for authentication) or you can use passwordless authentication mode for development</li>
             </ul>
           </div>
 
@@ -208,7 +208,7 @@ DOTA_SERVER_URL`}</code>
               <h3 className="text-xl font-semibold mb-3">Option 2: Bypassing Authentication (Development)</h3>
               <pre className="code-block mb-4">
                 <code>{`# Development Authentication Bypass
-LOCAL_GOOGLE_TOKEN="mock-google-token"
+LOCAL_GOOGLE_TOKEN="passwordless-authentication-token"
 NODE_ENV=development
 SESSION_SECRET=any_random_string_for_development
 
@@ -233,7 +233,7 @@ DOTA_SERVER_URL='your_local_api_url'`}</code>
             <h2 className="text-2xl font-bold mb-4">Authentication</h2>
             <p className="mb-4">
               The DOTA Web Dashboard uses Google OAuth for authentication in production environments. 
-              For development, you can either set up OAuth credentials or use the mock token approach.
+              For development, you can either set up OAuth credentials or use the passwordless authentication mode approach.
             </p>
 
             <h3 className="text-xl font-semibold mb-3">Setting Up Google OAuth</h3>
@@ -250,14 +250,14 @@ DOTA_SERVER_URL='your_local_api_url'`}</code>
               <li>Copy the same credentials to the <code>.env</code> file in the <code>/api</code> directory</li>
             </ol>
 
-            <h3 className="text-xl font-semibold mb-3">Using Mock Token for Development</h3>
+            <h3 className="text-xl font-semibold mb-3">Using Passwordless Authentication Mode for Development</h3>
             <p className="mb-4">
               For local development, you can use the <code>LOCAL_GOOGLE_TOKEN</code> approach:
             </p>
             <ol className="list-decimal pl-6 space-y-2 mb-4">
-              <li>Add <code>LOCAL_GOOGLE_TOKEN="mock-google-token"</code> to your <code>.env</code> file in the <code>/web</code> directory</li>
+              <li>Add <code>LOCAL_GOOGLE_TOKEN="passwordless-authentication-token"</code> to your <code>.env</code> file in the <code>/web</code> directory</li>
               <li>Make sure <code>NODE_ENV=development</code> is set in your environment</li>
-              <li>This will bypass the Google OAuth flow and use a mock authentication token instead</li>
+              <li>This will bypass the Google OAuth flow and use a passwordless authentication token instead</li>
             </ol>
           </div>
 
@@ -324,8 +324,8 @@ pnpm start`}</code>
             <ol className="list-decimal pl-6 space-y-2 mb-4">
               <li>Ensure your Google OAuth credentials are correct and match in both <code>/web/.env</code> and <code>/api/.env</code> files</li>
               <li>Check that your authorized redirect URIs are properly configured in the Google Developer Console</li>
-              <li>For development, make sure <code>LOCAL_GOOGLE_TOKEN</code> is correctly set if you're using mock authentication</li>
-              <li>Verify that <code>NODE_ENV=development</code> is set when using mock authentication</li>
+              <li>For development, make sure <code>LOCAL_GOOGLE_TOKEN</code> is correctly set if you're using passwordless authentication mode</li>
+              <li>Verify that <code>NODE_ENV=development</code> is set when using passwordless authentication mode</li>
             </ol>
           </div>
         </div>
