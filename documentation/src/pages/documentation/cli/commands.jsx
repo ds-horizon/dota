@@ -753,7 +753,8 @@ export default function CLICommands() {
             <pre className="code-block mb-6">
               <code>
 {`  dota deployment history <ownerName>/<appName> <deploymentName> [options]
-  dota deployment h <ownerName>/<appName> <deploymentName> [options]`}</code>
+  dota deployment h <ownerName>/<appName> <deploymentName> [options]`}
+              </code>
             </pre>
           </div>
         </div>
