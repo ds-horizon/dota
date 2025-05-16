@@ -72,8 +72,6 @@ Spin up the **entire DOTA toolchain** (API, Web, CLI) in seconds with a single c
 
 ![Quickstart Demo](documentation/src/images/quickstart.gif)
 
-For a step-by-step installation guide, see the [Quickstart Documentation](https://dota.dreamsportslabs.com/documentation/quickstart).
-
 #### Option 2: Manual Local Deployment (Step-by-Step)
 
 If you prefer a step-by-step approach instead of the one-line quickstart, follow these instructions:
@@ -116,7 +114,7 @@ You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by 
 - **Switch providers** by editing your `.env` and running the setup script.
 - **Mix and match** storage, database, and analytics plugins as needed.
 
-See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentation/deployment) for detailed guides and configuration examples.
+See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentation/deployment/local) for detailed guides and configuration examples.
 
 ## 🔌 Plugin System & Extensibility
 
