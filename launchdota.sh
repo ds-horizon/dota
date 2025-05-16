@@ -67,7 +67,7 @@ if [ -d "dota" ]; then
     git checkout feature/launch-script
     git pull origin feature/launch-script
 else
-    git clone -b feature/launch-script https://github.com/dream-sports-labs/dota
+    git clone -b feature/launch-script git@github.com:dream-sports-labs/dota.git
     cd dota
 fi
 

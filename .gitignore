@@ -63,3 +63,5 @@ AzuriteConfig
 # VS Code settings
 .vscode
 .vscode*
+
+/web/build

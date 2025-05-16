@@ -275,12 +275,12 @@ EOL
         echo "Using pnpm for install/build/dev"
         pnpm install
         pnpm build
-        pnpm dev > ../api/logs/web_server.log 2>&1 &
+        pnpm start > ../api/logs/web_server.log 2>&1 &
     else
         echo "pnpm install failed or not available, falling back to npm"
         npm install
         npm run build
-        npm run dev > ../api/logs/web_server.log 2>&1 &
+        npm run start > ../api/logs/web_server.log 2>&1 &
     fi
     WEB_PID=$!
     
