@@ -23,16 +23,27 @@
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
+      // Adjusted to correctly parse params from 404.html redirect
       (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-          );
+        if (l.search) { // Check if there's any search string
+          var params = new URLSearchParams(l.search);
+          var redirectPath = params.get('p'); // Get the 'p' parameter (e.g., /documentation/quickstart)
+
+          if (redirectPath) {
+            var newPath = redirectPath; // 'p' contains the full path from the domain root
+            
+            var queryString = params.get('q'); // Get the 'q' parameter (original query string)
+            if (queryString) {
+              newPath += '?' + queryString;
+            }
+            
+            newPath += l.hash; // Append the original hash
+
+            // Replace the current URL with the reconstructed original URL
+            window.history.replaceState(null, null, newPath);
+          }
         }
-      }(window.location))
+      }(window.location));
     </script>
     <!-- End Single Page Apps for GitHub Pages -->
   </head>
