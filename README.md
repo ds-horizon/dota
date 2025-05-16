@@ -155,7 +155,7 @@ Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/do
 
 ---
 
-## <img src="app/assets/d11-logo.png" style="width:24px; height:auto; padding-top:8px;" /> Created by DreamSportsLabs
+## <img src="documentation/src/images/d11-logo.png" style="width:24px; height:auto; padding-top:8px;" /> Created by DreamSportsLabs
 
 DreamSportsLabs is committed to building open-source tools that empower developers and businesses. Learn more about us at our [website](https://dreamsportslabs.com/).
 
