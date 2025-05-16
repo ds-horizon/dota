@@ -27,7 +27,7 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 ## 🔗 Quick Links
 
 - [Quickstart Guide](https://dota.dreamsportslabs.com/documentation/quickstart)
-- [Deployment Techniques](https://dota.dreamsportslabs.com/documentation/deployment)
+- [Deployment Techniques](https://dota.dreamsportslabs.com/documentation/deployment/local)
 - [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
 - [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
 - [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
