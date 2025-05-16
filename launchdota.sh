@@ -52,12 +52,11 @@ if [ -d "dota" ]; then
     print_status "Repository already exists, updating..."
     cd dota
     git fetch origin
-    git checkout main
-    git pull origin main
+    git checkout feature/launch-script
+    git pull origin feature/launch-script
 else
-    git clone https://github.com/dream-sports-labs/dota
+    git clone -b feature/launch-script https://github.com/dream-sports-labs/dota
     cd dota
-    git checkout main
 fi
 
 # Check if env.dev.sh exists and is executable
