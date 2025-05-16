@@ -168,6 +168,33 @@ export default function Sidebar() {
           </li>
         </ul>
       </div>
+      {/* Support Links */}
+      <div className="sidebar-support mt-8 flex flex-col gap-2">
+        <a
+          href="/documentation/introduction"
+          className="btn btn-link text-primary font-semibold"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Documentation
+        </a>
+        <a
+          href="https://discord.gg/Sa6a5Scj"
+          className="btn btn-link text-primary font-semibold"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ask Question
+        </a>
+        <a
+          href="https://github.com/dream-sports-labs/dota/issues"
+          className="btn btn-link text-primary font-semibold"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Report Issue
+        </a>
+      </div>
     </div>
   );
 }

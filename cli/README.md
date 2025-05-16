@@ -2,39 +2,39 @@
 
 The DOTA CLI is a Node.js application that allows users to interact with DOTA Server.
 
-## Installation
+## Quick Start
 
-To run the DOTA CLI, follow these steps:
+```bash
+cd cli
+npm install
+npm run build
+npm install -g .
+dota login --accessKey <your-access-key>
+```
 
-1. Clone the repository.
-1. Install the necessary dependencies by running `npm install`.
-1. Build the CLI by running `npm run build`.
-1. Install CLI globally by running `npm install -g`.
+## Getting Started
 
-## Getting started
-
-1. Create a [DOTA account](#account-creation) push using the DOTA CLI.
-1. Register your app with DOTA, and optionally share it with other developers on your team.
-1. DOTA-ify your app and point it at the deployment you wish to use.
-1. Release an update for your app.
-1. Check out the debug logs to ensure everything is working as expected.
+1. Create a [DOTA account](#account-creation) and DOTA-fy your app using the DOTA CLI.
+2. Register your app with DOTA, and optionally share it with other developers on your team.
+3. DOTA-fy your app and point it at the deployment you wish to use.
+4. Release an update for your app.
+5. Check out the debug logs to ensure everything is working as expected.
 
 ## Usage
 
 After installing DOTA CLI globally, it will be available under `dota`.
 
-
 ### Authentication
 
-Most commands within the DOTA CLI require authentication, and therefore, before you can begin managing your account, you need to login using the GitHub or Microsoft account you used when registering. You can do this by running the following command:
+Most commands within the DOTA CLI require authentication. Before you can begin managing your account, you need to login using your Google account or a mock token for development. You can do this by running the following command:
 
 ```shell
-dota login <optional: server-url> --accessToken=<access-key>
+dota login <optional: server-url> --accessKey=<access-key>
 ```
 
-This will launch a browser, asking you to authenticate with either your GitHub or Microsoft account. This will generate an access key that you need to copy/paste into the CLI (it will prompt you for it). You are now successfully authenticated and can safely close your browser window.
+This will launch a browser, asking you to authenticate with your Google account. This will generate an access key that you need to copy/paste into the CLI (it will prompt you for it). You are now successfully authenticated and can safely close your browser window.
 
-If at any time you want to determine if you're already logged in, you can run the following command to display the e-mail address associated with your current authentication session, which identity providers your account is linked to (e.g. GitHub):
+If at any time you want to determine if you're already logged in, you can run the following command to display the e-mail address associated with your current authentication session:
 
 ```shell
 dota whoami
@@ -46,7 +46,7 @@ When you login from the CLI, your access key is persisted to disk for the durati
 dota logout
 ```
 
-If you forget to logout from a machine you'd prefer not to leave a running session on (e.g. your friend's laptop), you can use the following commands to list and remove any current login sessions.
+If you forget to logout from a machine you'd prefer not to leave a running session on, you can use the following commands to list and remove any current login sessions.
 
 ```shell
 dota session ls
@@ -55,29 +55,26 @@ dota session rm <machineName>
 
 ### Access Keys
 
-If you need to be able to authenticate against the DOTA service without launching a browser and/or without needing to use your GitHub and/or Microsoft credentials (e.g. in a CI environment), you can run the following command to create an "access key" (along with a name describing what it is for):
+If you need to be able to authenticate against the DOTA service without launching a browser (e.g. in a CI environment), you can run the following command to create an "access key":
 
 ```shell
-dota access-key add "VSTS Integration"
+dota access-key add "CI Integration"
 ```
 
-By default, access keys expire in 60 days. You can specify a different expiry duration by using the `--ttl` option and passing in a [human readable duration string](https://github.com/jkroso/parse-duration#parsestr) (e.g. "2d" => 2 days, "1h 15 min" => 1 hour and 15 minutes). For security, the key will only be shown once on creation, so remember to save it somewhere if needed!
-
-After creating the new key, you can specify its value using the `--accessKey` flag of the `login` command, which allows you to perform "headless" authentication, as opposed to launching a browser.
+After creating the new key, you can specify its value using the `--accessKey` flag of the `login` command, which allows you to perform headless authentication:
 
 ```shell
 dota login --accessKey <accessKey>
 ```
 
-When logging in via this method, the access key will not be automatically invalidated on logout, and can be used in future sessions until it is explicitly removed from the DOTA server or expires. However, it is still recommended that you log out once your session is complete, in order to remove your credentials from disk.
+## CLI Usage Guide
 
-Finally, if at any point you need to change a key's name and/or expiration date, you can use the following command:
+For a full CLI Usage Guide, see the [documentation site](https://dota.dreamsportslabs.com/documentation/cli/commands) or the [web documentation](../documentation/src/pages/documentation/cli/commands.jsx).
 
-```shell
-dota access-key patch <accessKeyName> --name "new name" --ttl 10d
-```
+## Support
 
-_NOTE: When patching the TTL of an existing access key, its expiration date will be set relative to the current time, with no regard for its previous value._
+- [Ask a Question (Discord)](https://discord.gg/Sa6a5Scj)
+- [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
 
 ## App Management
 

@@ -1,6 +1,25 @@
 # DOTA Web Dashboard
 
-The DOTA Web Dashboard is a comprehensive management interface for DOTA (Distributed Over-The-Air Updates), built with Remix and React. It provides a user-friendly interface for managing organizations, applications, deployments, and access control.
+The DOTA Web Dashboard provides a user-friendly interface to manage deployments, monitor metrics, and configure your DOTA environment.
+
+## Quickstart
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Documentation
+
+See [Web Dashboard Documentation](https://dota.dreamsportslabs.com/documentation/web/dashboard) for detailed usage and configuration.
+
+## Support
+
+- [Ask a Question (Discord)](https://discord.gg/Sa6a5Scj)
+- [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
 
 ## Features
 
