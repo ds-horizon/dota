@@ -108,9 +108,9 @@ You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by 
 
 | Mode      | Storage/DB Plugins           | Cloud Provider | Analytics Plugins | Notes                        |
 |-----------|------------------------------|---------------|------------------|------------------------------|
-| **Local** | JSON, LocalStack (S3, EC2), MySQL, Postgres, Redis, Azurite | Emulated             | Redis      | All-in-Docker; emulate AWS/Azure; switch DB dialect |
+| **Local** | JSON, LocalStack (S3, EC2), MySQL, Postgres, Redis, Azurite | Emulated           | Redis      | All-in-Docker; emulate AWS/Azure; switch DB dialect |
 | **AWS**   | S3, EC2, RDS (MySQL/Postgres)| AWS           | OSS Cache      | Use real AWS credentials     |
-| **Azure** | Blob Storage, App Service, Azurite, MySQL, Postgres | Azure Cache       | Redis      | Use real Azure credentials   |
+| **Azure** | Blob Storage, App Service, Azurite, MySQL, Postgres | Azure       | Azure Redis      | Use real Azure credentials   |
 | **Custom**| Any plugin (e.g., Supabase, Cloudflare, JSON, etc.) | Any           | Any               | Hybrid/multi-cloud supported |
 
 - **Switch providers** by editing your `.env` and running the setup script.
