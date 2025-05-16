@@ -148,11 +148,34 @@ export default function TableOfContents() {
   };
 
   return (
-    <div className="toc">
-      <h4>On This Page</h4>
-      <ul className="toc-list">
-        {renderHeadings()}
-      </ul>
+    // Make this a flex column and ensure it can take height (e.g., h-full or min-h-screen if appropriate)
+    // The parent 'toc-container' is sticky, so height will be related to viewport.
+    <div className="toc flex flex-col h-full"> 
+      <div> {/* Wrapper for title and list */} 
+        <h4>On This Page</h4>
+        <ul className="toc-list">
+          {renderHeadings()}
+        </ul>
+      </div>
+      {/* This div will be pushed to the bottom by mt-auto and its items aligned to the right */}
+      <div className="toc-support-links mt-auto pt-4 border-t border-border-color flex flex-col items-end space-y-2">
+        <a 
+          href="https://discord.gg/Sa6a5Scj" 
+          className="text-sm text-primary hover:text-primary-dark font-medium"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ask a Question
+        </a>
+        <a 
+          href="https://github.com/dream-sports-labs/dota/issues" 
+          className="text-sm text-primary hover:text-primary-dark font-medium"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Report an Issue
+        </a>
+      </div>
     </div>
   );
 } 
