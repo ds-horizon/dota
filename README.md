@@ -157,11 +157,11 @@ Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/do
 
 ## <img src="documentation/src/images/d11-logo.png" style="width:24px; height:auto; padding-top:8px;" /> Created by DreamSportsLabs
 
-DreamSportsLabs is committed to building open-source tools that empower developers and businesses. Learn more about us at our [website](https://dreamsportslabs.com/).
+DreamSportsLabs is committed to building open-source tools that empower developers and businesses. Learn more about us at our [website](https://dota.dreamsportslabs.com/).
 
 ## 🚀 Contribute to DOTA
 
-DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](https://dota.dreamsportslabs.com/CONTRIBUTING.md).
+DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](CONTRIBUTING.md).
 
 ---
 
