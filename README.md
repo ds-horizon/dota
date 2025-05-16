@@ -167,7 +167,7 @@ DOTA is an open-source project and welcomes contributions from the community. Fo
 
 ## ⚖️ License
 
-This code is provided under the MIT License, see the [LICENSE](./LICENSE) to learn more.
+This code is provided under the MIT License, see the [LICENSE](LICENSE.txt) to learn more.
 
 ---
 
