@@ -1,3 +1,15 @@
+import React from 'react';
+import createAppGif from '@/images/createapp.gif';
+import orgCreateGif from '@/images/orgcreate.gif';
+import addCollabGif from '@/images/addcollab.gif';
+import tokenSaveGif from '@/images/tokensave.gif';
+import defaultDeploymentPng from '@/images/defaultdeployment.png';
+import deploymentManagePng from '@/images/deploymentmanage.png';
+import copyPng from '@/images/copy.png';
+import deploymentTablePng from '@/images/deploymenttable.png';
+import releaseGif from '@/images/release.gif';
+import promoteDeployGif from '@/images/promotedeploy.gif';
+
 export default function WebDashboard() {
   return (
     <div>
@@ -102,7 +114,7 @@ export default function WebDashboard() {
                 <li>Populate the panel that appears with information about the new app.</li>
               </ol>
               <figure className="mb-4">
-                <img src="/src/images/createapp.gif" alt="Creating a new app in DOTA Dashboard" className="rounded-md shadow-md" />
+                <img src={createAppGif} alt="Creating a new app in DOTA Dashboard" className="rounded-md shadow-md" />
                 <p className="text-gray-600 italic text-sm text-center mt-2">Creating a new app in DOTA Dashboard</p>
               </figure>
             </div>
@@ -156,7 +168,7 @@ export default function WebDashboard() {
                 that organization is automatically created if it doesn't already exist.
               </p>
               <figure className="mb-4">
-                <img src="/src/images/orgcreate.gif" alt="Creating a new organization in DOTA Dashboard" className="rounded-md shadow-md" />
+                <img src={orgCreateGif} alt="Creating a new organization in DOTA Dashboard" className="rounded-md shadow-md" />
                 <p className="text-gray-600 italic text-sm text-center mt-2">Creating a new organization via app creation</p>
               </figure>
             </div>
@@ -189,7 +201,7 @@ export default function WebDashboard() {
                 <li>Type the user's email address to add the user</li>
               </ol>
               <figure className="mb-4">
-                <img src="/src/images/addcollab.gif" alt="Adding collaborators to an app in DOTA Dashboard" className="rounded-md shadow-md" />
+                <img src={addCollabGif} alt="Adding collaborators to an app in DOTA Dashboard" className="rounded-md shadow-md" />
                 <p className="text-gray-600 italic text-sm text-center mt-2">Adding collaborators to an app</p>
               </figure>
             </div>
@@ -210,8 +222,8 @@ export default function WebDashboard() {
               <li>Viewing all tokens associated with your account</li>
             </ul>
             <figure className="mb-4">
-              <img src="/src/images/tokensave.gif" alt="Creating and saving tokens in DOTA Dashboard" className="rounded-md shadow-md" />
-              <p className="text-gray-600 italic text-sm text-center mt-2">Creating and saving tokens for authentication</p>
+              <img src={tokenSaveGif} alt="Creating and saving tokens in DOTA Dashboard" className="rounded-md shadow-md" />
+              <p className="text-gray-600 italic text-sm text-center mt-2">Creating and saving access tokens</p>
             </figure>
           </div>
 
@@ -233,10 +245,12 @@ export default function WebDashboard() {
                 Each app will have two deployments created by default: <strong>Production</strong> and <strong>Staging</strong>. 
                 These deployments are ready to use immediately after app creation.
               </p>
-              <figure className="mb-4">
-                <img src="/src/images/defaultdeployment.png" alt="Default deployments (Production and Staging) shown in the deployment search dialog" className="rounded-md shadow-md border border-gray-200" />
-                <p className="text-gray-600 italic text-sm text-center mt-2">Default deployments (Production and Staging) shown in the deployment search dialog</p>
-              </figure>
+              <div className="p-6 bg-gray-50 dark-mode:bg-gray-800 rounded-lg shadow-sm mb-6">
+                <figure className="mb-4">
+                  <img src={defaultDeploymentPng} alt="Default deployments (Production and Staging) shown in the deployment search dialog" className="rounded-md shadow-md border border-gray-200" />
+                  <p className="text-gray-600 italic text-sm text-center mt-2">Default deployments (Production and Staging)</p>
+                </figure>
+              </div>
             </div>
 
             <div className="mb-6">
@@ -252,10 +266,12 @@ export default function WebDashboard() {
               <p className="mb-4">
                 You can quickly access deployment actions by pressing <kbd>⌘</kbd>+<kbd>K</kbd> (Command+K) to open the command menu for creating and searching deployments.
               </p>
-              <figure className="mb-4 flex flex-col items-center">
-                <img src="/src/images/deploymentmanage.png" alt="Deployment management dropdown showing Create, Search, and Delete options" className="rounded-md shadow-md border border-gray-200" />
-                <p className="text-gray-600 italic text-sm text-center mt-2">Deployment management dropdown showing Create, Search, and Delete options</p>
-              </figure>
+              <div className="p-6 bg-gray-50 dark-mode:bg-gray-800 rounded-lg shadow-sm mb-6">
+                <figure className="mb-4">
+                  <img src={deploymentManagePng} alt="Deployment management dropdown showing Create, Search, and Delete options" className="rounded-md shadow-md border border-gray-200" />
+                  <p className="text-gray-600 italic text-sm text-center mt-2">Deployment management dropdown</p>
+                </figure>
+              </div>
             </div>
 
             <div className="mb-6">
@@ -264,10 +280,12 @@ export default function WebDashboard() {
                 Deployment keys are required when configuring your mobile app to receive updates from DOTA. 
                 You can easily copy any deployment key directly from the dashboard using the "Copy Deployment Key" button.
               </p>
-              <figure className="mb-4">
-                <img src="/src/images/copy.png" alt="Copy Deployment Key button with the deployment key" className="rounded-md shadow-md border border-gray-200" />
-                <p className="text-gray-600 italic text-sm text-center mt-2">Copy Deployment Key button with the deployment key</p>
-              </figure>
+              <div className="p-6 bg-gray-50 dark-mode:bg-gray-800 rounded-lg shadow-sm mb-6">
+                <figure className="mb-4">
+                  <img src={copyPng} alt="Copy Deployment Key button with the deployment key" className="rounded-md shadow-md border border-gray-200" />
+                  <p className="text-gray-600 italic text-sm text-center mt-2">Copy deployment key button</p>
+                </figure>
+              </div>
             </div>
 
             <div className="mb-6">
@@ -285,10 +303,12 @@ export default function WebDashboard() {
                 <li>Rollout - Percentage of users receiving this update</li>
                 <li>Released At - Timestamp of the release</li>
               </ul>
-              <figure className="mb-4 flex flex-col items-center">
-                <img src="/src/images/deploymenttable.png" alt="Deployment management table showing release information" className="rounded-md shadow-md border border-gray-200" />
-                <p className="text-gray-600 italic text-sm text-center mt-2">Deployment management table showing release information</p>
-              </figure>
+              <div className="p-6 bg-gray-50 dark-mode:bg-gray-800 rounded-lg shadow-sm mb-6">
+                <figure className="mb-4">
+                  <img src={deploymentTablePng} alt="Deployment management table showing release information" className="rounded-md shadow-md border border-gray-200" />
+                  <p className="text-gray-600 italic text-sm text-center mt-2">Deployment management table</p>
+                </figure>
+              </div>
             </div>
 
             <div className="alert-note mb-6">
@@ -367,10 +387,12 @@ export default function WebDashboard() {
                   </p>
                 </div>
               </div>
-              <figure className="mb-4 flex flex-col items-center">
-                <img src="/src/images/release.gif" alt="Managing release metadata in the DOTA Dashboard" className="rounded-md shadow-md border border-gray-200" />
-                <p className="text-gray-600 italic text-sm text-center mt-2">Managing release metadata in the DOTA Dashboard</p>
-              </figure>
+              <div className="p-6 bg-gray-50 dark-mode:bg-gray-800 rounded-lg shadow-sm mb-6">
+                <figure className="mb-4">
+                  <img src={releaseGif} alt="Managing release metadata in the DOTA Dashboard" className="rounded-md shadow-md border border-gray-200" />
+                  <p className="text-gray-600 italic text-sm text-center mt-2">Managing release metadata</p>
+                </figure>
+              </div>
             </div>
             
             <div className="mb-6">
@@ -402,10 +424,12 @@ export default function WebDashboard() {
               When promoting an update, you can override certain properties like description, rollout 
               percentage, and whether the update is mandatory.
             </p>
-            <figure className="mb-4 flex flex-col items-center">
-              <img src="/src/images/promotedeploy.gif" alt="Promoting an update from Staging to Production" className="rounded-md shadow-md border border-gray-200" />
-              <p className="text-gray-600 italic text-sm text-center mt-2">Promoting an update from one deployment to another</p>
-            </figure>
+            <div className="p-6 bg-gray-50 dark-mode:bg-gray-800 rounded-lg shadow-sm mb-6">
+              <figure className="mb-4">
+                <img src={promoteDeployGif} alt="Promoting an update from Staging to Production" className="rounded-md shadow-md border border-gray-200" />
+                <p className="text-gray-600 italic text-sm text-center mt-2">Promoting an update from Staging to Production</p>
+              </figure>
+            </div>
           </div>
 
           {/* -------------------------------------------------------------

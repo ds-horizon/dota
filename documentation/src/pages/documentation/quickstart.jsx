@@ -1,4 +1,5 @@
 import React from 'react';
+import quickstartGif from '@/images/quickstart.gif';
 
 export default function Quickstart() {
   return (
@@ -62,7 +63,7 @@ export default function Quickstart() {
             
             <div className="mt-4">
               <img 
-                src="/src/images/quickstart.gif" 
+                src={quickstartGif} 
                 alt="DOTA Launch Script Demo" 
                 className="rounded-lg border border-gray-300 dark-mode:border-gray-600 w-full shadow-md" 
               />

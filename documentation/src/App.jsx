@@ -248,10 +248,6 @@ function App() {
       q: 'How do I integrate DOTA with my app?',
       a: 'DOTA provides a CLI for your build pipeline and a React Native SDK for your app. Our step-by-step documentation guides you through the entire process.',
     },
-    {
-      q: 'Is DOTA compatible with Expo?',
-      a: 'Yes, DOTA works with both bare React Native projects and Expo managed projects using EAS Build.',
-    },
   ];
 
   const docLinks = [
@@ -694,39 +690,6 @@ MyApp = codePush(codePushOptions)(MyApp);`}
             <div className="flex justify-center md:justify-start mb-4 md:mb-0">
               <span className="text-text-primary font-bold text-xl">DOTA</span>
             </div>
-            <nav className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2 mb-4 md:mb-0">
-              <a
-                href="#features"
-                onClick={e => {
-                  e.preventDefault();
-                  scrollToSection('features');
-                }}
-                className="text-sm text-text-secondary hover:text-primary"
-              >
-                Features
-              </a>
-              <a
-                href="#documentation"
-                onClick={e => {
-                  e.preventDefault();
-                  scrollToSection('documentation');
-                }}
-                className="text-sm text-text-secondary hover:text-primary"
-              >
-                Documentation
-              </a>
-              <a
-                href="#faq"
-                onClick={e => {
-                  e.preventDefault();
-                  scrollToSection('faq');
-                }}
-                className="text-sm text-text-secondary hover:text-primary"
-              >
-                FAQ
-              </a>
-              {/* Add other links like Privacy Policy, Terms, etc. if needed */}
-            </nav>
             <div className="text-sm text-text-tertiary text-center md:text-right">
               &copy; {new Date().getFullYear()} DOTA Project. MIT Licensed.
             </div>
