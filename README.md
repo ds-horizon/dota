@@ -18,7 +18,7 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 - 🏗️ **Self-hostable**: Run locally, on-prem, or in your cloud
 - 🔌 **Pluggable Provider System**: Multi-platform cloud plugin provider
 - 🐳 **Docker-First**: Emulated environments with LocalStack, MySQL, and more
-- 🛡️ **Secure Auth**: Google OAuth or mock token for local/dev
+- 🛡️ **Secure Auth**: Google OAuth or passwordless authentication mode for local/dev
 - 📊 **Metrics & Monitoring**: Optional Redis integration for advanced analytics
 - 🛠️ **CLI, Web Dashboard, and API**: Full toolchain for devs and ops
 
@@ -43,7 +43,7 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 - 🐳 **Docker Desktop** (must be running)
 - 🟢 **Node.js** (v18+ recommended)
 - 🛠️ **Git**
-- (Optional) Google OAuth credentials or use a mock token for local login
+- (Optional) Google OAuth credentials or use passwordless authentication mode for local login
 
 ### ⚡ Quickstart
 
@@ -106,16 +106,15 @@ DOTA supports a flexible, plugin-based provider system. You can deploy and scale
 
 You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](documentation/environment).
 
-| Mode         | Storage/DB Plugins (Docker/Emulated)         | Cloud Providers (Production)         | Analytics/Other Plugins         | Notes/Custom Support           |
-|--------------|----------------------------------------------|--------------------------------------|---------------------------------|-------------------------------|
-| **Local**    | LocalStack (S3, EC2), MySQL, Redis, Azurite  | -                                    | Redis, custom                   | Run all in Docker; emulate AWS/Azure; switch DB dialect (MySQL/Postgres) |
-| **AWS**      | S3, EC2, RDS (MySQL/Postgres)                | AWS                                  | Redis, custom                   | Use real AWS creds; production scale |
-| **Azure**    | Blob Storage, App Service, Azurite           | Azure                                | Redis, custom                   | Use real Azure creds; production scale |
-| **Custom**   | Any plugin (e.g., Supabase, Cloudflare)      | Any                                  | Any                             | Bring your own plugin; hybrid/multi-cloud supported |
+| Mode      | Storage/DB Plugins           | Cloud Provider | Analytics Plugins | Notes                        |
+|-----------|------------------------------|---------------|------------------|------------------------------|
+| **Local** | JSON, LocalStack (S3, EC2), MySQL, Postgres, Redis, Azurite | –             | Redis, custom      | All-in-Docker; emulate AWS/Azure; switch DB dialect |
+| **AWS**   | S3, EC2, RDS (MySQL/Postgres)| AWS           | Redis, custom      | Use real AWS credentials     |
+| **Azure** | Blob Storage, App Service, Azurite, MySQL, Postgres | Azure         | Redis, custom      | Use real Azure credentials   |
+| **Custom**| Any plugin (e.g., Supabase, Cloudflare, JSON, etc.) | Any           | Any               | Hybrid/multi-cloud supported |
 
-- **Database plugin**: Switch between MySQL, Postgres, or other supported dialects via Sequelize.
-- **Analytics plugin**: Enable Redis or custom analytics.
-- **Full flexibility**: Mix and match plugins for storage, database, analytics, and more.
+- **Switch providers** by editing your `.env` and running the setup script.
+- **Mix and match** storage, database, and analytics plugins as needed.
 
 See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentation/deployment) for detailed guides and configuration examples.
 
@@ -146,13 +145,13 @@ Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/do
 
 ## ⚙️ TechStack Used:
 
-- <span style="display: flex; align-items: center;"><img src="app/assets/nodejs.png" alt="Node.js" style="width:16px; height:auto; margin-right:5px;"> <a href="https://nodejs.org/" target="_blank">Node.js</a></span>
-- <span style="display: flex; align-items: center;"><img src="app/assets/typescript.png" alt="TypeScript" style="width:16px; height:auto; margin-right:5px;"> <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a></span>
-- <span style="display: flex; align-items: center;"><img src="app/assets/react.png" alt="React" style="width:16px; height:auto; margin-right:5px;"> <a href="https://react.dev/" target="_blank">React</a></span>
-- <span style="display: flex; align-items: center;"><img src="app/assets/docker.png" alt="Docker" style="width:16px; height:auto; margin-right:5px;"> <a href="https://www.docker.com/" target="_blank">Docker</a></span>
-- <span style="display: flex; align-items: center;"><img src="app/assets/remix.png" alt="Remix" style="width:16px; height:auto; margin-right:5px;"> <a href="https://remix.run/" target="_blank">Remix</a></span>
-- <span style="display: flex; align-items: center;"><img src="app/assets/redis.png" alt="Redis" style="width:16px; height:auto; margin-right:5px;"> <a href="https://redis.io/" target="_blank">Redis</a></span>
-- <span style="display: flex; align-items: center;"><img src="app/assets/sequelize.png" alt="Sequelize" style="width:16px; height:auto; margin-right:5px;"> <a href="https://sequelize.org/" target="_blank">Sequelize</a></span>
+- [Node.js](https://nodejs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/)
+- [Docker](https://www.docker.com/)
+- [Remix](https://remix.run/)
+- [Redis](https://redis.io/)
+- [Sequelize](https://sequelize.org/)
 
 ---
 
@@ -162,13 +161,7 @@ DreamSportsLabs is committed to building open-source tools that empower develope
 
 ## 🚀 Contribute to DOTA
 
-<<<<<<< HEAD
-## 🤝 Contribute to DOTA
-
 DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](https://dota.dreamsportslabs.com/CONTRIBUTING.md).
-=======
-DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](reference/CONTRIBUTING.md).
->>>>>>> 9a1ba27 (updated readme)
 
 ---
 

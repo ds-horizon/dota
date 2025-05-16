@@ -13,7 +13,7 @@ export default function Quickstart() {
           <li className="mb-2">🐳 Docker Desktop (must be running)</li>
           <li className="mb-2">🟢 Node.js (v18+ recommended)</li>
           <li className="mb-2">🛠️ Git</li>
-          <li className="mb-2">(Optional) Google OAuth credentials or use mock-google-token for local login</li>
+          <li className="mb-2">(Optional) Google OAuth credentials or use passwordless authentication mode for local login</li>
         </ul>
       </div>
       
@@ -167,7 +167,7 @@ export default function Quickstart() {
             </ul>
           </div>
         </div>
-        <p className="mb-4">See the <a href="/documentation/deployment/local" className="text-blue-600 hover:underline">Local Deployment documentation</a> for advanced installation modes, cloud integration plugins, and configuration (including GCP/Mock token setup).</p>
+        <p className="mb-4">See the <a href="/documentation/deployment/local" className="text-blue-600 hover:underline">Local Deployment documentation</a> for advanced installation modes, cloud integration plugins, and configuration (including GCP/passwordless authentication mode setup).</p>
       </div>
 
       {/* Verification Section */}

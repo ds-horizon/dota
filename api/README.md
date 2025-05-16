@@ -13,12 +13,12 @@ DOTA Server can be deployed in multiple ways: locally for development, on AWS fo
 #### Prerequisites
 
 The DOTA Server requires storage to operate. For local setup, you have the following options:
-- **Authentication**: You can use a mock token or GCP secret (if set up)
+- **Authentication**: You can use passwordless authentication mode or GCP secret (if set up)
 - **Storage Options**: AWS S3, Azure Blob Storage, JSON storage, or just spawn a server
 
 To set up your local environment:
 1. Ensure you have Node.js installed
-2. Configure authentication using either mock token or GCP secret
+2. Configure authentication using either passwordless authentication mode or GCP secret
 3. Choose and configure your preferred storage option
 
 #### Steps
@@ -101,7 +101,7 @@ During the deployment process, the included bicep script will create bare minimu
 3. Storage account
 
 Additionally, for user authentication, a Google OAuth application is needed. 
-You may also use a mock token for development. See [ENVIRONMENT.md](./ENVIRONMENT.md) for details.
+You may also use passwordless authentication mode for development. See [ENVIRONMENT.md](./ENVIRONMENT.md) for details.
 
 #### Steps
 
