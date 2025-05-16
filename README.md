@@ -108,9 +108,9 @@ You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by 
 
 | Mode      | Storage/DB Plugins           | Cloud Provider | Analytics Plugins | Notes                        |
 |-----------|------------------------------|---------------|------------------|------------------------------|
-| **Local** | JSON, LocalStack (S3, EC2), MySQL, Postgres, Redis, Azurite | –             | Redis, custom      | All-in-Docker; emulate AWS/Azure; switch DB dialect |
-| **AWS**   | S3, EC2, RDS (MySQL/Postgres)| AWS           | Redis, custom      | Use real AWS credentials     |
-| **Azure** | Blob Storage, App Service, Azurite, MySQL, Postgres | Azure         | Redis, custom      | Use real Azure credentials   |
+| **Local** | JSON, LocalStack (S3, EC2), MySQL, Postgres, Redis, Azurite | Emulated             | Redis      | All-in-Docker; emulate AWS/Azure; switch DB dialect |
+| **AWS**   | S3, EC2, RDS (MySQL/Postgres)| AWS           | OSS Cache      | Use real AWS credentials     |
+| **Azure** | Blob Storage, App Service, Azurite, MySQL, Postgres | Azure Cache       | Redis      | Use real Azure credentials   |
 | **Custom**| Any plugin (e.g., Supabase, Cloudflare, JSON, etc.) | Any           | Any               | Hybrid/multi-cloud supported |
 
 - **Switch providers** by editing your `.env` and running the setup script.
@@ -123,8 +123,8 @@ See the [Deployment Documentation](https://dota.dreamsportslabs.com/documentatio
 DOTA's plugin system lets you extend or replace core features:
 - **Storage Plugins**: S3, Azure Blob, local, or custom.
 - **Database Plugins**: MySQL, Postgres, or custom (via Sequelize dialects).
-- **Auth Plugins**: Google OAuth, mock, Guardian (future).
-- **Metrics Plugins**: Redis, custom analytics.
+- **Auth Plugins**: Google OAuth, passwordless authentication, configurable OAuth Plugin(future, e.g [Guardian](https://guardian.dream11.com/) support).
+- **Metrics Plugins**: Redis, OSS Cache, Azure Cache with Cluster Mode.
 - **Cohorting Plugins**: Rule-based targeting by attributes (deployment key, app version/range, environment, user cohort, platform, app, tenant, etc.)—fully configurable via plugins (see [Plugin Guide](/documentation/plugins)).
 - **RBAC Plugins**: Inbuilt, configurable (future, e.g. [Casbin](https://github.com/casbin/casbin) support).
 
