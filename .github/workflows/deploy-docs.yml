@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix/gh-pages-spa-routing
     paths:
       - 'documentation/**'
       - '.github/workflows/deploy-docs.yml'
