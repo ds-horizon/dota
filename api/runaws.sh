@@ -35,17 +35,17 @@ load_env() {
         export "$var_name=$var_value"
       fi
     fi
-  done < "$env_file"
+  done < "$env_file" > /dev/null 2>&1
 }
 
 # Function to setup Node.js environment
 setup_node() {
   echo "🔄 Setting up Node.js environment..."
   export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" > /dev/null 2>&1
   
   # Use Node.js 20, install if not available
-  nvm use 20 || nvm install 20
+  nvm use 20 > /dev/null 2>&1 || nvm install 20 > /dev/null 2>&1
   
   # Verify Node.js version
   NODE_VERSION=$(node -v)
@@ -195,28 +195,28 @@ setup_aws() {
     echo "📝 Inflating .env file..."
     # Save all environment variables before running the setup script
     if [ -f .env ]; then
-      cp .env .env.backup
+      cp .env .env.backup > /dev/null 2>&1
     fi
     
     # Run the setup script
-    node scripts/setup-aws-env.js
+    node scripts/setup-aws-env.js > /dev/null 2>&1
     
     # Reload environment variables, keeping existing ones
     load_env
     
     # Restore backup if it exists
     if [ -f .env.backup ]; then
-      mv .env.backup .env
+      mv .env.backup .env > /dev/null 2>&1
     fi
   fi
   
   # Install dependencies
   echo "📦 Installing dependencies..."
-  npm install
+  npm install > /dev/null 2>&1
   
   # Initialize AWS (docker compose up)
   echo "🐳 Starting AWS services..."
-  docker compose up -d
+  docker compose up -d > /dev/null 2>&1
   
   # Wait for services to be ready
   echo "⏳ Waiting for services to be ready..."
@@ -420,7 +420,7 @@ npm run build > /dev/null 2>&1
 echo "🛜 Starting server with AWS storage on port $PORT..."
 LOG_FILE="logs/server_api.log"
 # Ensure the log file exists
-touch "$LOG_FILE"
+touch "$LOG_FILE" > /dev/null 2>&1
 # Start the server and redirect output to log file
 nohup npm start aws:env > "$LOG_FILE" 2>&1 &
 SERVER_PID=$!

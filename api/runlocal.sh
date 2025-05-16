@@ -38,10 +38,10 @@ EOL
   # Install dependencies and start web in background
   echo "🚀 Starting web server..."
   if command -v pnpm &> /dev/null; then
-    pnpm install
+    pnpm install > /dev/null 2>&1
     pnpm dev > ../api/logs/web_server.log 2>&1 &
   else
-    npm install
+    npm install > /dev/null 2>&1
     npm run dev > ../api/logs/web_server.log 2>&1 &
   fi
   WEB_PID=$!
@@ -53,11 +53,11 @@ EOL
   # Open browser to login page
   echo "🔗 Opening browser to login page..."
   if [[ "$OSTYPE" == "darwin"* ]]; then
-    open http://localhost:3000/login
+    open http://localhost:3000/login > /dev/null 2>&1
   elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    xdg-open http://localhost:3000/login
+    xdg-open http://localhost:3000/login > /dev/null 2>&1
   elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
-    start http://localhost:3000/login
+    start http://localhost:3000/login > /dev/null 2>&1
   else
     echo "⚠️ Could not automatically open browser. Please visit http://localhost:3000/login"
   fi
@@ -144,13 +144,13 @@ echo "🚀 Server started with Local storage"
 
 # Clean up before login
 echo "🧹 Cleaning environment before login..."
-pwd
+pwd > /dev/null 2>&1
 cd ../cli
 npm run exec:clean > /dev/null 2>&1
 
 # Login using CLI
 echo "🔑 Logging in to CLI..."
-dota login http://localhost:3010 --accessKey=mock-google-token
+dota login http://localhost:3010 --accessKey=mock-google-token > /dev/null 2>&1
 
 # Setup web if requested
 if [ "$WITH_WEB" = true ]; then

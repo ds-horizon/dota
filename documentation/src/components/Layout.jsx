@@ -9,6 +9,7 @@ import '../styles/globals.css';
 // Define the navigation structure that matches the sidebar
 const navigationItems = [
   { path: '/documentation/introduction', title: 'Introduction' },
+  { path: '/documentation/quickstart', title: 'Quickstart' },
   {
     title: 'Deployment',
     children: [

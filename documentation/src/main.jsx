@@ -7,6 +7,7 @@ import Layout from './components/Layout';
 // Documentation Pages
 import Documentation from './pages/documentation/index.jsx';
 import Introduction from './pages/documentation/introduction.jsx';
+import Quickstart from './pages/documentation/quickstart.jsx';
 import Installation from './pages/documentation/installation.jsx';
 import Contribution from './pages/documentation/contribution.jsx';
 
@@ -46,6 +47,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route element={<Layout />}>
           <Route path="/documentation" element={<Navigate to="/documentation/introduction" replace />} />
           <Route path="/documentation/introduction" element={<Introduction />} />
+          <Route path="/documentation/quickstart" element={<Quickstart />} />
           <Route path="/documentation/installation" element={<Installation />} />
           <Route path="/documentation/contribution" element={<Contribution />} />
 

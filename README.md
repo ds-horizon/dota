@@ -22,6 +22,45 @@ DOTA provides a complete solution for React Native over-the-air updates, allowin
 
 ## 📦 Getting Started
 
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Docker Desktop (must be running)
+- npm (Node Package Manager)
+- Google OAuth configuration (optional)
+
+### Installation Steps
+
+1. Clone the repository:
+```bash
+git clone https://github.com/dream-sports-labs/dota
+```
+
+2. Create environment files:
+```bash
+./env.dev.sh
+```
+This script copies `env.web.dev` from the root directory into `.env` files in both `api` and `web` directories.
+
+3. Navigate to the API directory:
+```bash
+cd api
+```
+
+4. Start the development server:
+```bash
+npm run dev:web
+```
+
+After successful installation, you should see:
+- Server running at `http://localhost:3010`
+- CLI logged in (verify with `dota --version` and `dota whoami`)
+- Web server running at `http://localhost:3000`
+
+## 🤝 Contribute to DOTA
+
+DOTA is an open-source project and welcomes contributions from the community. For details on how to contribute, please see our [guide to contributing](/CONTRIBUTING.md).
+
 ### DOTA Server
 
 The DOTA server, located in the `api` subdirectory, allows you to build, deploy and manage DOTA updates yourself. You can deploy the server in multiple ways:
