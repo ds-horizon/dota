@@ -242,19 +242,16 @@ setup_web() {
     cd ../web
 
     # Create .env file with mock values for development, preserving existing values
-    # First check if .env already exists
     if [ -f .env ]; then
         echo "Using existing .env file in web directory"
     else
         echo "Creating new .env file in web directory"
-        # Use existing environment variables if set, otherwise use mock values
         G_CLIENT_ID=${PREV_GOOGLE_CLIENT_ID:-"mock-client-id"}
         G_CLIENT_SECRET=${PREV_GOOGLE_CLIENT_SECRET:-"mock-client-secret"}
         S_URL=${DOTA_SERVER_URL:-"http://localhost:$PORT"}
         S3_BUCKET=${AWS_S3_BUCKET:-"local-bucket"}
         AWS_SECRET=${aws_secret_access_key:-"test"}
         AWS_KEY=${aws_access_key_id:-"test"}
-        
         cat > .env << EOL
 GOOGLE_CLIENT_ID=$G_CLIENT_ID
 GOOGLE_CLIENT_SECRET=$G_CLIENT_SECRET
@@ -265,15 +262,26 @@ aws_access_key_id=$AWS_KEY
 EOL
     fi
 
-    # Install dependencies and start web
+    # Try to use pnpm, install if missing, fallback to npm if install fails
     echo "🚀 Starting web server..."
     if ! command -v pnpm &> /dev/null; then
-      echo "❌ pnpm is required but not installed. Please install pnpm or use npm/yarn."
-      exit 1
+        echo "pnpm not found, attempting to install globally..."
+        if command -v npm &> /dev/null; then
+            npm install -g pnpm
+        fi
     fi
-    pnpm install
-    pnpm build
-    pnpm dev > ../api/logs/web_server.log 2>&1 &
+
+    if command -v pnpm &> /dev/null; then
+        echo "Using pnpm for install/build/dev"
+        pnpm install
+        pnpm build
+        pnpm dev > ../api/logs/web_server.log 2>&1 &
+    else
+        echo "pnpm install failed or not available, falling back to npm"
+        npm install
+        npm run build
+        npm run dev > ../api/logs/web_server.log 2>&1 &
+    fi
     WEB_PID=$!
     
     # Wait a moment for the web server to start
