@@ -122,7 +122,7 @@ DOTA's plugin system lets you extend or replace core features:
 - **Database Plugins**: MySQL, Postgres, or custom (via Sequelize dialects).
 - **Auth Plugins**: Google OAuth, passwordless authentication, configurable OAuth Plugin(future, e.g [Guardian](https://guardian.dream11.com/) support).
 - **Metrics Plugins**: Redis, OSS Cache, Azure Cache with Cluster Mode.
-- **Cohorting Plugins**: Rule-based targeting by attributes (deployment key, app version/range, environment, user cohort, platform, app, tenant, etc.)—fully configurable via plugins (see [Plugin Guide](/documentation/plugins)).
+- **Cohorting Plugins**: Rule-based targeting by attributes (deployment key, app version/range, environment, user cohort, platform, app, tenant, etc.)—fully configurable via plugins.
 - **RBAC Plugins**: Inbuilt, configurable (future, e.g. [Casbin](https://github.com/casbin/casbin) support).
 
 > **Impact:** Adapt DOTA to any workflow, compliance need, or infrastructure—just like hot-updater's build, storage, and database plugins.
