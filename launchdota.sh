@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# --- DOTA Launcher ---
+# Print help if --help is present anywhere in the arguments
+for arg in "$@"; do
+  if [[ "$arg" == "--help" ]]; then
+    ./generate-env.sh --help
+    echo -e "\nUsage: ./launchdota.sh <target_directory> [plugin options] [--help]"
+    exit 0
+  fi
+done
+
 # Function to print colored status messages
 print_status() {
     echo -e "\033[1;34m==>\033[0m $1"
@@ -16,11 +26,12 @@ print_success() {
 # Check if target directory is provided
 if [ $# -eq 0 ]; then
     print_error "Please provide a target directory path"
-    echo "Usage: $0 <target_directory>"
+    echo "Usage: $0 <target_directory> [plugin options] [--help]"
     exit 1
 fi
 
 TARGET_DIR="$1"
+shift
 
 # Check if git is installed
 if ! command -v git &> /dev/null; then
@@ -59,23 +70,22 @@ if [ -d ".git" ]; then
 fi
 
 # Clone the repository
-print_status "Cloning the repository..."
-if [ -d "dota" ]; then
-    print_status "Repository already exists, updating..."
-    cd dota
-    git fetch origin
-    git checkout feature/launch-script
-    git pull origin feature/launch-script
-else
-    git clone -b feature/launch-script git@github.com:dream-sports-labs/dota.git
-    cd dota
-fi
+# print_status "Cloning the repository..."
+# if [ -d "dota" ]; then
+#     print_status "Repository already exists, updating..."
+#     cd dota
+#     git fetch origin
+#     git checkout main
+#     git pull origin main
+# else
+#     git clone -b main git@github.com:dream-sports-labs/dota.git
+#     cd dota
+# fi
 
-# Check if env.dev.sh exists and is executable
-if [ ! -f "env.dev.sh" ]; then
-    print_error "env.dev.sh not found in the repository"
-    exit 1
-fi
+# Generate .env files from plugin options
+print_status "Generating environment files from plugin options..."
+chmod +x generate-env.sh
+./generate-env.sh "$@"
 
 # Make env.dev.sh executable
 chmod +x env.dev.sh

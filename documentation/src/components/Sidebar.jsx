@@ -124,6 +124,20 @@ export default function Sidebar() {
           </li>
 
           <li className="sidebar-section">
+            <h4 className="sidebar-heading">Plugins</h4>
+            <ul className="sidebar-subnav">
+              <li className="sidebar-subitem">
+                <Link
+                  to="/documentation/plugins"
+                  style={isActive('/documentation/plugins')}
+                >
+                  Plugin Guide
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li className="sidebar-section">
             <h4 className="sidebar-heading">Web Dashboard</h4>
             <ul className="sidebar-subnav">
               <li className="sidebar-subitem">

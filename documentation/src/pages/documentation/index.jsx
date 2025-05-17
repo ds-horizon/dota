@@ -103,6 +103,18 @@ export default function Home() {
               </a>
             </p>
           </div>
+          
+          <div className="bg-card dark:bg-gray-800 border border-card-border dark:border-gray-700 rounded-lg p-6">
+            <h3 className="text-xl font-medium mb-3">Plugin System</h3>
+            <p className="mb-4">
+              Learn how to extend, configure, and customize DOTA with plugins for storage, database, auth, metrics, and more.
+            </p>
+            <p className="mt-6">
+              <a href="/documentation/plugins" className="text-dota-600 hover:underline font-medium">
+                Plugin Guide →
+              </a>
+            </p>
+          </div>
         </div>
       </div>
       
