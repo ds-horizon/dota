@@ -1,0 +1,25 @@
+{
+  "name": "dota-mcp-server",
+  "version": "0.1.0",
+  "description": "DOTA Model Context Protocol Server (dota-mcp-server)",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "axios": "^1.9.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.5.0",
+    "fastify": "^4.27.2",
+    "pg-hstore": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.18",
+    "ts-node": "^10.9.2",
+    "tsup": "^7.2.0",
+    "typescript": "^5.4.0"
+  }
+}

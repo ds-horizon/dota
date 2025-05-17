@@ -275,12 +275,22 @@ EOL
         echo "Using pnpm for install/build/dev"
         pnpm install
         pnpm build
+<<<<<<< Updated upstream
         pnpm start > ../api/logs/web_server.log 2>&1 &
+=======
+        pnpm start
+        pnpm dev > ../api/logs/web_server.log 2>&1 &
+>>>>>>> Stashed changes
     else
         echo "pnpm install failed or not available, falling back to npm"
         npm install
         npm run build
+<<<<<<< Updated upstream
         npm run start > ../api/logs/web_server.log 2>&1 &
+=======
+        npm run start
+        npm run dev > ../api/logs/web_server.log 2>&1 &
+>>>>>>> Stashed changes
     fi
     WEB_PID=$!
     
