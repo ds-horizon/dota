@@ -69,18 +69,18 @@ if [ -d ".git" ]; then
     fi
 fi
 
-# Clone the repository
-# print_status "Cloning the repository..."
-# if [ -d "dota" ]; then
-#     print_status "Repository already exists, updating..."
-#     cd dota
-#     git fetch origin
-#     git checkout main
-#     git pull origin main
-# else
-#     git clone -b main git@github.com:dream-sports-labs/dota.git
-#     cd dota
-# fi
+Clone the repository
+print_status "Cloning the repository..."
+if [ -d "dota" ]; then
+    print_status "Repository already exists, updating..."
+    cd dota
+    git fetch origin
+    git checkout main
+    git pull origin main
+else
+    git clone -b main git@github.com:dream-sports-labs/dota.git
+    cd dota
+fi
 
 # Generate .env files from plugin options
 print_status "Generating environment files from plugin options..."
