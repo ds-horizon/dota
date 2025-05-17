@@ -102,7 +102,7 @@ For more details and troubleshooting, see the [Quickstart Documentation](https:/
 
 DOTA supports a flexible, plugin-based provider system. You can deploy and scale your update server in any environment:
 
-You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](documentation/environment).
+You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by editing `.env.dev.web`. For details, see the [Environment Configuration Guide](https://dota.dreamsportslabs.com/documentation/configuration/environment).
 
 | Mode      | Storage/DB Plugins           | Cloud Provider | Analytics Plugins | Notes                        |
 |-----------|------------------------------|---------------|------------------|------------------------------|
