@@ -20,7 +20,7 @@ For a quick development setup with AWS S3 storage:
 
 ```bash
 # Set environment variables 
-export STORAGE_PROVIDER=aws 
+export STORAGE_PROVIDER=s3 
 export EMULATED=TRUE 
 export S3_BUCKET=your-dota-bucket 
 export S3_REGION=your-aws-region 
