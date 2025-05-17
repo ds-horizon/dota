@@ -10,6 +10,7 @@ import Introduction from './pages/documentation/introduction.jsx';
 import Quickstart from './pages/documentation/quickstart.jsx';
 import Installation from './pages/documentation/installation.jsx';
 import Contribution from './pages/documentation/contribution.jsx';
+import PluginsGuide from './pages/documentation/plugins.jsx';
 
 // Advanced Topics
 import NamingLimitations from './pages/documentation/advanced/naming.jsx';
@@ -50,6 +51,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/documentation/quickstart" element={<Quickstart />} />
           <Route path="/documentation/installation" element={<Installation />} />
           <Route path="/documentation/contribution" element={<Contribution />} />
+          <Route path="/documentation/plugins" element={<PluginsGuide />} />
 
           {/* Advanced Topics Routes */}
           <Route path="/documentation/advanced/naming" element={<NamingLimitations />} />
