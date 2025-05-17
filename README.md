@@ -2,7 +2,7 @@
 
 # DOTA - Over-the-Air Updates for React Native Apps
 
-DOTA is a self-hostable, modular toolchain that empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices—bypassing app store delays and enabling rapid adoption. Deploy locally or on your preferred cloud, use the full stack or just the components you need, and extend easily with [supported plugins](documentation/plugins).
+DOTA is a self-hostable, modular toolchain that empowers React Native developers to deliver over-the-air (OTA) updates directly to user devices—bypassing app store delays and enabling rapid adoption. Deploy locally or on your preferred cloud, use the full stack or just the components you need, and extend easily with supported plugins.
 
 ### Why DOTA?
 - 🚀 Instantly push updates—no app store or distribution delays.
@@ -109,7 +109,6 @@ You can change provider settings (e.g., use real AWS, Azure, or GCP secrets) by 
 | **Local** | JSON, LocalStack (S3, EC2), MySQL, Postgres, Redis, Azurite | Emulated           | Redis      | All-in-Docker; emulate AWS/Azure; switch DB dialect |
 | **AWS**   | S3, EC2, RDS (MySQL/Postgres)| AWS           | OSS Cache      | Use real AWS credentials     |
 | **Azure** | Blob Storage, App Service, Azurite, Azure Data Tables | Azure | Azure Redis | Use real Azure credentials |
-| **Custom**| Any plugin (e.g., Supabase, Cloudflare, JSON, etc.) | Any           | Any               | Hybrid/multi-cloud supported |
 
 - **Switch providers** by editing your `.env` and running the setup script.
 - **Mix and match** storage, database, and analytics plugins as needed.
@@ -128,7 +127,7 @@ DOTA's plugin system lets you extend or replace core features:
 
 > **Impact:** Adapt DOTA to any workflow, compliance need, or infrastructure—just like hot-updater's build, storage, and database plugins.
 
-Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/documentation/plugins).
+Want to spawn your toolchain on custom plugin? See the [Plugin Guide](https://dota.dreamsportslabs.com/documentation/plugins).
 
 ---
 
@@ -138,7 +137,6 @@ Want to add your own? See the [Plugin Guide](https://dota.dreamsportslabs.com/do
 - For a detailed breakdown of the REST API Layer, see the [DeepWiki documentation](https://deepwiki.com/dream-sports-labs/code-push-server/2.2-rest-api-layer#rest-api-layer).
 - [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
 - [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
-- [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
 
 ---
 
