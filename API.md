@@ -274,4 +274,4 @@ Returns `Healthy` if the server and dependencies are up.
 
 ---
 
-**For full details and try-it-out, see your `API Guide(https://dota.dreamsportslabs.com/documentation/api)` Swagger UI.** 
+**For full details and try-it-out, see your `(API Guide)[https://dota.dreamsportslabs.com/documentation/api)` Swagger UI.** 
