@@ -64,6 +64,7 @@
     "react-router-dom": "^6.30.0",
     "recharts": "^2.12.7",
     "sonner": "^1.5.0",
+    "swagger-ui-react": "^5.21.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.3",
