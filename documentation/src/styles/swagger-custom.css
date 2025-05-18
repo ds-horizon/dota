@@ -1,0 +1,51 @@
+.swagger-docs-container {
+    background: transparent;
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 80vh;
+    color: inherit;
+  }
+  
+  .swagger-ui {
+    background: transparent;
+    color: inherit;
+  }
+  
+  .swagger-ui .topbar {
+    display: none;
+  }
+  
+  .swagger-ui .info,
+  .swagger-ui .markdown,
+  .swagger-ui .response-col_status,
+  .swagger-ui .response-col_description,
+  .swagger-ui .opblock-summary,
+  .swagger-ui .opblock .opblock-summary-method,
+  .swagger-ui .opblock .opblock-summary-path,
+  .swagger-ui .opblock .opblock-summary-description {
+    color: inherit !important;
+  }
+  
+  .swagger-ui .opblock,
+  .swagger-ui .opblock-tag,
+  .swagger-ui .responses-table,
+  .swagger-ui .highlight-code,
+  .swagger-ui pre {
+    background: inherit !important;
+    color: inherit !important;
+    border-radius: 0;
+    border: none;
+  }
+  
+  .swagger-ui .btn {
+    background: #6d28d9;
+    color: #fff;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  .swagger-ui .btn:hover {
+    background: #4c1d95;
+  }

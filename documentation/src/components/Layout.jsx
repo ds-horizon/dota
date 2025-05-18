@@ -40,6 +40,16 @@ const navigationItems = [
     ],
   },
   {
+    title: 'Plugins',
+    children: [
+      { path: '/documentation/plugins', title: 'Plugin Guide' },
+    ],
+  },
+  {
+    path: '/documentation/api',
+    title: 'API Reference',
+  },
+  {
     title: 'Web Dashboard',
     children: [
       { path: '/documentation/web/setup', title: 'Setup' },

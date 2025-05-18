@@ -556,47 +556,35 @@ export default function CLICommands() {
             </ul>
 
             <h3 className="text-xl font-semibold mb-3">Releasing Updates (General)</h3>
-
             <p className="mb-2">Usage:</p>
             <pre className="code-block mb-6">
               <code>
 {`  dota release <ownerName>/<appName> <updateContentsPath> <targetBinaryVersion> [options]`}
               </code>
             </pre>
-            <p className="mb-2">Example:</p>
+            <p className="mb-2">Examples:</p>
             <pre className="code-block mb-6">
               <code>
-{`  dota release OrgName/MyApp ./platforms/ios/www 1.0.3 -d Production`}
+{`  # Release a single file to the Staging deployment (default)
+  dota release OrgName/MyApp app.js "*"
+
+  # Release a folder to the Production deployment
+  dota release OrgName/MyApp ./platforms/ios/www 1.0.3 -d Production
+
+  # Release a folder to Production with a rollout to 20% of users
+  dota release OrgName/MyApp ./platforms/ios/www 1.0.3 -d Production -r 20`}
               </code>
             </pre>
-
             <p className="mb-4">
-              Below are key parameters (some shown in usage's [options]) you can use with 
-              <code>dota release</code>:
+              <b>Options:</b>
             </p>
-
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li>
-                <strong>deploymentName (-d)</strong> - Defaults to Staging if not provided.
-              </li>
-              <li>
-                <strong>description (-des)</strong> - Optional "change log" for the deployment.
-              </li>
-              <li>
-                <strong>disabled (-x)</strong> - If set, the update will not be immediately
-                downloadable.
-              </li>
-              <li>
-                <strong>mandatory (-m)</strong> - If set, the update is considered mandatory.
-              </li>
-              <li>
-                <strong>noDuplicateReleaseError</strong> - If set, uploading an identical update
-                will produce a warning instead of an error.
-              </li>
-              <li>
-                <strong>rollout (-r)</strong> - The percentage of users that should receive this
-                release (defaults to 100%).
-              </li>
+              <li><strong>-d, --deploymentName</strong>: Deployment to release the update to (default: Staging)</li>
+              <li><strong>-des, --description</strong>: Description of the changes made to the app in this release</li>
+              <li><strong>-x, --disabled</strong>: If set, the update will not be immediately downloadable</li>
+              <li><strong>-m, --mandatory</strong>: If set, the update is considered mandatory</li>
+              <li><strong>--noDuplicateReleaseError</strong>: If set, uploading an identical update will produce a warning instead of an error</li>
+              <li><strong>-r, --rollout</strong>: The percentage of users that should receive this release (defaults to 100%)</li>
             </ul>
 
             <h3 className="text-xl font-semibold mb-3">Releasing Updates (React Native)</h3>
@@ -606,51 +594,46 @@ export default function CLICommands() {
 {`  dota release-react <ownerName>/<appName> <platform> [options]`}
               </code>
             </pre>
-            <p className="mb-2">Example:</p>
+            <p className="mb-2">Examples:</p>
             <pre className="code-block mb-6">
               <code>
-{`  dota release-react OrgName/MyApp ios -d Production`}
-              </code>
-            </pre>
-            <p className="mb-4">
-              <code>dota release-react</code> is a React Native-specific version of the "vanilla" 
-              <code>dota release</code> command, simplifying the process by automatically running 
-              <code>react-native bundle</code> (using sensible defaults) and inferring the 
-              targetBinaryVersion from your project files. It accepts similar options to 
-              <code>dota release</code>, such as <code>--deploymentName</code>, <code>--description</code>, 
-              <code>--rollout</code>, etc.
-            </p>
+{`  # Release iOS project to Staging (default)
+  dota release-react OrgName/MyApp ios
 
-            <p className="mb-4">
-              To release an update, use the `release` command. You must specify the content path (file or directory), the target binary version, and the deployment.
-            </p>
+  # Release Android project to Production
+  dota release-react OrgName/MyApp android -d Production
 
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota release <ownerName>/<appName> <updateContentsPath> <targetBinaryVersion> [options]`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota release OrgName/MyApp ./platforms/ios/www 1.0.3 -d Production`}
+  # Release Windows project in development mode
+  dota release-react OrgName/MyApp windows --dev`}
               </code>
             </pre>
             <p className="mb-4">
-              - `./platforms/ios/www` is the content path to your update files.
+              <b>Options:</b>
             </p>
-
-            <p className="mb-4">
-              **Using Hermes:**
-              To enable Hermes bytecode compilation, use the `--useHermes` flag:
-            </p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota release-react OrgName/MyApp android -d Production --useHermes`}
-              </code>
-            </pre>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li><strong>-b, --bundleName</strong>: Name of the generated JS bundle file</li>
+              <li><strong>-d, --deploymentName</strong>: Deployment to release the update to (default: Staging)</li>
+              <li><strong>-des, --description</strong>: Description of the changes made to the app with this release</li>
+              <li><strong>--dev, --development</strong>: Specifies whether to generate a dev or release build</li>
+              <li><strong>-x, --disabled</strong>: If set, the update will not be immediately downloadable</li>
+              <li><strong>-e, --entryFile</strong>: Path to the app's entry Javascript file</li>
+              <li><strong>-g, --gradleFile</strong>: Path to the gradle file (Android only)</li>
+              <li><strong>-m, --mandatory</strong>: If set, the update is considered mandatory</li>
+              <li><strong>--noDuplicateReleaseError</strong>: If set, uploading an identical update will produce a warning instead of an error</li>
+              <li><strong>-p, --plistFile</strong>: Path to the plist file (iOS only)</li>
+              <li><strong>-pre, --plistFilePrefix</strong>: Prefix for Info.plist file (iOS only)</li>
+              <li><strong>-r, --rollout</strong>: The percentage of users that should receive this release (defaults to 100%)</li>
+              <li><strong>-s, --sourcemapOutput</strong>: Path to where the sourcemap should be written</li>
+              <li><strong>-t, --targetBinaryVersion</strong>: Semver expression for the binary app version(s) this release is targeting</li>
+              <li><strong>-o, --outputDir</strong>: Path to where the bundle and sourcemap should be written</li>
+              <li><strong>-h, --useHermes</strong>: Enable Hermes and bypass automatic checks</li>
+              <li><strong>--pod, --podFile</strong>: Path to the cocopods config file (iOS only)</li>
+              <li><strong>-hf, --extraHermesFlags</strong>: Flags for Hermes (can be specified multiple times)</li>
+              <li><strong>-k, --privateKeyPath</strong>: Path to private key used for code signing</li>
+              <li><strong>-xp, --xcodeProjectFile</strong>: Path to the Xcode project or project.pbxproj file</li>
+              <li><strong>-xt, --xcodeTargetName</strong>: Name of target (iOS only)</li>
+              <li><strong>-c, --buildConfigurationName</strong>: Name of build configuration (iOS only)</li>
+            </ul>
           </div>
 
           {/* -------------------------------------------------------------

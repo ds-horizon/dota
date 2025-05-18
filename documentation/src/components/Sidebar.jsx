@@ -138,6 +138,20 @@ export default function Sidebar() {
           </li>
 
           <li className="sidebar-section">
+            <h4 className="sidebar-heading">API</h4>
+            <ul className="sidebar-subnav">
+              <li className="sidebar-subitem">
+                <Link
+                  to="/documentation/api"
+                  style={isActive('/documentation/api')}
+                >
+                  API Reference
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li className="sidebar-section">
             <h4 className="sidebar-heading">Web Dashboard</h4>
             <ul className="sidebar-subnav">
               <li className="sidebar-subitem">
