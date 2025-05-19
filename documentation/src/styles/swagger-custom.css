@@ -12,6 +12,7 @@
   .swagger-ui {
     background: transparent;
     color: inherit;
+    transition: all 0.2s ease;
   }
   
   .swagger-ui .topbar {
@@ -41,11 +42,780 @@
   }
   
   .swagger-ui .btn {
-    background: #6d28d9;
+    background: var(--dota-600);
     color: #fff;
     border-radius: 6px;
     transition: background 0.2s;
   }
   .swagger-ui .btn:hover {
-    background: #4c1d95;
+    background: var(--dota-700);
+  }
+
+  /* Dark mode improvements */
+  .dark-mode .swagger-ui .opblock-tag {
+    border-bottom-color: var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .opblock {
+    margin: 0 0 15px 0;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark-mode .swagger-ui select,
+  .dark-mode .swagger-ui input[type=text] {
+    background-color: var(--code-bg-color) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui textarea,
+  .dark-mode .swagger-ui .parameter__name,
+  .dark-mode .swagger-ui .parameter__type,
+  .dark-mode .swagger-ui table thead tr th,
+  .dark-mode .swagger-ui .response-col_status,
+  .dark-mode .swagger-ui .response-col_links,
+  .dark-mode .swagger-ui .model-title,
+  .dark-mode .swagger-ui .model,
+  .dark-mode .swagger-ui section.models h4 {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .model-toggle:after {
+    background: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui section.models {
+    border: 1px solid var(--border-color) !important;
+    background: var(--accent) !important;
+  }
+
+  .dark-mode .swagger-ui .model-box {
+    background: var(--code-bg-color) !important;
+  }
+
+  /* Improve expand/collapse UX */
+  .swagger-ui .opblock-tag {
+    padding: 10px 20px !important;
+    margin: 10px 0 5px 0 !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+
+  .swagger-ui .opblock-tag:hover {
+    background-color: rgba(109, 40, 217, 0.05) !important;
+  }
+
+  .swagger-ui .expand-operation {
+    margin-right: 8px !important;
+    height: 20px !important;
+    width: 20px !important;
+    transition: transform 0.2s;
+  }
+
+  .swagger-ui .expand-operation svg {
+    height: 20px !important;
+    width: 20px !important;
+  }
+
+  .swagger-ui .opblock .opblock-summary {
+    padding: 8px 20px !important;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+  }
+
+  .swagger-ui .opblock .opblock-summary:hover {
+    background-color: rgba(109, 40, 217, 0.05) !important;
+  }
+
+  .swagger-ui .opblock.is-open .opblock-summary {
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+
+  /* Improve method colors for dark mode */
+  .dark-mode .swagger-ui .opblock-get .opblock-summary-method {
+    background: #2563eb !important; 
+  }
+
+  .dark-mode .swagger-ui .opblock-post .opblock-summary-method {
+    background: #16a34a !important;
+  }
+
+  .dark-mode .swagger-ui .opblock-put .opblock-summary-method {
+    background: #ca8a04 !important;
+  }
+
+  .dark-mode .swagger-ui .opblock-delete .opblock-summary-method {
+    background: #dc2626 !important;
+  }
+
+  /* Animation for expand/collapse */
+  .swagger-ui .opblock-body {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Additional dark mode fixes */
+  .dark-mode .swagger-ui .highlight-code {
+    background-color: var(--code-bg-color) !important;
+  }
+
+  .dark-mode .swagger-ui .microlight {
+    color: var(--text-color) !important;
+    background-color: var(--code-bg-color) !important;
+  }
+
+  /* Syntax highlighting in dark mode */
+  .dark-mode .swagger-ui .microlight .tokenComment {
+    color: #94a3b8 !important;
+  }
+
+  .dark-mode .swagger-ui .microlight .tokenProperty {
+    color: #a78bfa !important;  /* Using lighter purple for properties */
+  }
+
+  .dark-mode .swagger-ui .microlight .tokenPunctuation {
+    color: #d1d5db !important;
+  }
+
+  .dark-mode .swagger-ui .microlight .tokenString,
+  .dark-mode .swagger-ui .microlight .tokenLiteral {
+    color: #34d399 !important;  /* Green for strings */
+  }
+
+  .dark-mode .swagger-ui .microlight .tokenNumber {
+    color: #fb923c !important;  /* Orange for numbers */
+  }
+
+  .dark-mode .swagger-ui .microlight .tokenKeyword {
+    color: #f87171 !important;  /* Reddish for keywords */
+  }
+
+  /* Fix for schema tabs and schemas in dark mode */
+  .dark-mode .swagger-ui .tab li {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .tab li.active {
+    color: var(--dota-600) !important;
+  }
+
+  .dark-mode .swagger-ui .scheme-container {
+    background: var(--accent) !important;
+    box-shadow: none !important;
+    border: 1px solid var(--border-color) !important;
+    margin: 0 0 20px 0 !important;
+    padding: 20px !important;
+    border-radius: 6px !important;
+  }
+
+  /* Improve expand/collapse smoothness */
+  .swagger-ui .arrow {
+    transition: transform 0.3s ease !important;
+  }
+
+  .swagger-ui .opblock-tag[data-is-open="true"] .arrow {
+    transform: rotate(90deg) !important;
+  }
+
+  /* Custom scrollbars to match rest of site */
+  .swagger-ui pre::-webkit-scrollbar,
+  .swagger-ui .parameters-container::-webkit-scrollbar,
+  .swagger-ui .responses-wrapper::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .swagger-ui pre::-webkit-scrollbar-track,
+  .swagger-ui .parameters-container::-webkit-scrollbar-track,
+  .swagger-ui .responses-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .swagger-ui pre::-webkit-scrollbar-thumb,
+  .swagger-ui .parameters-container::-webkit-scrollbar-thumb,
+  .swagger-ui .responses-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 3px;
+  }
+
+  .dark-mode .swagger-ui pre::-webkit-scrollbar-thumb,
+  .dark-mode .swagger-ui .parameters-container::-webkit-scrollbar-thumb,
+  .dark-mode .swagger-ui .responses-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+  }
+
+  /* Response containers in dark mode */
+  .dark-mode .swagger-ui table {
+    background-color: transparent !important;
+  }
+
+  .dark-mode .swagger-ui .response {
+    background-color: var(--accent) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .response h4,
+  .dark-mode .swagger-ui .response h5 {
+    color: var(--text-color) !important;
+  }
+
+  /* Fix parameter sections */
+  .dark-mode .swagger-ui .parameters-container {
+    background-color: var(--accent) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .parameter__in {
+    color: var(--muted-foreground) !important;
+  }
+
+  /* Make parameter inputs consistent */
+  .swagger-ui input[type=text],
+  .swagger-ui textarea {
+    padding: 8px 10px !important;
+    border-radius: 4px !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+  }
+
+  .swagger-ui input[type=text]:focus,
+  .swagger-ui textarea:focus {
+    border-color: var(--dota-600) !important;
+    box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.2) !important;
+    outline: none !important;
+  }
+
+  /* Better focus indicators */
+  .swagger-ui select:focus,
+  .swagger-ui button:focus {
+    outline: 2px solid var(--dota-600) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Fix schema collapse/expand buttons in dark mode */
+  .dark-mode .swagger-ui .model-toggle {
+    background-color: var(--accent) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .dark-mode .swagger-ui .model-toggle:after {
+    background: var(--text-color) !important;
+    width: 10px;
+    height: 2px;
+    left: 4px;
+    top: 9px;
+  }
+
+  .dark-mode .swagger-ui .model-toggle:before {
+    background: var(--text-color) !important;
+    width: 2px;
+    height: 10px;
+    left: 8px;
+    top: 5px;
+    content: "";
+    position: absolute;
+    transition: transform 0.2s ease;
+  }
+
+  .dark-mode .swagger-ui .model.deprecated .model-toggle:before,
+  .dark-mode .swagger-ui .model.deprecated .model-toggle:after {
+    background-color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .arrow-down,
+  .dark-mode .swagger-ui .arrow-up {
+    filter: invert(1); /* Invert colors for dark mode */
+  }
+
+  /* Fix authorization icon in dark mode */
+  .dark-mode .swagger-ui .authorization__btn svg {
+    fill: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .unlocked,
+  .dark-mode .swagger-ui .locked {
+    filter: invert(1); /* Invert lock icons */
+    opacity: 0.8;
+  }
+
+  /* Improve text contrast in dark mode */
+  .dark-mode .swagger-ui,
+  .dark-mode .swagger-ui .info .title,
+  .dark-mode .swagger-ui .info p,
+  .dark-mode .swagger-ui .info li,
+  .dark-mode .swagger-ui .info table,
+  .dark-mode .swagger-ui .opblock-summary-description,
+  .dark-mode .swagger-ui .opblock-description-wrapper p,
+  .dark-mode .swagger-ui .btn-group.btn-group-sm .btn,
+  .dark-mode .swagger-ui .dialog-ux .modal-ux-content h4,
+  .dark-mode .swagger-ui .dialog-ux .modal-ux-content p,
+  .dark-mode .swagger-ui .dialog-ux .modal-ux-header h3,
+  .dark-mode .swagger-ui section.models h4 span {
+    color: var(--text-color) !important;
+  }
+
+  /* Make properties and model names more readable in dark mode */
+  .dark-mode .swagger-ui .property.primitive,
+  .dark-mode .swagger-ui .property-name,
+  .dark-mode .swagger-ui table.model tr.property-row .star,
+  .dark-mode .swagger-ui .parameter__name,
+  .dark-mode .swagger-ui .parameter__type {
+    color: var(--text-color) !important;
+    font-weight: 500;
+  }
+
+  /* Make dropdown selects more visible in dark mode */
+  .dark-mode .swagger-ui select {
+    background-color: var(--accent) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23e2e8f0'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E") !important;
+    background-position: right 10px center !important;
+    background-size: 20px !important;
+    padding-right: 30px !important;
+    appearance: none !important;
+  }
+
+  /* Fix code snippets contrast */
+  .dark-mode .swagger-ui .renderedMarkdown code,
+  .dark-mode .swagger-ui .opblock-description-wrapper code,
+  .dark-mode .swagger-ui .opblock-external-docs-wrapper code,
+  .dark-mode .swagger-ui .opblock-title_normal code {
+    background: var(--code-bg-color) !important;
+    color: var(--dota-600) !important;
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+
+  /* Improve schema property highlighting */
+  .dark-mode .swagger-ui .model-box {
+    background: var(--accent) !important;
+    border-radius: 4px;
+    border: 1px solid var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .property {
+    color: var(--text-color) !important;
+    font-size: 14px !important;
+  }
+
+  .dark-mode .swagger-ui .renderedMarkdown h4,
+  .dark-mode .swagger-ui .renderedMarkdown h5 {
+    color: var(--dota-600) !important;
+  }
+
+  /* Fix server selection dropdown in dark mode */
+  .dark-mode .swagger-ui .servers-title,
+  .dark-mode .swagger-ui .servers > label {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .servers select {
+    border-color: var(--border-color) !important;
+  }
+
+  /* Make try it out section more visible */
+  .dark-mode .swagger-ui .try-out__btn {
+    background-color: var(--dota-600) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .dark-mode .swagger-ui .try-out__btn:hover {
+    background-color: var(--dota-700) !important;
+  }
+
+  /* Improve execute button contrast */
+  .dark-mode .swagger-ui .btn.execute {
+    background-color: var(--dota-600) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .dark-mode .swagger-ui .btn.execute:hover {
+    background-color: var(--dota-700) !important;
+  }
+
+  /* Fix schema-property expand/collapse arrows */
+  .dark-mode .swagger-ui .model-box .model .model-toggle {
+    margin-right: 8px;
+  }
+
+  .dark-mode .swagger-ui span.model-toggle.collapsed {
+    transform: rotate(-90deg);
+  }
+
+  .dark-mode .swagger-ui span.model-toggle:not(.collapsed):before {
+    transform: rotate(-90deg);
+  }
+
+  /* Make JSON schema examples more readable */
+  .dark-mode .swagger-ui .example {
+    color: var(--text-color) !important;
+    background-color: var(--code-bg-color) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .prop-format {
+    color: var(--muted-foreground) !important;
+  }
+
+  .dark-mode .swagger-ui .prop-type {
+    color: var(--dota-600) !important;
+  }
+
+  /* Fix tab styles in dark mode */
+  .dark-mode .swagger-ui .tab {
+    padding: 0 10px !important;
+  }
+
+  .dark-mode .swagger-ui .tab li {
+    padding: 8px 10px !important;
+  }
+
+  .dark-mode .swagger-ui .tab li:hover {
+    color: var(--dota-600) !important;
+  }
+
+  .dark-mode .swagger-ui .tab li:after {
+    background-color: var(--dota-600) !important;
+  }
+
+  /* Improve dialog modal contrast in dark mode */
+  .dark-mode .swagger-ui .dialog-ux .modal-ux {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .dialog-ux .modal-ux-header {
+    background: var(--accent) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .dialog-ux .modal-ux-content {
+    background: var(--card-bg) !important;
+  }
+
+  .dark-mode .swagger-ui .dialog-ux .modal-ux-header h3 {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .btn.modal-btn.auth {
+    color: white !important;
+  }
+
+  /* Fix more model structure styling in dark mode */
+  .dark-mode .swagger-ui .model .property.primitive,
+  .dark-mode .swagger-ui .model .property {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .model .property .primitive:after {
+    color: var(--muted-foreground) !important;
+  }
+
+  .dark-mode .swagger-ui .model-title {
+    font-weight: 600 !important;
+  }
+
+  .dark-mode .swagger-ui .model {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .parameter__enum {
+    color: var(--muted-foreground) !important;
+  }
+
+  /* Fix SVG icons in dark mode */
+  .dark-mode .swagger-ui svg {
+    fill: var(--text-color);
+  }
+
+  .dark-mode .swagger-ui .copy-to-clipboard {
+    background-color: var(--accent) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  .dark-mode .swagger-ui .copy-to-clipboard svg {
+    fill: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .copy-to-clipboard:hover {
+    background-color: var(--dota-600) !important;
+  }
+
+  .dark-mode .swagger-ui .copy-to-clipboard:hover svg {
+    fill: white !important;
+  }
+
+  /* Fix required asterisks */
+  .dark-mode .swagger-ui .required {
+    color: #ef4444 !important;
+  }
+
+  /* Enhanced schema toggle visibility */
+  .dark-mode .swagger-ui .model-toggle {
+    transition: all 0.3s ease !important;
+  }
+
+  .dark-mode .swagger-ui .model-toggle:hover {
+    background-color: var(--dota-600) !important;
+  }
+
+  .dark-mode .swagger-ui .model-toggle:hover:before,
+  .dark-mode .swagger-ui .model-toggle:hover:after {
+    background-color: white !important;
+  }
+
+  /* Make errors and validation messages more visible */
+  .dark-mode .swagger-ui .errors-wrapper {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+  }
+
+  .dark-mode .swagger-ui .validation-errors {
+    color: #ef4444 !important;
+  }
+
+  .dark-mode .swagger-ui .response-col_links .response-undocumented {
+    color: var(--muted-foreground) !important;
+  }
+
+  /* Fix deprecated badges */
+  .dark-mode .swagger-ui .model-deprecated-warning {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #ef4444 !important;
+  }
+
+  /* Improve collapsible section aesthetics */
+  .dark-mode .swagger-ui .opblock-section-header {
+    background-color: var(--accent) !important;
+    box-shadow: none !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 4px;
+  }
+
+  .dark-mode .swagger-ui .opblock-section-header h4 {
+    color: var(--text-color) !important;
+  }
+
+  /* Improve scopes section in auth modal */
+  .dark-mode .swagger-ui .scopes h2 {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .scope-def {
+    color: var(--muted-foreground) !important;
+  }
+
+  /* Make authorization indicators more visible in dark mode */
+  .dark-mode .swagger-ui .authorization__btn {
+    color: var(--dota-600) !important;
+    background-color: rgba(167, 139, 250, 0.1) !important;
+    border: 1px solid var(--dota-600) !important;
+    border-radius: 4px;
+    padding: 2px 8px !important;
+    margin-right: 5px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease;
+  }
+
+  .dark-mode .swagger-ui .authorization__btn:hover {
+    background-color: var(--dota-600) !important;
+    color: white !important;
+  }
+
+  .dark-mode .swagger-ui .authorization__btn .svg-assets {
+    fill: var(--dota-600) !important;
+  }
+
+  .dark-mode .swagger-ui .authorization__btn:hover .svg-assets {
+    fill: white !important;
+  }
+
+  /* Make "Authorized" text more visible */
+  .dark-mode .swagger-ui .auth-container .authorize {
+    color: var(--text-color) !important;
+  }
+
+  .dark-mode .swagger-ui .auth-container .authorize .btn.authorize {
+    background-color: var(--dota-600) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .dark-mode .swagger-ui .auth-container .authorize .btn.authorize svg {
+    fill: white !important;
+  }
+
+  /* Make authorization status in endpoints more visible */
+  .dark-mode .swagger-ui .opblock-summary-control .authorization__btn {
+    margin-left: 5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  /* "Available authorizations" text improvements */
+  .dark-mode .swagger-ui .auth-wrapper .auth-container .auth-msg {
+    color: var(--dota-600) !important;
+    font-weight: 600 !important;
+    background-color: rgba(167, 139, 250, 0.1) !important;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    border-left: 3px solid var(--dota-600) !important;
+  }
+
+  /* Enhance lock icons */
+  .dark-mode .swagger-ui .authorization__btn .unlocked,
+  .dark-mode .swagger-ui .authorization__btn .locked {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  .dark-mode .swagger-ui .authorization__btn .unlocked {
+    fill: #10b981 !important; /* Green for unlocked */
+  }
+
+  .dark-mode .swagger-ui .authorization__btn .locked {
+    fill: var(--dota-600) !important; /* Purple for locked */
+  }
+
+  /* Fix for auth padlock SVG paths in dark mode */
+  .dark-mode .swagger-ui .authorization__btn svg path {
+    fill: var(--dota-600) !important;
+  }
+
+  .dark-mode .swagger-ui .authorization__btn:hover svg path {
+    fill: white !important;
+  }
+
+  /* Make authorization section header more visible */
+  .dark-mode .swagger-ui .scheme-container .schemes-title {
+    color: var(--dota-600) !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+  }
+
+  /* Improve auth button contrast */
+  .dark-mode .swagger-ui .btn.authorize {
+    background-color: var(--dota-600) !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .dark-mode .swagger-ui .btn.authorize:hover {
+    background-color: var(--dota-700) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Fix sidebar active item styling */
+  .sidebar-item a,
+  .sidebar-subitem a {
+    background-color: transparent !important;
+    transition: color 0.2s ease !important;
+  }
+
+  .sidebar-item a:hover,
+  .sidebar-subitem a:hover {
+    background-color: transparent !important;
+    color: var(--dota-600) !important;
+  }
+
+  .dark-mode .sidebar-item a,
+  .dark-mode .sidebar-subitem a {
+    background-color: transparent !important;
+  }
+
+  .dark-mode .sidebar-item a:hover,
+  .dark-mode .sidebar-subitem a:hover {
+    background-color: transparent !important;
+  }
+
+  /* Fix textarea in Try it out section for dark mode */
+  .dark-mode .swagger-ui .body-param__text {
+    background-color: var(--code-bg-color) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+    font-family: 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !important;
+    padding: 10px !important;
+    border-radius: 4px !important;
+  }
+
+  .dark-mode .swagger-ui .body-param__text:focus {
+    border-color: var(--dota-600) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2) !important;
+  }
+
+  /* Fix parameter examples */
+  .dark-mode .swagger-ui .parameter__example {
+    color: var(--muted-foreground) !important;
+  }
+
+  /* Fix curl command display */
+  .dark-mode .swagger-ui .curl-command {
+    background-color: var(--code-bg-color) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  /* Fix code editors */
+  .dark-mode .swagger-ui .opblock-body pre.microlight,
+  .dark-mode .swagger-ui textarea.curl {
+    background-color: var(--code-bg-color) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+  }
+
+  /* Fix spacing between Authorize and Close buttons */
+  .swagger-ui .auth-btn-wrapper {
+    display: flex !important;
+    gap: 10px !important;
+    margin-top: 15px !important;
+    justify-content: flex-end !important;
+  }
+
+  .swagger-ui .auth-btn-wrapper .btn {
+    margin: 0 !important;
+    padding: 8px 16px !important;
+  }
+
+  /* Improve auth modal footer spacing */
+  .swagger-ui .modal-ux-content .auth-container {
+    padding-bottom: 15px !important;
+  }
+
+  .swagger-ui .btn-done, 
+  .swagger-ui .btn-cancel {
+    margin-right: 10px !important;
+  }
+
+  /* Fix auth dialog layout */
+  .swagger-ui .auth-container {
+    padding: 15px !important;
+  }
+
+  .swagger-ui .auth-container h4 {
+    margin-bottom: 15px !important;
   }
