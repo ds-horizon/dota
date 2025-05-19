@@ -134,7 +134,6 @@ Want to spawn your toolchain on custom plugin? See the [Plugin Guide](https://do
 ## 📖 API Documentation
 
 - [API Reference](https://dota.dreamsportslabs.com/documentation/api)
-- For a detailed breakdown of the REST API Layer, see the [DeepWiki documentation](https://deepwiki.com/dream-sports-labs/code-push-server/2.2-rest-api-layer#rest-api-layer).
 - [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
 - [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
 
