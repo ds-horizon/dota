@@ -69,7 +69,7 @@ if [ -d ".git" ]; then
     fi
 fi
 
-Clone the repository
+#Clone the repository
 print_status "Cloning the repository..."
 if [ -d "dota" ]; then
     print_status "Repository already exists, updating..."
