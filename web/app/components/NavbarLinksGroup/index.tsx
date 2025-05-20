@@ -45,7 +45,7 @@ export function LinksGroup({
     <Text
       className={classes.link}
       key={id + link.label}
-      onClick={() => navigate(link.link)}
+      onClick={() => navigate(link.link, { state: { orgName: label, orgId: id } })}
     >
       <NavLink
         key={link.link}
