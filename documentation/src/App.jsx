@@ -149,6 +149,8 @@ function App() {
     features: useRef(null),
     documentation: useRef(null),
     faq: useRef(null),
+    api: useRef(null),
+    contact: useRef(null),
   };
 
   useEffect(() => {
@@ -275,9 +277,10 @@ function App() {
     <div className="min-h-screen flex flex-col docs-landing-page bg-page-background">
       {/* Header/Nav */}
       <header
-        className={`sticky top-0 z-50 w-full backdrop-blur-lg transition-all duration-300 ${
-          isScrolled ? 'bg-white/90 shadow-lg' : 'bg-transparent'
+        className={`fixed top-0 z-50 w-full backdrop-blur-md transition-all duration-300 ${
+          isScrolled ? 'bg-white/90 shadow-md' : 'bg-white/60'
         }`}
+        style={{ transform: 'translateZ(0)' }}
       >
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center">
@@ -285,21 +288,25 @@ function App() {
             <span className="text-text-primary font-bold text-2xl tracking-tight">DOTA</span>
           </div>
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            {['features', 'documentation', 'faq'].map(tabId => (
+            {['features', 'documentation', 'faq', 'api', 'contact'].map(tabId => (
               <button
                 key={tabId}
                 onClick={() => scrollToSection(tabId)}
                 className={`text-sm font-medium transition-colors duration-200 hover:text-primary focus:outline-none focus:text-primary ${
                   activeTab === tabId ? 'text-primary' : 'text-text-secondary'
                 }`}
+                aria-current={activeTab === tabId ? 'page' : undefined}
               >
-                {tabId === 'faq' ? 'FAQ' : tabId.charAt(0).toUpperCase() + tabId.slice(1)}
+                {tabId === 'faq' ? 'FAQ' : tabId === 'api' ? 'API' : tabId.charAt(0).toUpperCase() + tabId.slice(1)}
               </button>
             ))}
           </nav>
           <div className="hidden md:flex items-center">
-            <button onClick={navigateToInternalDocumentation} className="btn btn-primary font-bold text-white">
-              Get Started <ArrowRight />
+            <button 
+              onClick={navigateToInternalDocumentation} 
+              className="btn btn-primary font-bold text-white transform transition-transform hover:scale-105"
+            >
+              Get Started Free <ArrowRight />
             </button>
           </div>
           <div className="md:hidden">
@@ -345,34 +352,35 @@ function App() {
           </div>
         </div>
         {/* Mobile Menu */}
-        {mobileMenuOpen && (
+        <div className={`origin-top transform transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0 pointer-events-none'}`} style={{ transformOrigin: 'top' }}>
           <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg z-40 py-2">
             <nav className="flex flex-col space-y-2 px-4">
-              {['features', 'documentation', 'faq'].map(tabId => (
+              {['features', 'documentation', 'faq', 'api', 'contact'].map(tabId => (
                 <button
                   key={tabId}
                   onClick={() => scrollToSection(tabId)}
                   className={`block w-full text-left py-2 px-3 rounded-md text-base font-medium transition-colors duration-200 hover:bg-primary-lightest hover:text-primary focus:outline-none focus:text-primary ${
                     activeTab === tabId ? 'text-primary bg-primary-lightest' : 'text-text-secondary'
                   }`}
+                  aria-current={activeTab === tabId ? 'page' : undefined}
                 >
-                  {tabId === 'faq' ? 'FAQ' : tabId.charAt(0).toUpperCase() + tabId.slice(1)}
+                  {tabId === 'faq' ? 'FAQ' : tabId === 'api' ? 'API' : tabId.charAt(0).toUpperCase() + tabId.slice(1)}
                 </button>
               ))}
               <button
                 onClick={navigateToInternalDocumentation}
-                className="btn btn-primary w-full mt-2 font-bold text-white"
+                className="btn btn-primary w-full mt-2 font-bold text-white transform transition-transform hover:scale-105"
               >
-                Get Started <ArrowRight />
+                Get Started Free <ArrowRight />
               </button>
             </nav>
           </div>
-        )}
+        </div>
       </header>
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative py-24 md:py-32 lg:py-40 overflow-hidden hero-section">
+        <section className="relative min-h-screen flex items-center overflow-hidden hero-section">
           <div className="hero-gradient-animation"></div>
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -382,11 +390,10 @@ function App() {
                   Open Source & Self-Hosted
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-text-heading mb-6 leading-tight">
-                  Over-the-air React Native Updates.{' '}
-                  <span className="text-primary">Instantly.</span>
+                  Use Open Source DOTA <span className="text-primary">Toolchain</span>
                 </h1>
                 <p className="text-lg text-text-secondary mb-10 max-w-xl">
-                Deliver updates to your React Native apps quickly without waiting for App Store approval. Gain complete control over your deployment pipeline and user data.
+                  Deliver updates to your React Native apps quickly without waiting for Distribution Store approval. Gain complete control over your deployment pipeline and user data.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
@@ -399,9 +406,9 @@ function App() {
                     href="https://github.com/dream-sports-labs/dota"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary btn-lg group"
+                    className="btn btn-secondary btn-lg group inline-flex gap-2 items-center"
                   >
-                    View on GitHub {renderIcon('github')}
+                    <IconGitHub /> View on GitHub
                   </a>
                 </div>
               </div>
@@ -437,8 +444,8 @@ function App() {
                   </div>
                 </div>
                 {/* Decorative Blobs - refined */}
-                <div className="absolute -bottom-16 -right-16 w-72 h-72 bg-primary/10 rounded-full blur-3xl -z-10 opacity-70"></div>
-                <div className="absolute -top-16 -left-16 w-64 h-64 bg-primary-accent/10 rounded-full blur-3xl -z-10 opacity-70"></div>
+                <div className="absolute -bottom-16 -right-16 w-72 h-72 bg-primary-10 rounded-full blur-3xl -z-10 opacity-70"></div>
+                <div className="absolute -top-16 -left-16 w-64 h-64 bg-primary-accent-10 rounded-full blur-3xl -z-10 opacity-70"></div>
               </div>
             </div>
           </div>
@@ -447,9 +454,9 @@ function App() {
         {/* Features Section */}
         <section id="features" ref={sectionRefs.features} className="py-20 lg:py-28 bg-section-bg">
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 animate-fade-in-up transition-opacity delay-150 duration-700 opacity-0 will-change-transform">
               <div className="badge badge-primary mb-4 font-bold text-white">
-                <span className="badge-dot bg-white/50"></span>
+                <span className="badge-dot bg-white-50"></span>
                 Core Features
               </div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-text-heading mb-4 simple-heading">
@@ -462,7 +469,7 @@ function App() {
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {featuresData.map((feature, i) => (
-                <div key={i} className="feature-card group">
+                <div key={i} className="feature-card group hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 transition-transform">
                   <div className="feature-icon">{renderIcon(feature.icon)}</div>
                   <h3 className="text-xl font-semibold mb-3 text-text-heading group-hover:text-primary transition-colors">
                     {feature.title}
@@ -515,19 +522,21 @@ function App() {
                 className="code-window-wrapper animate-fade-in-up"
                 style={{ animationDelay: '0.4s' }}
               >
-                <div className="code-window">
-                  <div className="code-header">
-                    <div className="code-dots">
-                      <span className="code-dot bg-red-400"></span>
-                      <span className="code-dot bg-yellow-400"></span>
-                      <span className="code-dot bg-green-400"></span>
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary-accent-30 to-primary-30 blur-lg opacity-30 rounded-xl" />
+                  <div className="relative code-window z-10">
+                    <div className="code-header">
+                      <div className="code-dots">
+                        <span className="code-dot bg-red-400"></span>
+                        <span className="code-dot bg-yellow-400"></span>
+                        <span className="code-dot bg-green-400"></span>
+                      </div>
+                      <span className="code-title">App.js</span>
                     </div>
-                    <span className="code-title">App.js</span>
-                  </div>
-                  <div className="code-content">
-                    <pre className="text-sm">
-                      <code className="language-javascript">
-                        {`import React from 'react';
+                    <div className="code-content">
+                      <pre className="text-sm">
+                        <code className="language-javascript">
+                          {`import React from 'react';
 import codePush from "react-native-code-push";
 let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
@@ -551,8 +560,9 @@ class MyApp extends Component {
 }
 
 MyApp = codePush(codePushOptions)(MyApp);`}
-                      </code>
-                    </pre>
+                        </code>
+                      </pre>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -567,9 +577,9 @@ MyApp = codePush(codePushOptions)(MyApp);`}
           className="py-20 lg:py-28 bg-section-bg"
         >
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 animate-fade-in-up transition-opacity delay-150 duration-700 opacity-0 will-change-transform">
               <div className="badge badge-primary mb-4 font-bold text-white">
-                <span className="badge-dot bg-white/50"></span>
+                <span className="badge-dot bg-white-50"></span>
                 Documentation
               </div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-text-heading mb-4 simple-heading">
@@ -583,7 +593,7 @@ MyApp = codePush(codePushOptions)(MyApp);`}
 
             <div className="grid gap-8 md:grid-cols-3">
               {docLinks.map(doc => (
-                <div key={doc.id} onClick={doc.action} className="doc-card group">
+                <div key={doc.id} onClick={doc.action} className="feature-card group hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 transition-transform">
                   <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                     {doc.title}
                   </h3>
@@ -604,10 +614,114 @@ MyApp = codePush(codePushOptions)(MyApp);`}
           </div>
         </section>
 
+        {/* API Reference Section */}
+        <section id="api" ref={sectionRefs.api} className="py-20 lg:py-28">
+          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16 animate-fade-in-up transition-opacity delay-150 duration-700 opacity-0 will-change-transform">
+              <div className="badge badge-primary mb-4 font-bold text-white">
+                <span className="badge-dot bg-white-50"></span>
+                Developer Resources
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-text-heading mb-4 simple-heading">
+                API Reference
+              </h2>
+              <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+                Comprehensive API documentation for integrating and extending DOTA functionality.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-border-color overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary-5 rounded-full blur-3xl -z-0 opacity-30 transform translate-x-1/3 -translate-y-1/2"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-accent-5 rounded-full blur-3xl -z-0 opacity-30 transform -translate-x-1/3 translate-y-1/2"></div>
+              
+              <div className="relative z-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <div className="flex items-center mb-6">
+                  <div className="p-3 rounded-lg bg-primary-lightest text-primary mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
+                      <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">RESTful API Documentation</h3>
+                    <p className="text-text-secondary">
+                      Our API follows REST principles with intuitive endpoints for all DOTA operations.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="bg-section-bg p-6 rounded-lg border border-border-color mb-6">
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+                    <div className="mb-4 md:mb-0 md:mr-8">
+                      <h4 className="text-lg font-semibold mb-2">OpenAPI Specification</h4>
+                      <p className="text-sm text-text-secondary">
+                        Explore our interactive API documentation with request/response examples and try out API calls directly from your browser.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => navigate('/documentation/api')}
+                      className="btn btn-primary group inline-flex items-center text-white whitespace-nowrap"
+                    >
+                      View API Docs <ArrowRight />
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="feature-card group hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 transition-transform">
+                    <div className="feature-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3 text-text-heading group-hover:text-primary transition-colors">
+                      Device Management
+                    </h3>
+                    <p className="text-text-secondary text-sm">
+                      Manage connected devices and deliver targeted updates to specific device groups.
+                    </p>
+                  </div>
+                  
+                  <div className="feature-card group hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 transition-transform">
+                    <div className="feature-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3 text-text-heading group-hover:text-primary transition-colors">
+                      Release Management
+                    </h3>
+                    <p className="text-text-secondary text-sm">
+                      Create, test, and publish releases with complete version control and rollback capability.
+                    </p>
+                  </div>
+                  
+                  <div className="feature-card group hover:shadow-2xl hover:-translate-y-2 hover:rotate-1 transition-transform">
+                    <div className="feature-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                        <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3 text-text-heading group-hover:text-primary transition-colors">
+                      Analytics
+                    </h3>
+                    <p className="text-text-secondary text-sm">
+                      Track update metrics, device status, and user adoption rates with detailed reporting.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ Section */}
-        <section id="faq" ref={sectionRefs.faq} className="py-20 lg:py-28">
+        <section id="faq" ref={sectionRefs.faq} className="py-20 lg:py-28 bg-section-bg">
           <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 animate-fade-in-up transition-opacity delay-150 duration-700 opacity-0 will-change-transform">
               <div className="badge badge-subtle mb-4">
                 <span className="badge-dot bg-primary-accent"></span>
                 Need Help?
@@ -659,24 +773,151 @@ MyApp = codePush(codePushOptions)(MyApp);`}
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-20 lg:py-28 bg-primary-dark text-white">
+        {/* Contact Section */}
+        <section id="contact" className="py-20 lg:py-28">
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 simple-heading text-white">
-                Ready to Control Your App Updates?
+            {/* Header */}
+            <div className="text-center mb-16 animate-fade-in-up transition-opacity delay-150 duration-700 opacity-0 will-change-transform">
+              <div className="badge badge-subtle mb-4">
+                <span className="badge-dot bg-primary-accent"></span>
+                Contact
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-text-heading mb-4 simple-heading">
+                Get in Touch
               </h2>
-              <p className="text-lg text-primary-foreground/80 mb-10">
-                Start using DOTA today. Deploy instantly, manage effectively, and own your update
-                process.
+              <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+                Have questions or need help with DOTA? We're here to help.
               </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <button
-                  onClick={navigateToInternalDocumentation}
-                  className="btn btn-cta-primary group" // Special CTA button style
-                >
-                  Get Started Now <ArrowRight />
-                </button>
+            </div>
+
+            {/* Two-column grid */}
+            <div className="flex flex-col lg:flex-row gap-10 max-w-5xl mx-auto">
+              {/* Left column: Community Support */}
+              <div className="lg:w-3/5">
+                <div className="border border-border-color rounded-xl p-8 bg-section-bg shadow-md h-full">
+                  <h3 className="text-xl font-semibold mb-8 text-text-heading">Community Support</h3>
+                  <ul className="space-y-8">
+                    <li className="flex items-start group hover:transform hover:-translate-x-1 transition-all duration-200 relative">
+                      <a 
+                        href="https://github.com/dream-sports-labs/dota/discussions" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="absolute inset-0 z-10"
+                        aria-hidden="true"
+                      ></a>
+                      <div className="mr-4 mt-1 p-3 rounded-lg bg-primary-lightest text-primary group-hover:bg-primary group-hover:text-white transform transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                      </div>
+                      <div className="relative z-0">
+                        <h4 className="font-semibold mb-1 text-text-heading group-hover:text-primary transition-colors">GitHub Discussions</h4>
+                        <p className="text-text-secondary text-sm mb-2">Ask questions and share ideas with the community</p>
+                        <span className="inline-flex items-center text-primary hover:text-primary-dark transition group relative z-20">
+                          <span className="hover:underline">Join the discussion</span>
+                          <span className="transform group-hover:translate-x-1 transition-transform duration-200">
+                            <ArrowRight />
+                          </span>
+                        </span>
+                      </div>
+                    </li>
+                    <li className="flex items-start group hover:transform hover:-translate-x-1 transition-all duration-200 relative">
+                      <a 
+                        href="https://github.com/dream-sports-labs/dota/issues" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="absolute inset-0 z-10"
+                        aria-hidden="true"
+                      ></a>
+                      <div className="mr-4 mt-1 p-3 rounded-lg bg-primary-lightest text-primary group-hover:bg-primary group-hover:text-white transform transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <line x1="12" y1="8" x2="12" y2="12"></line>
+                          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                      </div>
+                      <div className="relative z-0">
+                        <h4 className="font-semibold mb-1 text-text-heading group-hover:text-primary transition-colors">GitHub Issues</h4>
+                        <p className="text-text-secondary text-sm mb-2">Report bugs or request features</p>
+                        <span className="inline-flex items-center text-primary hover:text-primary-dark transition group relative z-20">
+                          <span className="hover:underline">Open an issue</span>
+                          <span className="transform group-hover:translate-x-1 transition-transform duration-200">
+                            <ArrowRight />
+                          </span>
+                        </span>
+                      </div>
+                    </li>
+                    <li className="flex items-start group hover:transform hover:-translate-x-1 transition-all duration-200 relative">
+                      <a 
+                        href="https://github.com/dream-sports-labs/dota/pulls" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="absolute inset-0 z-10"
+                        aria-hidden="true"
+                      ></a>
+                      <div className="mr-4 mt-1 p-3 rounded-lg bg-primary-lightest text-primary group-hover:bg-primary group-hover:text-white transform transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="18" cy="18" r="3"></circle>
+                          <circle cx="6" cy="6" r="3"></circle>
+                          <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+                          <line x1="6" y1="9" x2="6" y2="21"></line>
+                        </svg>
+                      </div>
+                      <div className="relative z-0">
+                        <h4 className="font-semibold mb-1 text-text-heading group-hover:text-primary transition-colors">Pull Requests</h4>
+                        <p className="text-text-secondary text-sm mb-2">Contribute code or documentation improvements</p>
+                        <span className="inline-flex items-center text-primary hover:text-primary-dark transition group relative z-20">
+                          <span className="hover:underline">Create a pull request</span>
+                          <span className="transform group-hover:translate-x-1 transition-transform duration-200">
+                            <ArrowRight />
+                          </span>
+                        </span>
+                      </div>
+                    </li>
+                    <li className="flex items-start group hover:transform hover:-translate-x-1 transition-all duration-200 relative" onClick={() => navigate('/documentation/introduction')}>
+                      <div className="absolute inset-0 z-10" aria-hidden="true"></div>
+                      <div className="mr-4 mt-1 p-3 rounded-lg bg-primary-lightest text-primary group-hover:bg-primary group-hover:text-white transform transition-all duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                      </div>
+                      <div className="relative z-0">
+                        <h4 className="font-semibold mb-1 text-text-heading group-hover:text-primary transition-colors">Documentation</h4>
+                        <p className="text-text-secondary text-sm mb-2">Comprehensive guides and API references</p>
+                        <span className="inline-flex items-center text-primary hover:text-primary-dark transition group relative z-20">
+                          <span className="hover:underline">Read the docs</span>
+                          <span className="transform group-hover:translate-x-1 transition-transform duration-200">
+                            <ArrowRight />
+                          </span>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Right column: Direct Contact */}
+              <div className="lg:w-2/5">
+                <div className="bg-section-bg shadow-xl border border-border-color rounded-xl p-8 h-full flex flex-col justify-center items-center">
+                  <h3 className="text-2xl font-bold mb-6 text-text-heading text-center">Contact Us</h3>
+                  <p className="text-text-secondary mb-10 text-center max-w-xs">
+                    Have questions or need assistance with DOTA?<br/>
+                    Feel free to reach out to our team directly.
+                  </p>
+                  <div className="mx-auto">
+                    <a
+                      href="mailto:info@dreamsportslabs.com"
+                      className="btn btn-primary btn-lg group inline-flex items-center justify-center transform transition-transform hover:scale-105"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                      info@dreamsportslabs.com
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
