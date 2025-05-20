@@ -432,6 +432,9 @@ export const getReleaseListForDeployment = async (
     })
   );
 
+  if (!data.deployment || !Array.isArray(data.deployment.packageHistory) || data.deployment.packageHistory.length === 0) {
+    return [];
+  }
   return data.deployment.packageHistory.map((item) => {
     return {
       id: item.label,
