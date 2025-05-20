@@ -19,6 +19,7 @@ import cpIcon from './../assets/images/second.png';
 import { OrgContext, Organization } from "../context/OrgContext";
 import { useGetOrgList } from "../components/Pages/components/OrgListNavbar/hooks/useGetOrgList";
 import { useState, useEffect } from "react";
+import { slugify } from "../utils/slugify";
 
 export const loader = authenticateLoaderRequest();
 
@@ -43,7 +44,7 @@ export default function Hello() {
 
   useEffect(() => {
     if (orgList.length && params.org) {
-      const found = orgList.find((org) => org.id === params.org);
+      const found = orgList.find((org) => slugify(org.orgName) === params.org);
       setSelectedOrg(found || null);
     }
   }, [orgList, params.org]);

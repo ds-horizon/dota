@@ -14,6 +14,7 @@ import { Icon, IconChevronRight } from "@tabler/icons-react";
 import classes from "./index.module.css";
 import { useLocation, useNavigate, useParams } from "@remix-run/react";
 import { useOrgContext } from "../../context/OrgContext";
+import { slugify } from "../../utils/slugify";
 
 export interface LinksGroupProps {
   icon: Icon;
@@ -48,7 +49,7 @@ export function LinksGroup({
       className={classes.link}
       key={id + link.label}
       onClick={() => {
-        const orgObj = orgList.find((o) => o.id === id);
+        const orgObj = orgList.find((o) => slugify(o.orgName) === slugify(label));
         setSelectedOrg(orgObj || null);
         navigate(link.link);
       }}

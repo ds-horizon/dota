@@ -16,9 +16,9 @@ export default function AppDetails() {
         <div style={{ fontSize: 18, fontWeight: 700, color: "var(--mantine-color-text)" }}>
           {selectedOrg?.orgName || "Unknown Org"} <span style={{ color: '#2563eb', fontWeight: 600 }}>/</span> {app}
         </div>
-        <div style={{ fontSize: 14, color: "var(--mantine-color-dimmed)", marginTop: 2 }}>
+        {/* <div style={{ fontSize: 14, color: "var(--mantine-color-dimmed)", marginTop: 2 }}>
           Tenant &nbsp; &nbsp; &nbsp; &nbsp; App
-        </div>
+        </div> */}
       </div>
       <Tabs defaultValue="Deployments">
         <Tabs.List>
