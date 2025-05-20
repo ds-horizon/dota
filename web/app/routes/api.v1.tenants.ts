@@ -4,5 +4,6 @@ import { authenticateLoaderRequest } from "~/utils/authenticate";
 
 export const loader = authenticateLoaderRequest(async ({ user }) => {
   const { data, status } = await CodepushService.getTenants(user.user.id);
+  console.log(data);
   return json(data, { status });
 });

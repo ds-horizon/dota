@@ -13,6 +13,7 @@ import {
 import { Icon, IconChevronRight } from "@tabler/icons-react";
 import classes from "./index.module.css";
 import { useLocation, useNavigate, useParams } from "@remix-run/react";
+import { useOrgContext } from "../../context/OrgContext";
 
 export interface LinksGroupProps {
   icon: Icon;
@@ -32,6 +33,7 @@ export function LinksGroup({
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
+  const { orgList, setSelectedOrg } = useOrgContext();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(
     initiallyOpened || false || params.org === id
@@ -45,7 +47,11 @@ export function LinksGroup({
     <Text
       className={classes.link}
       key={id + link.label}
-      onClick={() => navigate(link.link)}
+      onClick={() => {
+        const orgObj = orgList.find((o) => o.id === id);
+        setSelectedOrg(orgObj || null);
+        navigate(link.link);
+      }}
     >
       <NavLink
         key={link.link}

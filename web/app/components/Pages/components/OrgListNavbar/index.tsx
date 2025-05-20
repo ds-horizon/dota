@@ -27,7 +27,7 @@ export function OrgListWithActions() {
         links: [
           {
             label: "Apps",
-            link: route("/dashboard/:org/apps", { org: org.id }),
+            link: route("/dashboard/:org/apps", { org: org.id, orgName: org.orgName }),
           },
           // {
           //   label: "Manage",
