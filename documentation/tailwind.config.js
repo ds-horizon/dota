@@ -1,25 +1,41 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html",
   ],
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: 'var(--primary)',
+          dark: 'var(--primary-dark)',
+          light: 'var(--primary-light)',
+          lightest: 'var(--primary-lightest)',
+          foreground: 'var(--primary-foreground)',
         },
-        muted: {
-          foreground: "hsl(var(--muted-foreground))",
-        },
+        'primary-accent': 'var(--primary-accent)',
+        'text-heading': 'var(--text-heading)',
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-tertiary': 'var(--text-tertiary)',
+        'page-background': 'var(--bg-page-background)',
+        'section-bg': 'var(--bg-section-bg)',
+        card: 'var(--bg-card)',
+        'border-color': 'var(--border-color)',
+        'border-strong': 'var(--border-color-strong)',
+      },
+      transitionProperty: { 
+        'max-height': 'max-height'
+      },
+      transformOrigin: { 
+        top: 'top'
+      },
+      scale: { 
+        '0': '0', 
+        '100': '1'
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [],
 }
