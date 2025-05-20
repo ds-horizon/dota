@@ -208,7 +208,7 @@ DOTA_SERVER_URL`}</code>
               <h3 className="text-xl font-semibold mb-3">Option 2: Bypassing Authentication (Development)</h3>
               <pre className="code-block mb-4">
                 <code>{`# Development Authentication Bypass
-LOCAL_GOOGLE_TOKEN="passwordless-authentication-token"
+LOCAL_GOOGLE_TOKEN="mock-google-token"
 NODE_ENV=development
 SESSION_SECRET=any_random_string_for_development
 
@@ -255,7 +255,7 @@ DOTA_SERVER_URL='your_local_api_url'`}</code>
               For local development, you can use the <code>LOCAL_GOOGLE_TOKEN</code> approach:
             </p>
             <ol className="list-decimal pl-6 space-y-2 mb-4">
-              <li>Add <code>LOCAL_GOOGLE_TOKEN="passwordless-authentication-token"</code> to your <code>.env</code> file in the <code>/web</code> directory</li>
+              <li>Add <code>LOCAL_GOOGLE_TOKEN="mock-google-token"</code> to your <code>.env</code> file in the <code>/web</code> directory</li>
               <li>Make sure <code>NODE_ENV=development</code> is set in your environment</li>
               <li>This will bypass the Google OAuth flow and use a passwordless authentication token instead</li>
             </ol>

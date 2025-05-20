@@ -142,6 +142,7 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [githubStats, setGithubStats] = useState({ stars: 0, forks: 0 });
   const navigate = useNavigate();
 
   // Refs for sections
@@ -155,13 +156,27 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20); // Slightly increased threshold
-
-      // Optional: Update activeTab based on scroll position
-      // This can be complex to get right with smooth scrolling, so it's often simpler to manage via clicks
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Fetch GitHub stats
+  useEffect(() => {
+    const fetchGithubStats = async () => {
+      try {
+        const response = await fetch('https://api.github.com/repos/dream-sports-labs/dota');
+        const data = await response.json();
+        setGithubStats({
+          stars: data.stargazers_count,
+          forks: data.forks_count
+        });
+      } catch (error) {
+        console.error('Error fetching GitHub stats:', error);
+      }
+    };
+    fetchGithubStats();
   }, []);
 
   const scrollToSection = id => {
@@ -393,7 +408,7 @@ function App() {
                   Use Open Source DOTA <span className="text-primary">Toolchain</span>
                 </h1>
                 <p className="text-lg text-text-secondary mb-10 max-w-xl">
-                  Deliver updates to your React Native apps quickly without waiting for Distribution Store approval. Gain complete control over your deployment pipeline and user data.
+                  DOTA updates to your React Native apps quickly without waiting for Distribution Store approval. Gain complete control over your deployment pipeline and user data.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
@@ -410,6 +425,46 @@ function App() {
                   >
                     <IconGitHub /> View on GitHub
                   </a>
+                </div>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="bg-section-bg border border-border-color rounded-full px-4 py-2 flex items-center gap-2">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="18" 
+                      height="18" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      className="text-primary"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span className="text-text-heading font-medium">
+                      {githubStats.stars.toLocaleString()} Stars
+                    </span>
+                  </div>
+                  <div className="bg-section-bg border border-border-color rounded-full px-4 py-2 flex items-center gap-2">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      className="text-primary"
+                    >
+                      <path d="M9 18c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    <span className="text-text-heading font-medium">
+                      {githubStats.forks.toLocaleString()} Forks
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="hidden md:block relative animate-float-slow">
@@ -774,7 +829,7 @@ MyApp = codePush(codePushOptions)(MyApp);`}
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 lg:py-28">
+        <section id="contact" ref={sectionRefs.contact} className="py-20 lg:py-28 scroll-mt-20">
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header */}
             <div className="text-center mb-16 animate-fade-in-up transition-opacity delay-150 duration-700 opacity-0 will-change-transform">
