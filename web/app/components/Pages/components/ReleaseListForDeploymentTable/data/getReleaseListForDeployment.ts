@@ -22,6 +22,7 @@ export type ReleaseListResponse = {
   releasedAt: number;
   description: string;
   releasedBy: string;
+  blobUrl?: string;
 };
 
 // const data: ReleaseListResponse[] = [
@@ -451,6 +452,7 @@ export const getReleaseListForDeployment = async (
       releasedAt: item.uploadTime,
       description: item.description,
       releasedBy: item.releasedBy,
+      blobUrl: item.blobUrl,
     };
   });
 };
