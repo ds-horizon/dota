@@ -92,7 +92,7 @@ class AccountManager {
     OWNER: "Owner",
     COLLABORATOR: "Collaborator",
   };
-  public static SERVER_URL = "http://localhost:3000";
+  public static SERVER_URL = "http://localhost:3010";
 
   private static API_VERSION: number = 2;
 

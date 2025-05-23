@@ -1631,7 +1631,7 @@ export class S3Storage implements storage.Storage {
         appVersion: pkgData.appVersion,
         blobUrl: pkgData.blobUrl,
         description: pkgData.description,
-        diffPackageMap: pkgData.diffPackageMap ? JSON.parse(pkgData.diffPackageMap) : undefined,
+        diffPackageMap: pkgData.diffPackageMap && isValidJson(pkgData.diffPackageMap) ? JSON.parse(pkgData.diffPackageMap) : undefined,
         isDisabled: pkgData.isDisabled,
         isMandatory: pkgData.isMandatory,
         label: pkgData.label,
@@ -1870,3 +1870,12 @@ export class S3Storage implements storage.Storage {
         });
     }
   }
+
+function isValidJson(str: string): boolean {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
