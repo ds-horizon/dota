@@ -1631,7 +1631,9 @@ export class S3Storage implements storage.Storage {
         appVersion: pkgData.appVersion,
         blobUrl: pkgData.blobUrl,
         description: pkgData.description,
-        diffPackageMap: pkgData.diffPackageMap && isValidJson(pkgData.diffPackageMap) ? JSON.parse(pkgData.diffPackageMap) : undefined,
+        diffPackageMap: typeof pkgData.diffPackageMap === "string"
+          ? (isValidJson(pkgData.diffPackageMap) ? JSON.parse(pkgData.diffPackageMap) : undefined)
+          : pkgData.diffPackageMap,
         isDisabled: pkgData.isDisabled,
         isMandatory: pkgData.isMandatory,
         label: pkgData.label,

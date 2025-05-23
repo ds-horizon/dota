@@ -1,393 +1,222 @@
 #!/usr/bin/env node
 /**
- * create-dota-app.js
+ * dotafy.js – v2
+ * ---------------
+ * Automates **DOTA (CodePush‑next)** integration for an *existing* React‑Native **Android** project **and** bootstraps
+ * a matching DOTA app on your self‑hosted server (default: http://localhost:3010).
  *
- * 1. Ensures a 'dummyOrg' exists for the current user (creates if not)
- * 2. Creates/uses a DOTA app under dummyOrg and grabs its Staging key
- * 3. Detects your React Native version, then installs:
- *      • react-native-code-push    if RN < 0.65
- *      • @code-push-next/react-native-code-push if RN ≥ 0.65
- * 4. Writes the two TSX/TS helpers under src/utility/codePush
- * 5. Patches Bootstrap.tsx, Jest setup, and Android config for CodePush
+ * It *does not* publish a release – you control that step manually once you're ready.
+ *
+ * -----------------------------------------------------------------------------
+ * USAGE
+ *   node dotafy.js <projectDir> <appName> [serverUrl]
+ *
+ *   projectDir   – path to the root of the already‑generated React‑Native app
+ *   appName      – the name for the new DOTA app, e.g. "DummyApp-android"
+ *   serverUrl    – base URL of your DOTA server (default http://localhost:3010)
+ *
+ * PRE‑REQUISITES
+ *   1. DOTA CLI (`npm i -g @dream11/dota-cli` or similar) accessible as the `dota` command.
+ *   2. `dota login <serverUrl>` done once so that the CLI is authenticated.
+ *   3. Android SDK & JDK so that `./gradlew assembleRelease` *could* succeed (the script
+ *      itself no longer builds, but Gradle files are modified).
+ *   4. Node ≥16.
+ *
+ * HOW IT WORKS
+ *   1. Detects the React‑Native version (from package.json).
+ *   2. Installs the correct CodePush client:
+ *        • `@code-push-next/react-native-code-push` for RN ≥ 0.77
+ *        • `react-native-code-push` for lower versions
+ *   3. Creates a **DOTA app** → `dota app add <appName>` (idempotent; ignores if exists).
+ *   4. Fetches the *Staging* deployment key → `dota deployment list <appName> -k --format json`.
+ *   5. Patches Android native layer:
+ *        • settings.gradle, app/build.gradle, strings.xml (inserts ServerUrl & DeploymentKey)
+ *        • MainApplication.java|kt adds `CodePush.getJSBundleFile()` override
+ *   6. Wraps your JS entry (index.js / App.js / index.tsx / App.tsx) with a CodePush HOC
+ *      that shows the custom update dialog you specified earlier.
+ *
+ * -----------------------------------------------------------------------------
+ * After running, open the app on a device/emulator, make a change, **then** release manually:
+ *
+ *   # from your project root
+ *   npx dota release-react <appName> android -d Staging \
+ *        --serverUrl <serverUrl> --description "First OTA!" --targetBinaryVersion "*"
  */
 
-const fs        = require('fs-extra');
-const path      = require('path');
-const { execSync } = require('child_process');
+// ---------------------------------------------------------------------------------------------
+// Dependencies – kept minimal and node‑built‑ins only for portability
+// ---------------------------------------------------------------------------------------------
+const fs   = require('fs');
+const path = require('path');
+const cp   = require('child_process');
 
-// ——————————————————
-// 1) Parse args
-// ——————————————————
-const [ appName, projectPath = '.', dotaRepoPath ] = process.argv.slice(2);
-
-if (!appName) {
-  console.error('❌ Usage: node create-dota-app.js <appName> <projectPath> [dotaRepoPath]');
-  process.exit(1);
+//----------------------------------------------------------------- helpers ----------------------
+function exec(cmd, opts = {}) {
+  console.log(`\n\x1b[2m$ ${cmd}\x1b[0m`);
+  return cp.execSync(cmd, { stdio: 'pipe', encoding: 'utf8', ...opts }).trim();
 }
-
-const root = path.resolve(projectPath);
-if (!fs.existsSync(root)) {
-  console.error(`❌ Project path not found: ${root}`);
-  process.exit(1);
+function safeRead(file)  { return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null; }
+function safeWrite(file, content) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, content);
+  console.log(`  ↳ wrote ${path.relative(process.cwd(), file)}`);
 }
-
-console.log(`📦 App:       ${appName}`);
-console.log(`📁 Project:   ${root}`);
-if (dotaRepoPath) console.log(`📂 DOTA repo: ${dotaRepoPath}`);
-
-// ——————————————————
-// 2) Helpers
-// ——————————————————
-function execCmd(cmd, silent=false) {
-  console.log(`$ ${cmd}`);
-  return execSync(cmd, { stdio: silent ? 'pipe' : 'inherit' });
-}
-
-function patchFile(rel, fn) {
-  const fp = path.join(root, rel);
-  if (!fs.existsSync(fp)) return console.warn(`⚠️  Missing: ${rel}`);
-  const src = fs.readFileSync(fp, 'utf8');
-  const out = fn(src);
-  if (out !== src) {
-    fs.writeFileSync(fp, out, 'utf8');
-    console.log(`✓ Patched ${rel}`);
-  }
-}
-
-function getRNVersion() {
-  try {
-    const pj = JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));
-    const dep = (pj.dependencies||{})['react-native'] || (pj.devDependencies||{})['react-native'];
-    if (!dep) return null;
-    const m = dep.match(/\d+\.\d+\.\d+/);
-    return m ? m[0] : dep;
-  } catch {
-    return null;
-  }
-}
-function isGE(v,t){ if(!v) return false; let a=v.split('.').map(x=>+x), b=t.split('.').map(x=>+x);
-  for(let i=0;i<3;i++){ if((a[i]||0)>(b[i]||0)) return true; if((a[i]||0)<(b[i]||0)) return false; }
+function patchFile(file, searchRegex, insert, { after = true } = {}) {
+  const src = safeRead(file);
+  if (!src) throw new Error(`Missing expected file: ${file}`);
+  if (src.includes(insert.trim())) return false; // already patched
+  const replacement = after ? src.replace(searchRegex, match => match + insert)
+                            : src.replace(searchRegex, insert + '$&');
+  safeWrite(file, replacement);
   return true;
 }
+function detectRnVersion(projectDir) {
+  const pkgJson = require(path.join(process.cwd(), 'package.json'));
+  const rnVer = (pkgJson.dependencies && pkgJson.dependencies['react-native']) ||
+                (pkgJson.devDependencies && pkgJson.devDependencies['react-native']);
+  if (!rnVer) throw new Error('react-native not found in package.json');
+  const m = rnVer.match(/(\d+)\.(\d+)\.(\d+)/);
+  return !m ? { raw: rnVer, major: 0, minor: 0, patch: 0 }
+            : { raw: rnVer, major: +m[1], minor: +m[2], patch: +m[3] };
+}
 
-// ——————————————————
-// 3) DOTA CLI sanity
-// ——————————————————
-try {
-  execCmd('dota --version', true);
-  execCmd('dota whoami',    true);
-} catch {
-  console.error('❌ Ensure `dota-cli` is installed and you are logged in (dota login).');
+//----------------------------------- CLI args ---------------------------------------------------
+const [projectDir, appName, serverUrl = 'http://10.0.2.2:3010'] = process.argv.slice(2);
+if (!projectDir || !appName) {
+  console.error('Usage: node dotafy.js <projectDir> <appName> [serverUrl]');
   process.exit(1);
 }
+const absProjectDir = path.resolve(projectDir);
+if (!fs.existsSync(absProjectDir)) throw new Error(`projectDir ${absProjectDir} not found`);
+process.chdir(absProjectDir);
+console.log(`\n📁 Working in ${absProjectDir}`);
 
-// ——————————————————
-// 4) Main
-// ——————————————————
-;(async()=>{
-  // 4.1 Ensure dummyOrg exists
-  let orgName = 'dummyOrg';
-  let orgExists = false;
+//---------------------------------- STEP 1: choose CodePush client -----------------------------
+const rn = detectRnVersion('.');
+// Determine correct CodePush package and version for the detected RN version
+let cpPkg;
+if (rn.major > 0 || rn.minor >= 77) {
+  // RN 0.77+
+  cpPkg = '@code-push-next/react-native-code-push';
+} else if (rn.major === 0 && rn.minor >= 71) {
+  // RN 0.71 - 0.76
+  cpPkg = 'react-native-code-push'; // latest 8.x is compatible
+} else {
+  // RN < 0.71 (e.g., 0.64)
+  cpPkg = 'react-native-code-push@7.0.4';
+}
+console.log(`Detected React‑Native ${rn.raw} – installing ${cpPkg}`);
+exec(`npm install --save ${cpPkg}`);
+
+//---------------------------------- STEP 2: ensure DOTA app exists -----------------------------
+function ensureDotaApp(appName) {
   try {
-    const orgsOut = execCmd('dota org ls', true).toString();
-    const orgs = JSON.parse(orgsOut);
-    orgExists = orgs.some(o => o.displayName === orgName);
+    exec(`dota app add ${appName}`);
+    console.log(`✔️  DOTA app "${appName}" created`);
   } catch (e) {
-    console.warn('⚠️  Could not list orgs, will try to create dummyOrg.');
+    console.log(`ℹ️  DOTA app "${appName}" already exists – continuing`);
   }
-  if (!orgExists) {
-    try {
-      execCmd(`dota org add ${orgName}`);
-      console.log(`✓ Created org ${orgName}`);
-    } catch (e) {
-      console.warn(`⚠️  Could not create org ${orgName} (it may already exist or org creation is not supported).`);
-    }
-  } else {
-    console.log(`✓ Org ${orgName} exists`);
-  }
-
-  // 4.2 Ensure the app exists (user-level, no org)
-  let appExists = false;
+  // fetch deployment key (expects JSON array [{name:"Staging",key:"..."}, …])
+  let key;
   try {
-    const appsOut = execCmd(`dota app ls`, true).toString();
-    const apps = JSON.parse(appsOut);
-    appExists = apps.some(a => a.name === `${appName}-Android`);
-  } catch (e) {
-    console.warn('⚠️  Could not list apps, will try to create app.');
+    const out = exec(`dota deployment list ${appName} -k --format json`);
+    const deployments = JSON.parse(out);
+    key = (deployments.find(d => d.name === 'Staging') || deployments[0]).key;
+    if (!key) throw new Error('No key found');
+    console.log(`✔️  Staging deployment key: ${key}`);
+  } catch (err) {
+    throw new Error('Could not retrieve deployment key – check your DOTA CLI / server');
   }
-  const dotaAppFull = `${appName}-Android`;
-  if (!appExists) {
-    try {
-      execCmd(`dota app add dummyOrg/${dotaAppFull}`);
-      console.log(`✓ Created app dummyOrg/${dotaAppFull}`);
-    } catch (e) {
-      console.error(`❌ Failed to create app dummyOrg/${dotaAppFull}: ${e.message}`);
-      process.exit(1);
-    }
-  } else {
-    console.log(`✓ App ${dotaAppFull} exists`);
-  }
-  console.log(`\n→ Using DOTA app "${dotaAppFull}"…`);
+  return key;
+}
+const deploymentKey = ensureDotaApp(appName);
 
-  // 4.2b Get deployment key
-  let deployKey;
-  try {
-    const out = execCmd(
-      `dota deployment list ${dotaAppFull} --displayKeys`,
-      true
-    ).toString();
-    deployKey = JSON.parse(out).find(d=>d.name==='Staging')?.key;
-  } catch {}
-  if (!deployKey) {
-    deployKey = `MOCK_KEY_${Date.now()}`;
-    console.warn(`⚠️  Couldn't fetch key, using mock: ${deployKey}`);
-  } else {
-    console.log(`✓ Got deployment key`);
-  }
+//---------------------------------- STEP 3: patch Android native -------------------------------
+const androidDir = path.join('android');
+if (!fs.existsSync(androidDir)) throw new Error('Android directory not found – is this a RN project?');
 
-  // 4.3 Install correct CodePush SDK
-  console.log(`\n→ Installing CodePush into ${root}…`);
-  process.chdir(root);
-  if (!fs.existsSync('package.json')) {
-    fs.writeFileSync(
-      'package.json',
-      JSON.stringify({name:appName.toLowerCase(),version:'1.0.0',private:true},null,2)
-    );
-    console.log('✓ Created package.json');
-  }
+// 3.1 settings.gradle
+const settingsGradle = path.join(androidDir, 'settings.gradle');
+let settingsContent = safeRead(settingsGradle);
+// Remove any existing react-native-code-push include/project lines
+settingsContent = settingsContent
+  .replace(/,? *':react-native-code-push'/g, '')
+  .replace(/project\(':react-native-code-push'\)\.projectDir = new File\([^\n]+\)\n?/g, '');
+// Add the correct include and project lines after include ':app'
+settingsContent = settingsContent.replace(
+  /include ':app'/,
+  "include ':app', ':react-native-code-push'\nproject(':react-native-code-push').projectDir = new File(rootProject.projectDir, '../node_modules/" + cpPkg.replace(/@.*$/, '') + "/android/app')"
+);
+safeWrite(settingsGradle, settingsContent);
 
-  const rn = getRNVersion();
-  console.log(`• Detected RN version: ${rn||'<unknown>'}`);
+// 3.2 app/build.gradle – append apply from
+const buildGradle = path.join(androidDir, 'app', 'build.gradle');
+const gradleLine = `apply from: "../../node_modules/${cpPkg}/android/codepush.gradle"`;
+patchFile(buildGradle, /apply plugin: "com.facebook.react"/, `\n${gradleLine}`);
 
-  // 4.4 Write TS/TSX helpers under src/utility/codePush
-  console.log(`\n→ Writing CodePush helpers…`);
-  const cpDir = path.join(root,'src','utility','codePush');
-  fs.ensureDirSync(cpDir);
+// 3.3 strings.xml – add ServerUrl + DeploymentKey (moduleConfig=true to allow overrides)
+const stringsXml = path.join(androidDir, 'app', 'src', 'main', 'res', 'values', 'strings.xml');
+let strings = safeRead(stringsXml);
+if (!strings) throw new Error('Could not find strings.xml');
+// Always update or insert CodePushServerUrl and CodePushDeploymentKey
+if (strings.includes('CodePushServerUrl')) {
+  strings = strings.replace(/<string[^>]*name="CodePushServerUrl"[^>]*>.*?<\/string>/,
+    `<string moduleConfig=\"true\" name=\"CodePushServerUrl\">${serverUrl}</string>`);
+} else {
+  strings = strings.replace('<resources>', `<resources>\n    <string moduleConfig=\"true\" name=\"CodePushServerUrl\">${serverUrl}</string>`);
+}
+if (strings.includes('CodePushDeploymentKey')) {
+  strings = strings.replace(/<string[^>]*name="CodePushDeploymentKey"[^>]*>.*?<\/string>/,
+    `<string moduleConfig=\"true\" name=\"CodePushDeploymentKey\">${deploymentKey}</string>`);
+} else {
+  strings = strings.replace('<resources>', `<resources>\n    <string moduleConfig=\"true\" name=\"CodePushDeploymentKey\">${deploymentKey}</string>`);
+}
+safeWrite(stringsXml, strings);
+console.log('✔️  Updated strings.xml');
 
-  // Determine correct CodePush import based on RN version
-  const codePushImport = (rn && !isGE(rn,'0.65.0'))
-    ? 'react-native-code-push'
-    : '@code-push-next/react-native-code-push';
-
-  fs.writeFileSync(
-    path.join(cpDir,'withCodePush.tsx'),
-`import codePush, { CodePushOptions } from '${codePushImport}';
-import React from 'react';
-
-export interface CodePushConfig extends CodePushOptions {
-  serverUrl?: string;
-  checkFrequency?: number;
+// 3.4 MainApplication.{java|kt}
+const appSrcMain = path.join(androidDir, 'app', 'src', 'main');
+function findMainApplication() {
+  const files = [];
+  (function walk(dir) {
+    fs.readdirSync(dir).forEach(f => {
+      const p = path.join(dir, f);
+      if (fs.statSync(p).isDirectory()) return walk(p);
+      if (f === 'MainApplication.java' || f === 'MainApplication.kt') files.push(p);
+    });
+  })(appSrcMain);
+  if (!files.length) throw new Error('MainApplication.{java|kt} not found');
+  return files[0];
+}
+const mainApp = findMainApplication();
+const isKt = mainApp.endsWith('.kt');
+console.log(`Patching ${path.relative(absProjectDir, mainApp)}`);
+if (isKt) {
+  patchFile(mainApp, /package .*\n/, `import com.microsoft.codepush.react.CodePush;\n`, { after: true });
+  patchFile(mainApp, /object : DefaultReactNativeHost\(this\) \{/, `object : DefaultReactNativeHost(this) {\n        override fun getJSBundleFile(): String = CodePush.getJSBundleFile()\n    `);
+} else {
+  patchFile(mainApp, /package .*\n/, `import com.microsoft.codepush.react.CodePush;\n`, { after: true });
+  patchFile(mainApp, /new ReactNativeHost\(this\) \{/, `new ReactNativeHost(this) {\n        @Override\n        protected String getJSBundleFile() {\n          return CodePush.getJSBundleFile();\n        }`);
 }
 
-export const withCodePush = (config: Partial<CodePushConfig> = {}) => (Wrapped: React.ComponentType<any>) => {
-  const options: CodePushOptions = {
-    installMode: codePush.InstallMode.IMMEDIATE,
-    updateDialog: {
-      appendReleaseDescription: true,
-      title: 'An update is available!',
-      mandatoryUpdateMessage: 'An update is required to continue using the app.',
-      mandatoryContinueButtonLabel: 'Install now',
-      optionalUpdateMessage: 'An update is available. Would you like to install it?',
-      optionalIgnoreButtonLabel: 'Later',
-      optionalInstallButtonLabel: 'Install now',
-    },
-    ...config,
-  };
-  const checkFrequency = config.checkFrequency || codePush.CheckFrequency.ON_APP_START;
-  return codePush(options, checkFrequency)(Wrapped);
-};`
-  );
+//---------------------------------- STEP 4: wrap JS entry --------------------------------------
+const entries = ['index.js', 'App.js', 'index.tsx', 'App.tsx'].map(f => path.join(absProjectDir, f));
+const entryFile = entries.find(f => fs.existsSync(f));
+if (!entryFile) throw new Error('Could not locate app entry file (index.js / App.js / .tsx)');
+let js = safeRead(entryFile);
+if (!js.includes('react-native-code-push')) {
+  // Remove any export default codePush... or export default App lines
+  js = js.replace(/export default .*\n?/g, '');
+  // Remove any AppRegistry.registerComponent line
+  js = js.replace(/AppRegistry\.registerComponent\([^)]*\);?\n?/g, '');
+  // Inject the correct CodePush wrapper and registration
+  js += `\n\n// 🚀 DOTA OTA wrapper injected by dotafy\nimport codePush from 'react-native-code-push';\n\nconst codePushOptions = {\n  updateDialog: {\n    appendReleaseDescription: true,\n    title: 'An update is available!',\n    mandatoryUpdateMessage: 'An update is required to continue using the app.',\n    mandatoryContinueButtonLabel: 'Install now',\n    optionalUpdateMessage: 'An update is available. Would you like to install it?',\n    optionalIgnoreButtonLabel: 'Later',\n    optionalInstallButtonLabel: 'Install now',\n  },\n  installMode: codePush.InstallMode.IMMEDIATE,\n};\n\nconst CodePushedApp = codePush(codePushOptions)(App);\nAppRegistry.registerComponent(appName, () => CodePushedApp);\n`;
+  safeWrite(entryFile, js);
+  console.log('✔️  Wrapped entry file with CodePush HOC (correct pattern)');
+}
 
-  fs.writeFileSync(
-    path.join(cpDir,'config.ts'),
-`import { CodePushConfig } from './withCodePush';
-import codePush from '${codePushImport}';
-export const getCodePushConfig = (env:'staging'|'production'):CodePushConfig => {
-  const common:CodePushConfig = {
-    installMode: codePush.InstallMode.IMMEDIATE,
-    updateDialog: {
-      appendReleaseDescription: true,
-      title: 'An update is available!',
-      mandatoryUpdateMessage: 'An update is required to continue using the app.',
-      mandatoryContinueButtonLabel: 'Install now',
-      optionalUpdateMessage: 'An update is available. Would you like to install it?',
-      optionalIgnoreButtonLabel: 'Later',
-      optionalInstallButtonLabel: 'Install now',
-    },
-  };
-  return { ...common, serverUrl: env==='staging' ? 'http://localhost:3010' : 'http://localhost:3010' };
-};`
-  );
-
-  console.log('✓ Helpers created');
-
-  // 4.6 Patch source files
-  console.log(`\n→ Patching Bootstrap.tsx…`);
-  patchFile('src/Bootstrap.tsx', src=>{
-    let out = src;
-    if (!out.includes('withCodePush')) {
-      out = out.replace(
-        /import .*LoggerTrace['";]?/, // fallback: insert after first import
-        `$&\nimport { withCodePush } from './utility/codePush/withCodePush';\nimport { getCodePushConfig } from './utility/codePush/config';`
-      );
-    }
-    if (!out.includes('CodePushBootstrap')) {
-      out = out.replace(
-        /const styles\s*=\s*/, // fallback: insert before styles
-        `const env = __DEV__?'staging':'production';\nconst CodePushBootstrap = withCodePush(getCodePushConfig(env))(Bootstrap);\n\nconst styles =`
-      );
-    }
-    return out.replace(/export default Bootstrap;/,'export default CodePushBootstrap;');
-  });
-
-  console.log(`→ Updating Jest setup…`);
-  for (const f of ['jest-setup.ts','jest.setup.ts','jest-setup.js','jest.setup.js']) {
-    const p = path.join(root,f);
-    if (fs.existsSync(p)) {
-      const c = fs.readFileSync(p,'utf8');
-      if (!c.includes("react-native-code-push")) {
-        fs.appendFileSync(p, `
-
-jest.mock('react-native-code-push',()=>{ 
-  const cp=(c:any)=>(C:any)=>C;
-  cp.CheckFrequency={ON_APP_START:'ON_APP_START'};
-  cp.InstallMode    ={IMMEDIATE:'IMMEDIATE'};
-  return cp;
-});`);
-        console.log(`✓ Patched ${f}`);
-      }
-      break;
-    }
-  }
-
-  fs.writeFileSync(
-    path.join(root,'codepush.config.js'),
-`module.exports={
-  deploymentKey: process.env.DEPLOYMENT_KEY||'${deployKey}',
-  serverUrl:'http://localhost:3010',
-  appVersion:'0.0.1', deploymentName:'Staging',
-  isMandatory:false, checkFrequency:'ON_APP_RESUME',
-  installMode:'ON_NEXT_RESTART', minimumBackgroundDuration:0
-};`
-  );
-  console.log('✓ codepush.config.js created');
-
-  console.log(`\n→ Patching Android settings.gradle…`);
-  patchFile('android/settings.gradle', s=>
-    s.replace(
-      /include ':app'/,
-      `include ':app',':react-native-code-push'\nproject(':react-native-code-push').projectDir=new File(rootProject.projectDir,'../node_modules/react-native-code-push/android/app')`
-    )
-  );
-
-  console.log(`→ Patching Android strings.xml…`);
-  patchFile('android/app/src/main/res/values/strings.xml', s => {
-    let out = s;
-    // Remove any existing CodePushServerUrl/DeploymentKey lines
-    out = out.replace(/\s*<string[^>]*name="CodePushDeploymentKey"[^>]*>.*?<\/string>/g, '');
-    out = out.replace(/\s*<string[^>]*name="CodePushServerUrl"[^>]*>.*?<\/string>/g, '');
-    // Insert before </resources>
-    out = out.replace(
-      /<\/resources>/,
-      `    <string moduleConfig="true" name="CodePushDeploymentKey">${deployKey}</string>\n    <string moduleConfig="true" name="CodePushServerUrl">http://localhost:3010</string>\n</resources>`
-    );
-    return out;
-  });
-
-  console.log(`→ Patching build.gradle…`);
-  patchFile('android/app/build.gradle', s=>
-    s
-      .replace(/android\s*{/,`apply from:"../../node_modules/react-native-code-push/android/codepush.gradle"\n\nandroid{`)
-      .replace(/versionNameSuffix ["'][^"']+["']/g, m=>`// ${m}`)
-  );
-
-  console.log(`→ Patching MainApplication…`);
-  function findMA(dir){
-    for(const f of fs.readdirSync(dir)){
-      const fp = path.join(dir,f);
-      if (fs.statSync(fp).isDirectory()) {
-        const r = findMA(fp); if(r) return r;
-      } else if (/MainApplication\.(java|kt)$/.test(f)) {
-        return { fp, isKt: f.endsWith('.kt') };
-      }
-    }
-  }
-  const ma = findMA(path.join(root,'android','app','src','main','java'));
-  if (ma) {
-    let c = fs.readFileSync(ma.fp,'utf8');
-    if (!/CodePush.getJSBundleFile/.test(c)) {
-      c = c.replace(
-        /(import .*;\s*)(?!import)/,
-        `$1\nimport com.microsoft.codepush.react.CodePush;\n`
-      );
-      const re = ma.isKt
-        ? /override fun getJSMainModuleName\(\)[\s\S]*?\}/
-        : /@Override\s+public String getJSMainModuleName\(\)[\s\S]*?\}/;
-      c = c.replace(
-        re,
-        m=>m+`
-        override fun getJSBundleFile(): String {
-          return CodePush.getJSBundleFile()
-        }`
-      );
-      fs.writeFileSync(ma.fp,c,'utf8');
-      console.log(`✓ Patched ${path.relative(root, ma.fp)}`);
-    }
-  }
-
-  // 4.7 Ensure Bootstrap.tsx exists and is DOTA/CodePush wrapped
-  const bootstrapPath = path.join(root, 'src', 'Bootstrap.tsx');
-  if (!fs.existsSync(bootstrapPath)) {
-    fs.ensureDirSync(path.dirname(bootstrapPath));
-    fs.writeFileSync(
-      bootstrapPath,
-`import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet } from 'react-native';
-import App from '../App';
-import { withCodePush } from './utility/codePush/withCodePush';
-import { getCodePushConfig } from './utility/codePush/config';
-
-const Stack = createStackNavigator();
-
-const Bootstrap = () => {
-  return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={App} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
-  );
-};
-
-const env = __DEV__ ? 'staging' : 'production';
-const CodePushBootstrap = withCodePush(getCodePushConfig(env))(Bootstrap);
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-});
-
-export default CodePushBootstrap;
-`    );
-    console.log('✓ Created src/Bootstrap.tsx');
-  }
-
-  // 4.8 Patch index.js to use Bootstrap
-  const indexPath = path.join(root, 'index.js');
-  if (fs.existsSync(indexPath)) {
-    let idx = fs.readFileSync(indexPath, 'utf8');
-    if (!idx.includes("Bootstrap")) {
-      idx = idx.replace(/import\s+App\s+from\s+['\"]\.\/App['\"];?/g, "import Bootstrap from './src/Bootstrap';");
-      idx = idx.replace(/AppRegistry\.registerComponent\(([^,]+),\s*\(\)\s*=>\s*App\);/, 'AppRegistry.registerComponent($1, () => Bootstrap);');
-      fs.writeFileSync(indexPath, idx, 'utf8');
-      console.log('✓ Patched index.js to use Bootstrap');
-    }
-  }
-
-  console.log(`\n🎉 DOTA + CodePush integration complete!`);
-  console.log(`→ Release with: dota release-react ${dotaAppFull} android -d Staging`);
-})();
+//---------------------------------- Done! -------------------------------------------------------
+console.log(`\n✅ DOTA integration complete. Next steps:`);
+console.log(`   • Open your project in Android Studio or run \`npx react-native run-android\``);
+console.log(`   • When ready, publish OTA via:`);
+console.log(`       npx dota release-react ${appName} android -d Staging --serverUrl ${serverUrl}`);
