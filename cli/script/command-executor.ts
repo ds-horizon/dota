@@ -1,5 +1,3 @@
-
-
 import AccountManager = require("./management-sdk");
 const childProcess = require("child_process");
 import debugCommand from "./commands/debug";
@@ -48,6 +46,7 @@ import {
   isBinaryOrZip,
   fileExists
 } from "./utils/file-utils";
+import { IMetricsCommand } from "../script/types/cli";
 
 const configFilePath: string = path.join(process.env.LOCALAPPDATA || process.env.HOME, ".dota.config");
 const emailValidator = require("email-validator");
@@ -436,7 +435,7 @@ export function execute(command: cli.ICommand) {
   //console.log("connectionInfo: ", connectionInfo);
 
 
-  return Q(<void>null).then(() => {
+  return Q.resolve().then(() => {
     switch (command.type) {
       // Must not be logged in
       case cli.CommandType.login:
@@ -572,6 +571,9 @@ export function execute(command: cli.ICommand) {
 
       case cli.CommandType.whoami:
         return whoami(command);
+
+      case cli.CommandType.metrics:
+        return metricsCommand(<IMetricsCommand>command);
 
       default:
         // We should never see this message as invalid commands should be caught by the argument parser.
@@ -1642,4 +1644,47 @@ function getSdk(accessKey: string, headers: Headers, customServerUrl: string): A
   });
 
   return sdk;
+}
+
+function metricsCommand(command: IMetricsCommand): Promise<void> {
+  // Set org context for SDK
+  if (sdk) {
+    sdk.passedOrgName = command.org;
+  }
+  // Fetch metrics and history for the deployment
+  const appName = command.appName;
+  const deploymentName = command.deploymentName;
+  const label = command.label;
+  const targetVersion = command.targetVersion;
+
+  // Get metrics and history
+  return Q.all([
+    sdk.getDeploymentMetrics(appName, deploymentName),
+    sdk.getDeploymentHistory(appName, deploymentName),
+  ]).then(([metrics, history]) => {
+    // Find the package for the label and targetVersion
+    const pkg = history.find(
+      (p: any) => p.label === label && p.appVersion === targetVersion
+    );
+    if (!pkg) {
+      console.log(
+        `No release found for label "${label}" and target version "${targetVersion}" in deployment "${deploymentName}".`
+      );
+      return;
+    }
+    const m = metrics[label] || {};
+    const installed = (m as any).installed || 0;
+    const downloaded = (m as any).downloaded || 0;
+    const failed = (m as any).failed || 0;
+    const rollout = pkg.rollout || 0;
+    // Adoption %: installed / downloaded
+    const adoption = downloaded > 0 ? (installed / downloaded) * 100 : 0;
+    // Rollback %: failed / installed
+    const rollback = installed > 0 ? (failed / installed) * 100 : 0;
+    // Print
+    console.log(`Metrics for ${command.org}/${appName} [${deploymentName}] label: ${label}, target version: ${targetVersion}`);
+    console.log(`  Rollout:   ${rollout}%`);
+    console.log(`  Adoption:  ${adoption.toFixed(2)}% (${installed} of ${downloaded} installs)`);
+    console.log(`  Rollbacks: ${rollback.toFixed(2)}% (${failed} of ${installed} installs)`);
+  });
 }

@@ -933,6 +933,15 @@ yargs
       .example("whoami", "Display the account info for the current login session");
     addCommonConfiguration(yargs);
   })
+  .command("metrics", "View and manage your app metrics", (yargs: yargs.Argv) => {
+    isValidCommandCategory = true;
+    isValidCommand = true;
+    yargs
+      .usage(USAGE_PREFIX + " metrics <org>/<app> <deployment> <label> <targetVersion>")
+      .demand(/*count*/ 4, /*max*/ 4) // Require exactly four non-option arguments
+      .example("metrics OrgName/MyApp Production v3 1.0.3", "View metrics for the v3 release of the MyApp app targeting version 1.0.3");
+    addCommonConfiguration(yargs);
+  })
   .alias("v", "version")
   .version(packageJson.version)
   .wrap(/*columnLimit*/ null)
@@ -1017,8 +1026,12 @@ export function createCommand(): cli.ICommand {
         switch (arg1) {
           case "add":
             if (arg2) {
+              // Enforce org/app format
+              if (!/^\w[^/]*\/\w[^/]*$/.test(arg2)) {
+                console.error("✖  You must specify the app as <org>/<app>. Standalone app creation is not allowed.\nUsage: dota app add <ownerName>/<appName>");
+                process.exit(1);
+              }
               cmd = { type: cli.CommandType.appAdd };
-
               (<cli.IAppAddCommand>cmd).appName = arg2;
             }
             break;
@@ -1033,8 +1046,12 @@ export function createCommand(): cli.ICommand {
           case "remove":
           case "rm":
             if (arg2) {
+              // Enforce org/app format
+              if (!/^\w[^/]*\/\w[^/]*$/.test(arg2)) {
+                console.error("✖  You must specify the app as <org>/<app>. Ambiguous app deletion is not allowed.\nUsage: dota app rm <ownerName>/<appName>");
+                process.exit(1);
+              }
               cmd = { type: cli.CommandType.appRemove };
-
               (<cli.IAppRemoveCommand>cmd).appName = arg2;
             }
             break;
@@ -1338,6 +1355,28 @@ export function createCommand(): cli.ICommand {
 
       case "whoami":
         cmd = { type: cli.CommandType.whoami };
+        break;
+
+      case "metrics":
+        if (arg1 && arg2 && arg3 && arg4) {
+          // arg1: org/app, arg2: deployment, arg3: label, arg4: targetVersion
+          const orgApp = arg1.split("/");
+          if (orgApp.length !== 2) {
+            console.error("✖  You must specify the app as <org>/<app>.\nUsage: dota metrics <org>/<app> <deployment> <label> <targetVersion>");
+            process.exit(1);
+          }
+          cmd = {
+            type: cli.CommandType.metrics,
+            org: orgApp[0],
+            appName: orgApp[1],
+            deploymentName: arg2,
+            label: arg3,
+            targetVersion: arg4,
+          } as cli.IMetricsCommand;
+        } else {
+          console.error("✖  Usage: dota metrics <org>/<app> <deployment> <label> <targetVersion>");
+          process.exit(1);
+        }
         break;
     }
 
