@@ -28,6 +28,30 @@ export default function CLICommands() {
               with specific usage details.
             </p>
           </div>
+          <div className="alert-note mb-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="alert-icon"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <div className="alert-content">
+                    <strong>Note:</strong>
+                    <p>
+                    Organization names should not contain spaces. Use camelCase or hyphens for multi-word organization names (e.g., "MyOrg" or "my-org").
+                    </p>
+              </div>
+          </div>
 
           {/* -------------------------------------------------------------
               APP MANAGEMENT
@@ -191,8 +215,7 @@ export default function CLICommands() {
             <h2 className="text-2xl font-bold mb-4">Organization Management</h2>
 
             <p className="mb-4">
-              You can view and manage the organizations associated with your account using the
-              following commands.
+              Commands for managing organizations in DOTA.
             </p>
 
             <p className="mb-4">
@@ -210,21 +233,6 @@ export default function CLICommands() {
               <code>
 {`  dota org ls
   dota org ls --format json`}
-              </code>
-            </pre>
-
-            <p className="mb-4">To remove an organization:</p>
-            <p className="mb-2">Usage:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota org remove <orgName>
-  dota org rm <orgName>`}
-              </code>
-            </pre>
-            <p className="mb-2">Example:</p>
-            <pre className="code-block mb-6">
-              <code>
-{`  dota org rm MyOrganization`}
               </code>
             </pre>
           </div>
