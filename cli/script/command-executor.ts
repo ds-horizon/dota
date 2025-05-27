@@ -121,8 +121,8 @@ export const confirm = (message: string = "Are you sure?"): Promise<boolean> => 
 };
 
 function accessKeyAdd(command: cli.IAccessKeyAddCommand): Promise<void> {
-  return sdk.addAccessKey(command.name, command.ttl).then((accessKey: AccessKey) => {
-    log(`Successfully created the "${command.name}" access key: ${accessKey.key}`);
+  return sdk.addAccessKey(command.friendlyName, command.ttl).then((accessKey: AccessKey) => {
+    log(`Successfully created the "${command.friendlyName}" access key: ${accessKey.key}`);
     log("Make sure to save this key value somewhere safe, since you won't be able to view it from the CLI again!");
   });
 }

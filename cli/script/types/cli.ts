@@ -56,7 +56,7 @@ export interface IAppCommand extends ICommand {
 }
 
 export interface IAccessKeyAddCommand extends ICommand {
-  name: string;
+  friendlyName: string;
   ttl?: number;
 }
 

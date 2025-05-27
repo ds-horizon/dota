@@ -1,5 +1,3 @@
-
-
 import * as yargs from "yargs";
 import * as cli from "../script/types/cli";
 import * as chalk from "chalk";
@@ -309,7 +307,22 @@ yargs
     yargs
       .usage(USAGE_PREFIX + " access-key <command>")
       .demand(/*count*/ 2, /*max*/ 2) // Require exactly two non-option arguments.
-      .command("add", "Create a new access key associated with your account", (yargs: yargs.Argv) => accessKeyAdd("add", yargs))
+      .command("add", "Create a new access key associated with your account", (yargs: yargs.Argv) => {
+        isValidCommand = true;
+        yargs
+          .usage(USAGE_PREFIX + " access-key add <friendlyName>")
+          .demand(/*count*/ 1, /*max*/ 1) // Require exactly one non-option arguments
+          .example("access-key add \"VSTS Integration\"", 'Creates a new access key with the name "VSTS Integration", which expires in 60 days')
+          .example("access-key add \"One time key\" --ttl 5m", 'Creates a new access key with the name "One time key", which expires in 5 minutes')
+          .option("ttl", {
+            default: "60d",
+            demand: false,
+            description: "Duration string which specifies the amount of time that the access key should remain valid for (e.g 5m, 60d, 1y)",
+            type: "string",
+          });
+
+        addCommonConfiguration(yargs);
+      })
       .command("patch", "Update the name and/or TTL of an existing access key", (yargs: yargs.Argv) => accessKeyPatch("patch", yargs))
       .command("remove", "Remove an existing access key", (yargs: yargs.Argv) => accessKeyRemove("remove", yargs))
       .command("rm", "Remove an existing access key", (yargs: yargs.Argv) => accessKeyRemove("rm", yargs))
@@ -324,8 +337,6 @@ yargs
     yargs
       .usage(USAGE_PREFIX + " org <command>")
       .demand(/*count*/ 2, /*max*/ 2) // Require exactly two non-option arguments.
-      .command("remove", "Remove an existing organisation", (yargs: yargs.Argv) => accessKeyRemove("remove", yargs))
-      .command("rm", "Remove an existing organisation", (yargs: yargs.Argv) => accessKeyRemove("rm", yargs))
       .command("list", "List the organisations associated with your account", (yargs: yargs.Argv) => orgList("list", yargs))
       .command("ls", "List the organisations associated with your account", (yargs: yargs.Argv) => orgList("ls", yargs))
       .check((argv: any, aliases: { [aliases: string]: string }): any => isValidCommand); // Report unrecognized, non-hyphenated command category.
@@ -947,7 +958,7 @@ export function createCommand(): cli.ICommand {
             if (arg2) {
               cmd = { type: cli.CommandType.accessKeyAdd };
               const accessKeyAddCmd = <cli.IAccessKeyAddCommand>cmd;
-              accessKeyAddCmd.name = arg2;
+              accessKeyAddCmd.friendlyName = arg2;
               const ttlOption: string = argv["ttl"] as any;
               if (isDefined(ttlOption)) {
                 accessKeyAddCmd.ttl = parseDurationMilliseconds(ttlOption);
@@ -997,14 +1008,6 @@ export function createCommand(): cli.ICommand {
           case "ls":
             cmd = { type: cli.CommandType.orgList };
             (<cli.IOrgListCommand>cmd).format = argv["format"] as any;
-            break;
-
-          case "remove":
-          case "rm":
-            if (arg2) {
-              cmd = { type: cli.CommandType.accessKeyRemove };
-              (<cli.IAccessKeyRemoveCommand>cmd).accessKey = arg2;
-            }
             break;
         }
         break;
