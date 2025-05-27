@@ -196,6 +196,7 @@ export const seedData = {
       friendlyName: "Mock Google Token for Development",
       expires: Date.now() + (365 * 24 * 60 * 60 * 1000), // One year from now
       scope: "all",
+      isSession: true
     }
   ],
 };

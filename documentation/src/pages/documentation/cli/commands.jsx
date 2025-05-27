@@ -202,10 +202,17 @@ export default function CLICommands() {
   dota app ls --format json
 
 # List all apps for a specific org
-  dota app <orgName> ls
-  dota app <orgName> ls --format json`}
+  dota app list --org <orgName>
+  dota app ls --org <orgName> --format json`}
               </code>
             </pre>
+            <p className="mb-4">
+              The table output shows the following columns:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li><strong>Name</strong> - The name of the app</li>
+              <li><strong>Deployments</strong> - The list of deployments associated with the app</li>
+            </ul>
           </div>
 
           {/* -------------------------------------------------------------
@@ -587,12 +594,21 @@ export default function CLICommands() {
               <b>Options:</b>
             </p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li><strong>-d, --deploymentName</strong>: Deployment to release the update to (default: Staging)</li>
-              <li><strong>-des, --description</strong>: Description of the changes made to the app in this release</li>
-              <li><strong>-x, --disabled</strong>: If set, the update will not be immediately downloadable</li>
-              <li><strong>-m, --mandatory</strong>: If set, the update is considered mandatory</li>
-              <li><strong>--noDuplicateReleaseError</strong>: If set, uploading an identical update will produce a warning instead of an error</li>
-              <li><strong>-r, --rollout</strong>: The percentage of users that should receive this release (defaults to 100%)</li>
+              <li><strong>-d, --deploymentName</strong>: Deployment to release the update to (default: Staging). The deployment name should be a single value without any additional suffixes.</li>
+              <li><strong>-des, --description</strong>: Description of the changes made to the app in this release. This will be displayed in the release history.</li>
+              <li><strong>-x, --disabled</strong>: If set, the update will not be immediately downloadable by users.</li>
+              <li><strong>-m, --mandatory</strong>: If set, the update is considered mandatory and users will be prompted to install it.</li>
+              <li><strong>--noDuplicateReleaseError</strong>: If set, uploading an identical update will produce a warning instead of an error.</li>
+              <li><strong>-r, --rollout</strong>: The percentage of users that should receive this release (defaults to 100%). Can be specified as a number (e.g., 20) or percentage (e.g., 20%).</li>
+            </ul>
+            <p className="mb-4">
+              <b>Notes:</b>
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>The <code>updateContentsPath</code> should point to a directory or file containing your update content. Do not package it in a .zip or binary file.</li>
+              <li>The <code>targetBinaryVersion</code> can be specified as a semver expression (e.g., 1.0.0) or use "*" to target all versions.</li>
+              <li>The release process will automatically handle the upload and distribution of your update to the specified deployment.</li>
+              <li>You can monitor the release progress through the upload progress indicator.</li>
             </ul>
 
             <h3 className="text-xl font-semibold mb-3">Releasing Updates (React Native)</h3>

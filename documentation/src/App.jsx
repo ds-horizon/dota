@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/index.css'; // Ensure this path is correct
+import './styles/logo.css';
 
 // SVG Icon Components (minor refactor for clarity if preferred, or keep as is)
 const IconLock = () => (
@@ -135,6 +136,51 @@ const CheckIcon = () => (
   >
     <polyline points="20 6 9 17 4 12"></polyline>
   </svg>
+);
+
+// Logo Components with hover animations
+const LogoLink = ({ href, children, className = "" }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`logo-link ${className}`}
+  >
+    {children}
+  </a>
+);
+
+const Dream11Logo = () => (
+  <LogoLink href="https://www.dream11.com/" className="mr-6">
+    <img
+      src="/trusted-logos/dream11.png"
+      alt="Dream11"
+      className="logo-image h-10 object-contain"
+      style={{ maxWidth: 120 }}
+    />
+  </LogoLink>
+);
+
+const FanCodeLogo = () => (
+  <LogoLink href="https://www.fancode.com/" className="mr-6">
+    <img
+      src="/trusted-logos/fancode.png"
+      alt="FanCode"
+      className="logo-image h-10 object-contain"
+      style={{ maxWidth: 120 }}
+    />
+  </LogoLink>
+);
+
+const PicksLogo = () => (
+  <LogoLink href="https://www.picksgame.in/">
+    <img
+      src="/trusted-logos/dreampicks.png"
+      alt="Picks"
+      className="logo-image h-10 object-contain"
+      style={{ maxWidth: 40, borderRadius: 8, background: '#fff' }}
+    />
+  </LogoLink>
 );
 
 function App() {
@@ -303,7 +349,7 @@ function App() {
             <span className="text-text-primary font-bold text-2xl tracking-tight">DOTA</span>
           </div>
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            {['features', 'documentation', 'faq', 'api', 'contact'].map(tabId => (
+            {['features', 'documentation', 'api', 'faq', 'contact'].map(tabId => (
               <button
                 key={tabId}
                 onClick={() => scrollToSection(tabId)}
@@ -370,7 +416,7 @@ function App() {
         <div className={`origin-top transform transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0 pointer-events-none'}`} style={{ transformOrigin: 'top' }}>
           <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg z-40 py-2">
             <nav className="flex flex-col space-y-2 px-4">
-              {['features', 'documentation', 'faq', 'api', 'contact'].map(tabId => (
+              {['features', 'documentation', 'api', 'faq', 'contact'].map(tabId => (
                 <button
                   key={tabId}
                   onClick={() => scrollToSection(tabId)}
@@ -503,6 +549,18 @@ function App() {
                 <div className="absolute -top-16 -left-16 w-64 h-64 bg-primary-accent-10 rounded-full blur-3xl -z-10 opacity-70"></div>
               </div>
             </div>
+
+                {/* Trusted by companies section - horizontally centered after stars/forks */}
+                <div className="mt-4 w-full flex flex-col items-center justify-center">
+                  <div className="text-xs uppercase tracking-widest text-text-tertiary text-center mb-3 font-semibold">
+                    Trusted by
+                  </div>
+                  <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+                    <Dream11Logo />
+                    <FanCodeLogo />
+                    <PicksLogo />
+                  </div>
+                </div>
           </div>
         </section>
 
