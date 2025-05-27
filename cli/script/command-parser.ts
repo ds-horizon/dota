@@ -1268,9 +1268,7 @@ export function createCommand(): cli.ICommand {
         break;
 
       case "release":
-        //console.log('arg0, arg1, arg2, arg3', arg0, arg1, arg2, arg3);
         if (arg1 && arg2 && arg3) {
-          //console.log('arg0, arg1, arg2, arg3', arg0, arg1, arg2, arg3);
           cmd = { type: cli.CommandType.release };
 
           const releaseCommand = <cli.IReleaseCommand>cmd;
@@ -1278,7 +1276,8 @@ export function createCommand(): cli.ICommand {
           releaseCommand.appName = arg1;
           releaseCommand.package = arg2;
           releaseCommand.appStoreVersion = arg3;
-          releaseCommand.deploymentName = argv["deploymentName"] as any;
+          // Ensure deploymentName is properly handled
+          releaseCommand.deploymentName = argv["deploymentName"] ? argv["deploymentName"].toString().split(",")[0] : "Staging";
           releaseCommand.description = argv["description"] ? backslash(argv["description"]) : "";
           releaseCommand.disabled = argv["disabled"] as any;
           releaseCommand.mandatory = argv["mandatory"] as any;
@@ -1298,7 +1297,8 @@ export function createCommand(): cli.ICommand {
 
           releaseReactCommand.appStoreVersion = argv["targetBinaryVersion"] as any;
           releaseReactCommand.bundleName = argv["bundleName"] as any;
-          releaseReactCommand.deploymentName = argv["deploymentName"] as any;
+          // Ensure deploymentName is properly handled
+          releaseReactCommand.deploymentName = argv["deploymentName"] ? argv["deploymentName"].toString().split(",")[0] : "Staging";
           releaseReactCommand.disabled = argv["disabled"] as any;
           releaseReactCommand.description = argv["description"] ? backslash(argv["description"]) : "";
           releaseReactCommand.development = argv["development"] as any;
