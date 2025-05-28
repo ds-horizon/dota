@@ -144,7 +144,7 @@ const LogoLink = ({ href, children, className = "" }) => (
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className={`logo-link ${className}`}
+    className={`logo-link text-text-secondary hover:text-primary ${className}`}
   >
     {children}
   </a>
@@ -155,7 +155,7 @@ const Dream11Logo = () => (
     <img
       src="/trusted-logos/dream11.png"
       alt="Dream11"
-      className="logo-image h-10 object-contain"
+      className="logo-image h-14 object-contain"
       style={{ maxWidth: 120 }}
     />
   </LogoLink>
@@ -166,7 +166,7 @@ const FanCodeLogo = () => (
     <img
       src="/trusted-logos/fancode.png"
       alt="FanCode"
-      className="logo-image h-10 object-contain"
+      className="logo-image h-14 object-contain"
       style={{ maxWidth: 120 }}
     />
   </LogoLink>
@@ -175,10 +175,10 @@ const FanCodeLogo = () => (
 const PicksLogo = () => (
   <LogoLink href="https://www.picksgame.in/">
     <img
-      src="/trusted-logos/dreampicks.png"
+      src="https://d13ir53smqqeyp.cloudfront.net/d11-static-pages/images/picks-fantasy-logo.png"
       alt="Picks"
-      className="logo-image h-10 object-contain"
-      style={{ maxWidth: 40, borderRadius: 8, background: '#fff' }}
+      className="logo-image h-14 object-contain"
+      style={{ maxWidth: 120 }}
     />
   </LogoLink>
 );
@@ -551,11 +551,11 @@ function App() {
             </div>
 
                 {/* Trusted by companies section - horizontally centered after stars/forks */}
-                <div className="mt-4 w-full flex flex-col items-center justify-center">
-                  <div className="text-xs uppercase tracking-widest text-text-tertiary text-center mb-3 font-semibold">
+                <div className="mt-6 w-full flex flex-col items-center justify-center">
+                  <div className="text-sm uppercase tracking-widest text-text-tertiary text-center mb-4 font-semibold">
                     Trusted by
                   </div>
-                  <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+                  <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
                     <Dream11Logo />
                     <FanCodeLogo />
                     <PicksLogo />
