@@ -255,3 +255,18 @@ export type PromoteReleaseToDeploymentRequest = BaseHeader & {
 export type PromoteReleaseToDeploymentResponse = {
   package: Package;
 };
+
+export type UploadReleaseRequest = BaseHeader & {
+  appId: string;
+  deploymentName: string;
+  file: File;
+  targetVersions: string;
+  description: string;
+  isDisabled: boolean;
+  isMandatory: boolean;
+  rollout: number;
+};
+
+export type UploadReleaseResponse = {
+  package: Package;
+};

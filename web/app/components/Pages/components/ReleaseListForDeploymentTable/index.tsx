@@ -1,11 +1,12 @@
 import cx from "clsx";
 import { useEffect, useState } from "react";
-import { Table, ScrollArea, Text, ActionIcon, Tooltip } from "@mantine/core";
+import { Table, ScrollArea, Text, ActionIcon, Tooltip, Button } from "@mantine/core";
 import classes from "./index.module.css";
 import { useGetReleaseListForDeployment } from "./hooks/useGetReleaseListForDeployment";
 import { useParams, useSearchParams } from "@remix-run/react";
 import { ReleaseListResponse } from "./data/getReleaseListForDeployment";
-import { IconDownload } from "@tabler/icons-react";
+import { IconDownload, IconUpload } from "@tabler/icons-react";
+import { ReleaseUploadForm } from "../ReleaseUploadForm";
 
 type RowsProps = {
   isLoading: boolean;
@@ -93,53 +94,71 @@ export function ReleaseListForDeploymentTable() {
     });
 
   const [scrolled, setScrolled] = useState(false);
+  const [uploadModalOpened, setUploadModalOpened] = useState(false);
 
   useEffect(() => {
     refetch();
   }, [searchParams.get("deployment")]);
 
   return (
-    <ScrollArea
-      h={"60%"}
-      onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
-    >
-      <Table
-        striped
-        highlightOnHover
-        withTableBorder
-        stickyHeader
-        mt={"xl"}
-        fz={"lg"}
+    <>
+      {/* Comment out or hide the Upload Release button and modal */}
+      {/* <Button
+        leftSection={<IconUpload size={14} />}
+        onClick={() => setUploadModalOpened(true)}
+        mb="md"
       >
-        <Table.Thead
-          className={cx(classes.header, { [classes.scrolled]: scrolled })}
+        Upload Release
+      </Button> */}
+      <ScrollArea
+        h={"60%"}
+        onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+      >
+        <Table
+          striped
+          highlightOnHover
+          withTableBorder
+          stickyHeader
+          mt={"xl"}
+          fz={"lg"}
         >
-          <Table.Tr>
-            <Table.Th>Label</Table.Th>
-            <Table.Th>Target Versions</Table.Th>
-            <Table.Th>Status</Table.Th>
-            <Table.Th>Mandatory</Table.Th>
-            <Table.Th>Rollbacks</Table.Th>
-            <Table.Th>Active Devices</Table.Th>
-            <Table.Th>Rollout</Table.Th>
-            <Table.Th>Released At</Table.Th>
-            <Table.Th>Download</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          <Rows
-            isLoading={isLoading || isFetching}
-            isError={isError}
-            data={data}
-            onClick={(id: string) => {
-              setSearchParams((p) => {
-                p.set("releaseId", id);
-                return p;
-              });
-            }}
-          />
-        </Table.Tbody>
-      </Table>
-    </ScrollArea>
+          <Table.Thead
+            className={cx(classes.header, { [classes.scrolled]: scrolled })}
+          >
+            <Table.Tr>
+              <Table.Th>Label</Table.Th>
+              <Table.Th>Target Versions</Table.Th>
+              <Table.Th>Status</Table.Th>
+              <Table.Th>Mandatory</Table.Th>
+              <Table.Th>Rollbacks</Table.Th>
+              <Table.Th>Active Devices</Table.Th>
+              <Table.Th>Rollout</Table.Th>
+              <Table.Th>Released At</Table.Th>
+              <Table.Th>Download</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            <Rows
+              isLoading={isLoading || isFetching}
+              isError={isError}
+              data={data}
+              onClick={(id: string) => {
+                setSearchParams((p) => {
+                  p.set("releaseId", id);
+                  return p;
+                });
+              }}
+            />
+          </Table.Tbody>
+        </Table>
+      </ScrollArea>
+      {/* <ReleaseUploadForm
+        opened={uploadModalOpened}
+        onClose={() => setUploadModalOpened(false)}
+        refetch={refetch}
+        deploymentName={searchParams.get("deployment") ?? ""}
+        appId={params.app ?? ""}
+      /> */}
+    </>
   );
 }
