@@ -183,6 +183,17 @@ const PicksLogo = () => (
   </LogoLink>
 );
 
+const DreamPlayLogo = () => (
+  <LogoLink href="https://dreamplay.game/" className="flex items-center">
+    <img
+      src="/trusted-logos/dreamplay.png"
+      alt="Dream Play Logo"
+      className="logo-image h-14 object-contain"
+      style={{ maxWidth: 120 }}
+    />
+  </LogoLink>
+);
+
 function App() {
   const [activeTab, setActiveTab] = useState('features');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -441,10 +452,10 @@ function App() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center overflow-hidden hero-section">
+        <section className="relative min-h-screen flex flex-col justify-between overflow-hidden hero-section">
           <div className="hero-gradient-animation"></div>
-          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex flex-col justify-between">
+            <div className="grid md:grid-cols-2 gap-12 items-center flex-1">
               <div className="text-left animate-fade-in-up">
                 <div className="badge badge-subtle mb-6">
                   <span className="badge-dot bg-primary-accent"></span>
@@ -549,18 +560,18 @@ function App() {
                 <div className="absolute -top-16 -left-16 w-64 h-64 bg-primary-accent-10 rounded-full blur-3xl -z-10 opacity-70"></div>
               </div>
             </div>
-
-                {/* Trusted by companies section - horizontally centered after stars/forks */}
-                <div className="mt-6 w-full flex flex-col items-center justify-center">
-                  <div className="text-sm uppercase tracking-widest text-text-tertiary text-center mb-4 font-semibold">
-                    Trusted by
-                  </div>
-                  <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
-                    <Dream11Logo />
-                    <FanCodeLogo />
-                    <PicksLogo />
-                  </div>
-                </div>
+            {/* Trusted by companies section - anchored to bottom of hero */}
+            <div className="w-full flex flex-col items-center justify-center pb-20">
+              <div className="text-sm uppercase tracking-widest text-text-tertiary text-center mb-4 font-semibold">
+                Trusted by
+              </div>
+              <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
+                <Dream11Logo />
+                <FanCodeLogo />
+                <PicksLogo />
+                <DreamPlayLogo />
+              </div>
+            </div>
           </div>
         </section>
 
