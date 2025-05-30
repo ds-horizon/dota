@@ -899,6 +899,10 @@ export function getManagementRouter(config: ManagementConfig): Router {
       const file: any = getFileWithField(req, "package");
       const tenantId: string = Array.isArray(req.headers.tenant) ? req.headers.tenant[0] : req.headers.tenant;
 
+      console.log("req.body:", req.body);
+      console.log("req.file:", req.file);
+      console.log("req.files:", req.files);
+
       if (!file || !file.buffer) {
         errorUtils.sendMalformedRequestError(res, "A deployment package must include a file.");
         return;

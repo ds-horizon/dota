@@ -38,6 +38,8 @@ import {
   UpdateCollabaratorsResponse,
   UpdateDeploymentsReleaseRequest,
   UpdatePackageRequest,
+  UploadReleaseRequest,
+  UploadReleaseResponse,
 } from "./types";
 
 class Codepush {
@@ -379,6 +381,29 @@ class Codepush {
       },
       {
         headers,
+      }
+    );
+  }
+
+  async uploadReleaseForDeployment(data: UploadReleaseRequest) {
+    const formData = new FormData();
+    formData.append("file", data.file);
+    formData.append("targetVersions", data.targetVersions);
+    formData.append("description", data.description);
+    formData.append("isDisabled", String(data.isDisabled));
+    formData.append("isMandatory", String(data.isMandatory));
+    formData.append("rollout", String(data.rollout));
+
+    return this.__client.post<null, AxiosResponse<UploadReleaseResponse>>(
+      `/apps/${encodeURIComponent(data.appId)}/deployments/${encodeURIComponent(
+        data.deploymentName
+      )}/release`,
+      formData,
+      {
+        headers: {
+          userId: data.userId,
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
   }

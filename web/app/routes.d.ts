@@ -5,6 +5,7 @@ declare module "routes-gen" {
     "/api/v1/:app/deployments": { "app": string };
     "/api/v1/:app/deployments/:deploymentName": { "app": string, "deploymentName": string };
     "/api/v1/:app/deployments/:deploymentName/promote/:targetDeployment": { "app": string, "deploymentName": string, "targetDeployment": string };
+    "/api/v1/:app/deployments/:deploymentName/releases": { "app": string, "deploymentName": string };
     "/api/v1/:org": { "org": string };
     "/api/v1/:org/apps": { "org": string };
     "/api/v1/:org/apps/:app": { "org": string, "app": string };
@@ -33,6 +34,7 @@ declare module "routes-gen" {
       | ["/api/v1/:app/deployments", RouteParams["/api/v1/:app/deployments"]]
       | ["/api/v1/:app/deployments/:deploymentName", RouteParams["/api/v1/:app/deployments/:deploymentName"]]
       | ["/api/v1/:app/deployments/:deploymentName/promote/:targetDeployment", RouteParams["/api/v1/:app/deployments/:deploymentName/promote/:targetDeployment"]]
+      | ["/api/v1/:app/deployments/:deploymentName/releases", RouteParams["/api/v1/:app/deployments/:deploymentName/releases"]]
       | ["/api/v1/:org", RouteParams["/api/v1/:org"]]
       | ["/api/v1/:org/apps", RouteParams["/api/v1/:org/apps"]]
       | ["/api/v1/:org/apps/:app", RouteParams["/api/v1/:org/apps/:app"]]

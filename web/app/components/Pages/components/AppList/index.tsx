@@ -6,6 +6,8 @@ import { route } from "routes-gen";
 import { Spotlight, SpotlightActionData } from "@mantine/spotlight";
 import { IconApps, IconSearch } from "@tabler/icons-react";
 import { User } from "~/.server/services/Auth/Auth.interface";
+import { useOrgContext } from "~/context/OrgContext";
+import { slugify } from "~/utils/slugify";
 
 type AppListForOrgProps = {
   user: User;
@@ -14,8 +16,11 @@ type AppListForOrgProps = {
 export function AppListForOrg({ user }: AppListForOrgProps) {
   const params = useParams();
   const navigate = useNavigate();
+  const { orgList } = useOrgContext();
+  const orgObj = orgList.find(org => slugify(org.orgName) === params.org);
+
   const { data, isLoading, isError } = useGetAppListForOrg({
-    orgId: params.org ?? "",
+    orgId: orgObj?.id ?? "",
     userEmail: user.user.email,
   });
 

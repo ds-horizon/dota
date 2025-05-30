@@ -1,10 +1,13 @@
 import cx from "clsx";
 import { useEffect, useState } from "react";
-import { Table, ScrollArea, Text } from "@mantine/core";
+import { Table, ScrollArea, Text, ActionIcon, Tooltip, Button } from "@mantine/core";
 import classes from "./index.module.css";
 import { useGetReleaseListForDeployment } from "./hooks/useGetReleaseListForDeployment";
 import { useParams, useSearchParams } from "@remix-run/react";
 import { ReleaseListResponse } from "./data/getReleaseListForDeployment";
+import { IconDownload, IconUpload } from "@tabler/icons-react";
+import { ReleaseUploadForm } from "../ReleaseUploadForm";
+
 type RowsProps = {
   isLoading: boolean;
   isError: boolean;
@@ -16,7 +19,7 @@ export const Rows = ({ isLoading, isError, data, onClick }: RowsProps) => {
   if (isLoading) {
     return (
       <Table.Tr>
-        <Table.Td colSpan={8}>
+        <Table.Td colSpan={9}>
           <Text>Loading</Text>
         </Table.Td>
       </Table.Tr>
@@ -26,7 +29,7 @@ export const Rows = ({ isLoading, isError, data, onClick }: RowsProps) => {
   if (isError) {
     return (
       <Table.Tr>
-        <Table.Td colSpan={8}>
+        <Table.Td colSpan={9}>
           <Text>Something went Wrong!</Text>
         </Table.Td>
       </Table.Tr>
@@ -36,12 +39,19 @@ export const Rows = ({ isLoading, isError, data, onClick }: RowsProps) => {
   if (!data?.length) {
     return (
       <Table.Tr>
-        <Table.Td colSpan={8}>
+        <Table.Td colSpan={9}>
           <Text>No Data Found</Text>
         </Table.Td>
       </Table.Tr>
     );
   }
+
+  const handleDownload = (e: React.MouseEvent, blobUrl?: string) => {
+    e.stopPropagation();
+    if (blobUrl) {
+      window.open(blobUrl, '_blank');
+    }
+  };
 
   return (
     <>
@@ -55,6 +65,19 @@ export const Rows = ({ isLoading, isError, data, onClick }: RowsProps) => {
           <Table.Td>{row.activeDevices}</Table.Td>
           <Table.Td>{row.rollout}%</Table.Td>
           <Table.Td>{new Date(row.releasedAt).toLocaleDateString()}</Table.Td>
+          <Table.Td>
+            {row.blobUrl && (
+              <Tooltip label="Download Release">
+                <ActionIcon
+                  variant="subtle"
+                  color="blue"
+                  onClick={(e) => handleDownload(e, row.blobUrl)}
+                >
+                  <IconDownload style={{ width: '70%', height: '70%' }} />
+                </ActionIcon>
+              </Tooltip>
+            )}
+          </Table.Td>
         </Table.Tr>
       ))}
     </>
@@ -71,52 +94,71 @@ export function ReleaseListForDeploymentTable() {
     });
 
   const [scrolled, setScrolled] = useState(false);
+  const [uploadModalOpened, setUploadModalOpened] = useState(false);
 
   useEffect(() => {
     refetch();
   }, [searchParams.get("deployment")]);
 
   return (
-    <ScrollArea
-      h={"60%"}
-      onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
-    >
-      <Table
-        striped
-        highlightOnHover
-        withTableBorder
-        stickyHeader
-        mt={"xl"}
-        fz={"lg"}
+    <>
+      {/* Comment out or hide the Upload Release button and modal */}
+      {/* <Button
+        leftSection={<IconUpload size={14} />}
+        onClick={() => setUploadModalOpened(true)}
+        mb="md"
       >
-        <Table.Thead
-          className={cx(classes.header, { [classes.scrolled]: scrolled })}
+        Upload Release
+      </Button> */}
+      <ScrollArea
+        h={"60%"}
+        onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+      >
+        <Table
+          striped
+          highlightOnHover
+          withTableBorder
+          stickyHeader
+          mt={"xl"}
+          fz={"lg"}
         >
-          <Table.Tr>
-            <Table.Th>Label</Table.Th>
-            <Table.Th>Target Versions</Table.Th>
-            <Table.Th>Status</Table.Th>
-            <Table.Th>Mandatory</Table.Th>
-            <Table.Th>Rollbacks</Table.Th>
-            <Table.Th>Active Devices</Table.Th>
-            <Table.Th>Rollout</Table.Th>
-            <Table.Th>Released At</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          <Rows
-            isLoading={isLoading || isFetching}
-            isError={isError}
-            data={data}
-            onClick={(id: string) => {
-              setSearchParams((p) => {
-                p.set("releaseId", id);
-                return p;
-              });
-            }}
-          />
-        </Table.Tbody>
-      </Table>
-    </ScrollArea>
+          <Table.Thead
+            className={cx(classes.header, { [classes.scrolled]: scrolled })}
+          >
+            <Table.Tr>
+              <Table.Th>Label</Table.Th>
+              <Table.Th>Target Versions</Table.Th>
+              <Table.Th>Status</Table.Th>
+              <Table.Th>Mandatory</Table.Th>
+              <Table.Th>Rollbacks</Table.Th>
+              <Table.Th>Active Devices</Table.Th>
+              <Table.Th>Rollout</Table.Th>
+              <Table.Th>Released At</Table.Th>
+              <Table.Th>Download</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            <Rows
+              isLoading={isLoading || isFetching}
+              isError={isError}
+              data={data}
+              onClick={(id: string) => {
+                setSearchParams((p) => {
+                  p.set("releaseId", id);
+                  return p;
+                });
+              }}
+            />
+          </Table.Tbody>
+        </Table>
+      </ScrollArea>
+      {/* <ReleaseUploadForm
+        opened={uploadModalOpened}
+        onClose={() => setUploadModalOpened(false)}
+        refetch={refetch}
+        deploymentName={searchParams.get("deployment") ?? ""}
+        appId={params.app ?? ""}
+      /> */}
+    </>
   );
 }

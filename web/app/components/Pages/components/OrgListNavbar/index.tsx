@@ -5,6 +5,7 @@ import { useEffect, useMemo } from "react";
 import { IconGauge } from "@tabler/icons-react";
 import { route } from "routes-gen";
 import { ACTION_EVENTS, actions } from "~/utils/event-emitter";
+import { slugify } from "~/utils/slugify";
 
 export function OrgListWithActions() {
   const { data, isLoading, isError, refetch } = useGetOrgList();
@@ -27,7 +28,7 @@ export function OrgListWithActions() {
         links: [
           {
             label: "Apps",
-            link: route("/dashboard/:org/apps", { org: org.id, orgName: org.orgName }),
+            link: route("/dashboard/:org/apps", { org: slugify(org.orgName) }),
           },
           // {
           //   label: "Manage",
