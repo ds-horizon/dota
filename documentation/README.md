@@ -84,4 +84,4 @@ We welcome contributions to improve the documentation. Please see the [Contribut
 
 ## Community
 
-Join the [DreamSportsLabs Discord server](https://discord.gg/dreamsportslabs) to connect with other DOTA users and contributors. 
+Join the [DreamSportsLabs Discord server](https://discord.gg/tUpDV8EaDM) to connect with other DOTA users and contributors. 

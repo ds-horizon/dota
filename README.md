@@ -31,7 +31,7 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 - [Web Dashboard](https://dota.dreamsportslabs.com/documentation/web/dashboard)
 - [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
 - [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
-- [Ask a Question (Discord)](https://discord.gg/Sa6a5Scj)
+- [Ask a Question (Discord)](https://discord.gg/tUpDV8EaDM)
 - [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
 
 ---
@@ -169,4 +169,4 @@ This code is provided under the MIT License, see the [LICENSE](LICENSE.txt) to l
 
 ## ✉️ Contact
 
-If you need feedback or support, reach out via the [Issue Tracker](https://github.com/dream-sports-labs/dota/issues) or [Discord](https://discord.gg/Sa6a5Scj).
+If you need feedback or support, reach out via the [Issue Tracker](https://github.com/dream-sports-labs/dota/issues) or [Discord](https://discord.gg/tUpDV8EaDM).

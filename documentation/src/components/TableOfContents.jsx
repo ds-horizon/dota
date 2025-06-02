@@ -160,7 +160,7 @@ export default function TableOfContents() {
       {/* This div will be pushed to the bottom by mt-auto and its items aligned to the right */}
       <div className="toc-support-links mt-auto pt-4 border-t border-border-color flex flex-col items-end space-y-2">
         <a 
-          href="https://discord.gg/Sa6a5Scj" 
+          href="https://discord.gg/tUpDV8EaDM" 
           className="text-sm text-primary hover:text-primary-dark font-medium"
           target="_blank"
           rel="noopener noreferrer"
