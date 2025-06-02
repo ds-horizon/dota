@@ -58,7 +58,7 @@ All contributions must be properly tested to maintain project stability:
 
 - If you have questions or need clarification on contributing, reach out via:
   - [Issue Tracker](https://github.com/dream-sports-labs/dota/issues)
-  - [Discord](https://discord.gg/Sa6a5Scj)
+  - [Discord](https://discord.gg/tUpDV8EaDM)
 ## Development Setup
 
 ### Prerequisites

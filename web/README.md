@@ -18,7 +18,7 @@ See [Web Dashboard Documentation](https://dota.dreamsportslabs.com/documentation
 
 ## Support
 
-- [Ask a Question (Discord)](https://discord.gg/Sa6a5Scj)
+- [Ask a Question (Discord)](https://discord.gg/tUpDV8EaDM)
 - [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
 
 ## Features Overview
