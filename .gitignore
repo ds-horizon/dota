@@ -72,4 +72,6 @@ dota
 cli/package-lock.json
 cli/dota.config
 package-lock.json
+mcp/build
+info.txt
 .dota.config
