@@ -562,14 +562,38 @@ function App() {
             </div>
             {/* Trusted by companies section - anchored to bottom of hero */}
             <div className="w-full flex flex-col items-center justify-center pb-20">
-              <div className="text-sm uppercase tracking-widest text-text-tertiary text-center mb-4 font-semibold">
+              <div className="text-sm uppercase tracking-widest text-text-tertiary text-center mb-8 font-semibold">
                 Trusted by
               </div>
-              <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
-                <Dream11Logo />
-                <FanCodeLogo />
-                <PicksLogo />
-                <DreamPlayLogo />
+              
+              {/* Rolling Billboard Container - 20% narrower */}
+              <div className="w-3/5 overflow-hidden relative">
+                {/* Scrolling content */}
+                <div className="flex animate-scroll-horizontal">
+                  {/* First set of logos */}
+                  <div className="flex items-center justify-center gap-16 md:gap-20 px-8 flex-shrink-0">
+                    <Dream11Logo />
+                    <FanCodeLogo />
+                    <PicksLogo />
+                    <DreamPlayLogo />
+                  </div>
+                  
+                  {/* Duplicate set for seamless loop */}
+                  <div className="flex items-center justify-center gap-16 md:gap-20 px-8 flex-shrink-0">
+                    <Dream11Logo />
+                    <FanCodeLogo />
+                    <PicksLogo />
+                    <DreamPlayLogo />
+                  </div>
+                  
+                  {/* Third set for extra smooth scrolling */}
+                  <div className="flex items-center justify-center gap-16 md:gap-20 px-8 flex-shrink-0">
+                    <Dream11Logo />
+                    <FanCodeLogo />
+                    <PicksLogo />
+                    <DreamPlayLogo />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

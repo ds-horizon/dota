@@ -1,6 +1,51 @@
 # Dota Management MCP Server
 
-A Model Context Protocol (MCP) server that exposes all Dota management APIs as tools. This server allows you to manage applications, deployments, releases, collaborators, and view metrics through MCP-compatible clients.
+A comprehensive Model Context Protocol (MCP) server that exposes Dota management APIs for seamless integration with AI assistants and development tools.
+
+## 🚀 Quick Setup
+
+**One-command installation:**
+```bash
+cd mcp && npm run setup
+```
+
+This single command will:
+1. Install all dependencies
+2. Build the TypeScript project
+3. Automatically configure the MCP server in Cursor's settings
+4. Display available tools and usage information
+
+After running this command, **restart Cursor** to load the new MCP server.
+
+## 📋 Manual Installation
+
+If you prefer to set up manually:
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Build the project:**
+   ```bash
+   npm run build
+   ```
+
+3. **Configure in Cursor:**
+   Add to your `~/.cursor/mcp.json`:
+   ```json
+   {
+     "mcpServers": {
+       "dota-management": {
+         "command": "node",
+         "args": ["/absolute/path/to/mcp/build/index.js"],
+         "env": {
+           "DOTA_API_URL": "http://localhost:3000"
+         }
+       }
+     }
+   }
+   ```
 
 ## Features
 
@@ -34,23 +79,6 @@ A Model Context Protocol (MCP) server that exposes all Dota management APIs as t
 - List application collaborators
 - Add new collaborators with permissions
 - Remove collaborators
-
-## Quick Start
-
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Build the server**:
-   ```bash
-   npm run build
-   ```
-
-3. **Run the server**:
-   ```bash
-   npm start
-   ```
 
 ## Available Tools (16 total)
 
