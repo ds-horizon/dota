@@ -1,0 +1,49 @@
+.triggerButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  box-shadow: var(--mantine-shadow-xl);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.triggerButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--mantine-shadow-xl);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 139, 230, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(34, 139, 230, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 139, 230, 0);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .triggerButton {
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+/* Reduce animation on mobile to save battery */
+@media (max-width: 768px) {
+  .triggerButton {
+    animation: none;
+  }
+}
+
+/* Respect user's preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .triggerButton {
+    animation: none;
+    transition: none;
+  }
+} 

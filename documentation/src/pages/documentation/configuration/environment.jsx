@@ -222,7 +222,7 @@ export default function EnvironmentConfig() {
               <tr>
                 <td className="border px-4 py-2 font-mono">DB_NAME</td>
                 <td className="border px-4 py-2">Database name</td>
-                <td className="border px-4 py-2 font-mono">codepushdb</td>
+                <td className="border px-4 py-2 font-mono">dotadb</td>
                 <td className="border px-4 py-2">No</td>
               </tr>
             </tbody>
@@ -508,7 +508,7 @@ DB_HOST=
 DB_PORT=3306
 DB_USER=
 DB_PASS=
-DB_NAME=codepushdb
+DB_NAME=dotadb
 
 # 4) CACHE (Redis)
 # -----------------------------------------------------------------------------

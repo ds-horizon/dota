@@ -17,17 +17,20 @@ export const seedData = {
     { id: "tenant_1", displayName: "organization-one", createdBy: "id_0" },
     { id: "tenant_2", displayName: "organization-two", createdBy: "id_1" },
     { id: "tenant_3", displayName: "org-hyphenated", createdBy: "id_0" },
+    { id: "tenant_mcp", displayName: "org-mcp", createdBy: "id_0" },
   ],
   apps: [
     { id: "id_2", name: "app-one", accountId: "id_0", tenantId: "tenant_1", createdTime: new Date().getTime() },
     { id: "id_3", name: "app-two", accountId: "id_1", tenantId: "tenant_2", createdTime: new Date().getTime() },
     { id: "id_4", name: "independent-app", accountId: "id_0", createdTime: new Date().getTime() }, // App without a tenant association
     { id: "id_5", name: "hyphenated-app", accountId: "id_0", tenantId: "tenant_3", createdTime: new Date().getTime() },
+    { id: "id_mcp_app_1", name: "mcp-test-app-1", accountId: "id_0", tenantId: "tenant_mcp", createdTime: new Date().getTime() },
   ],
   collaborators: [
     { email: "user1@example.com", accountId: "id_0", appId: "id_2", permission: "Owner", role: "Admin" },
     { email: "user2@example.com", accountId: "id_1", appId: "id_3", permission: "Owner", role: "Admin" },
     { email: "user1@example.com", accountId: "id_0", appId: "id_5", permission: "Owner", role: "Admin" },
+    { email: "user1@example.com", accountId: "id_0", appId: "id_mcp_app_1", permission: "Owner", role: "Admin" },
   ],
   deployments: [
     {
@@ -53,6 +56,14 @@ export const seedData = {
       appId: "id_5",
       packageId: "pkg_hyphenated_1",
       createdTime: 1731269070,
+    },
+    {
+      id: "id_mcp_deploy_1",
+      name: "main-mcp-deployment",
+      key: "deployment_key_mcp_1",
+      appId: "id_mcp_app_1",
+      packageId: "pkg_mcp_1",
+      createdTime: 1731269100,
     },
   ],
   packages: [
@@ -174,6 +185,23 @@ export const seedData = {
       uploadTime: 1731269090,
       deploymentId: "id_7",
       rollout: 100,
+    },
+    {
+      id: "pkg_mcp_1",
+      appVersion: "1.0.0",
+      blobUrl: "https://example.com/blob_mcp_1",
+      description: "Initial MCP test release",
+      isDisabled: false,
+      isMandatory: false,
+      label: "v1",
+      manifestBlobUrl: "https://example.com/manifest_mcp_1",
+      packageHash: "hash_mcp_1",
+      releasedBy: "user1@example.com",
+      releaseMethod: "Upload",
+      size: 1111,
+      uploadTime: 1731269100,
+      deploymentId: "id_mcp_deploy_1",
+      rollout: 1,
     },
   ],
   accessKeys: [

@@ -2,20 +2,27 @@
   "name": "dota-management-mcp-server",
   "version": "1.0.0",
   "description": "MCP server for Dota management operations",
-  "main": "build/index.js",
+  "main": "build/http-server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node build/index.js",
+    "start": "node build/http-server.js",
     "dev": "tsc --watch",
+    "dev:server": "tsc && node build/http-server.js",
+    "start:local": "DOTA_API_URL=http://localhost:3000 MCP_PORT=3001 node build/http-server.js",
+    "start:prod": "node build/http-server.js",
     "setup": "npm install && npm run build && node setup-mcp.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
     "axios": "^1.7.9",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
     "typescript": "^5.7.2"
   },
   "keywords": ["mcp", "dota", "management", "api"],

@@ -11,6 +11,7 @@ declare module "routes-gen" {
     "/api/v1/:org/apps/:app": { "org": string, "app": string };
     "/api/v1/access-keys": Record<string, never>;
     "/api/v1/auth/status": Record<string, never>;
+    "/api/v1/chatbot": Record<string, never>;
     "/api/v1/tenants": Record<string, never>;
     "/auth/:provider": { "provider": string };
     "/auth/:provider/callback": { "provider": string };
@@ -40,6 +41,7 @@ declare module "routes-gen" {
       | ["/api/v1/:org/apps/:app", RouteParams["/api/v1/:org/apps/:app"]]
       | ["/api/v1/access-keys"]
       | ["/api/v1/auth/status"]
+      | ["/api/v1/chatbot"]
       | ["/api/v1/tenants"]
       | ["/auth/:provider", RouteParams["/auth/:provider"]]
       | ["/auth/:provider/callback", RouteParams["/auth/:provider/callback"]]

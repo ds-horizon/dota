@@ -20,6 +20,7 @@ import { OrgContext, Organization } from "../context/OrgContext";
 import { useGetOrgList } from "../components/Pages/components/OrgListNavbar/hooks/useGetOrgList";
 import { useState, useEffect } from "react";
 import { slugify } from "../utils/slugify";
+import { ChatbotTrigger } from "~/components/Chatbot/ChatbotTrigger";
 
 export const loader = authenticateLoaderRequest();
 
@@ -88,6 +89,12 @@ export default function Hello() {
           <Outlet />
         </AppShell.Main>
       </AppShell>
+      
+      {/* Chatbot Trigger - appears on all dashboard pages */}
+      <ChatbotTrigger 
+        user={data} 
+        tenant={selectedOrg?.orgName /* pass canonical tenant id to chatbot */}
+      />
     </OrgContext.Provider>
   );
 }

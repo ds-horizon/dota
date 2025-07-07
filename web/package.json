@@ -37,12 +37,14 @@
     "isbot": "^4.1.0",
     "jszip": "^3.10.1",
     "morgan": "^1.10.0",
+    "openai": "^4.67.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
     "remix-auth": "^3.7.0",
     "remix-auth-google": "^2.0.0",
-    "routes-gen": "^0.6.1"
+    "routes-gen": "^0.6.1",
+    "lucide-react": "^0.467.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.13.1",

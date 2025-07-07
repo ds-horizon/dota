@@ -26,7 +26,7 @@ export default function ReactNativeConfig() {
       question: 'Updates being downloaded but not applied',
       answer: (
         <ul className="list-disc pl-6 space-y-1">
-          <li>Check the InstallMode configuration in your CodePush setup</li>
+          <li>Check the InstallMode configuration in your DOTA setup</li>
           <li>Verify that the app is properly restarting after update installation</li>
           <li>Ensure you're testing with the correct build type (release vs. debug)</li>
         </ul>
