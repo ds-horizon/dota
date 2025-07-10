@@ -25,12 +25,24 @@ export const seedData = {
     { id: "id_4", name: "independent-app", accountId: "id_0", createdTime: new Date().getTime() }, // App without a tenant association
     { id: "id_5", name: "hyphenated-app", accountId: "id_0", tenantId: "tenant_3", createdTime: new Date().getTime() },
     { id: "id_mcp_app_1", name: "mcp-test-app-1", accountId: "id_0", tenantId: "tenant_mcp", createdTime: new Date().getTime() },
+    // New fresh apps for Organisation One
+    { id: "id_10", name: "fresh-app-org1", accountId: "id_0", tenantId: "tenant_1", createdTime: new Date().getTime() },
+    { id: "id_11", name: "fresh-app2-org1", accountId: "id_0", tenantId: "tenant_1", createdTime: new Date().getTime() },
+    // DreamTestApp-android under Organization-One
+    { id: "id_20", name: "DreamTestApp-android", accountId: "id_0", tenantId: "tenant_1", createdTime: new Date().getTime() },
   ],
   collaborators: [
     { email: "user1@example.com", accountId: "id_0", appId: "id_2", permission: "Owner", role: "Admin" },
     { email: "user2@example.com", accountId: "id_1", appId: "id_3", permission: "Owner", role: "Admin" },
     { email: "user1@example.com", accountId: "id_0", appId: "id_5", permission: "Owner", role: "Admin" },
     { email: "user1@example.com", accountId: "id_0", appId: "id_mcp_app_1", permission: "Owner", role: "Admin" },
+    // Associate owner with newly added apps
+    { email: "user1@example.com", accountId: "id_0", appId: "id_10", permission: "Owner", role: "Admin" },
+    { email: "user1@example.com", accountId: "id_0", appId: "id_11", permission: "Owner", role: "Admin" },
+    { email: "user1@example.com", accountId: "id_0", appId: "id_20", permission: "Owner", role: "Admin" },
+    // Ensure all apps have user1@example.com as an Owner
+    { email: "user1@example.com", accountId: "id_0", appId: "id_3", permission: "Owner", role: "Admin" },
+    { email: "user1@example.com", accountId: "id_0", appId: "id_4", permission: "Owner", role: "Admin" },
   ],
   deployments: [
     {
@@ -38,7 +50,7 @@ export const seedData = {
       name: "Deployment One",
       key: "O25dwjupnmTCC-q70qC1CzWfO73NkSR75brivk",
       appId: "id_2",
-      packageId: "pkg_1", // Link deployment to package
+      packageId: "pkg_rollout_1", // Link to the new canary release
       createdTime: 1731269070,
     },
     {
@@ -64,6 +76,31 @@ export const seedData = {
       appId: "id_mcp_app_1",
       packageId: "pkg_mcp_1",
       createdTime: 1731269100,
+    },
+    {
+      id: "id_12",
+      name: "production",
+      key: "deployment_key_fresh_1",
+      appId: "id_10",
+      packageId: "pkg_fresh_10",
+      createdTime: Math.floor(Date.now() / 1000),
+    },
+    {
+      id: "id_13",
+      name: "production",
+      key: "deployment_key_fresh_2",
+      appId: "id_11",
+      packageId: "pkg_fresh_11",
+      createdTime: Math.floor(Date.now() / 1000),
+    },
+    // Production deployment for DreamTestApp-android
+    {
+      id: "id_14",
+      name: "production",
+      key: "deployment_key_dream_prod",
+      appId: "id_20",
+      packageId: "pkg_dream_1",
+      createdTime: Math.floor(Date.now() / 1000),
     },
   ],
   packages: [
@@ -203,6 +240,75 @@ export const seedData = {
       deploymentId: "id_mcp_deploy_1",
       rollout: 1,
     },
+    {
+      id: "pkg_fresh_10",
+      appVersion: "2.0.0",
+      blobUrl: "https://example.com/blob_fresh_app1_v1.zip",
+      description: "Initial release for fresh-app-org1",
+      isDisabled: false,
+      isMandatory: false,
+      label: "v1",
+      manifestBlobUrl: "https://example.com/manifest_fresh_app1_v1.json",
+      packageHash: "hash_fresh_app1_v1",
+      releasedBy: "user1@example.com",
+      releaseMethod: "Upload",
+      size: 4096,
+      uploadTime: Date.now(),
+      deploymentId: "id_12",
+      rollout: 100,
+    },
+    {
+      id: "pkg_fresh_11",
+      appVersion: "1.0.0",
+      blobUrl: "https://example.com/blob_fresh_app2_v1.zip",
+      description: "Initial release for fresh-app2-org1",
+      isDisabled: false,
+      isMandatory: false,
+      label: "v1",
+      manifestBlobUrl: "https://example.com/manifest_fresh_app2_v1.json",
+      packageHash: "hash_fresh_app2_v1",
+      releasedBy: "user1@example.com",
+      releaseMethod: "Upload",
+      size: 5120,
+      uploadTime: Date.now(),
+      deploymentId: "id_13",
+      rollout: 100,
+    },
+    {
+      id: "pkg_rollout_1",
+      appVersion: "1.3.0",
+      blobUrl: "https://example.com/blob_rollout_1",
+      description: "Canary release for App One (1% rollout)",
+      isDisabled: false,
+      isMandatory: false,
+      label: "v4",
+      manifestBlobUrl: "https://example.com/manifest_rollout_1",
+      packageHash: "hash_rollout_1",
+      releasedBy: "user1@example.com",
+      releaseMethod: "Upload",
+      size: 1500,
+      uploadTime: Date.now(),
+      deploymentId: "id_5",
+      rollout: 1,
+    },
+    // Initial canary (1 %) production release for DreamTestApp-android
+    {
+      id: "pkg_dream_1",
+      appVersion: "1.0.0",
+      blobUrl: "https://example.com/blob_dream_v1.zip",
+      description: "Initial release for DreamTestApp-android (1% rollout)",
+      isDisabled: false,
+      isMandatory: false,
+      label: "v1",
+      manifestBlobUrl: "https://example.com/manifest_dream_v1.json",
+      packageHash: "hash_dream_v1",
+      releasedBy: "user1@example.com",
+      releaseMethod: "Upload",
+      size: 2048,
+      uploadTime: Date.now(),
+      deploymentId: "id_14",
+      rollout: 1,
+    },
   ],
   accessKeys: [
     {
@@ -234,8 +340,8 @@ async function seed() {
   try {
     // Initialize models
     const models = createModelss(sequelize);
-    // Sync database
-    await sequelize.sync({ alter: true }); // Alters tables without dropping them
+    // Drop all existing tables and recreate them before seeding
+    await sequelize.sync({ force: true });
 
     // Insert seed data with upsert operations to avoid duplicate key errors
     console.log("Seeding accounts...");
