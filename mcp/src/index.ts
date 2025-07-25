@@ -6,58 +6,61 @@ import axios, { AxiosResponse } from "axios";
 // Base API URL - can be configured via environment variable
 const API_BASE_URL = process.env.DOTA_API_URL || "http://localhost:3000";
 
+// ============================================================
+// Dynamic base-path detection (supports dev /api/v1 and prod / )
+// ============================================================
+
+const BASE_CANDIDATES = ['', '/api/v1']; // prod first, then dev
+let detectedBasePath: string | null = null;
+
+async function pickBasePath(headers: Record<string,string>): Promise<string> {
+  if (detectedBasePath !== null) return detectedBasePath;
+  for (const base of BASE_CANDIDATES) {
+    try {
+      const resp = await axios({
+        method: 'HEAD',
+        url: `${API_BASE_URL}${base}/tenants`,
+        headers,
+        validateStatus: (s)=>true,
+      });
+      if (resp.status !== 404) {
+        detectedBasePath = base;
+        return base;
+      }
+    } catch (_) { /* ignore */ }
+  }
+  // fallback to first candidate
+  detectedBasePath = BASE_CANDIDATES[0];
+  return detectedBasePath;
+}
+
 // Helper function to make API requests with proper error handling
 async function makeApiRequest<T>(config: {
   method: 'GET' | 'POST' | 'PATCH' | 'DELETE';
-  url: string;
+  url: string;               // path starting with '/' and WITHOUT /api/v1
   data?: any;
   headers?: Record<string, string>;
 }): Promise<T> {
-  try {
-    const response = await axios({
-      method: config.method,
-      url: `${API_BASE_URL}${config.url}`,
-      data: config.data,
-      headers: {
-        'Content-Type': 'application/json',
-        ...config.headers,
-      },
-    });
-    
-    return response.data;
-  } catch (error: any) {
-    let errorMessage = 'API request failed';
-    
-    if (error.response) {
-      // Server responded with error status
-      const status = error.response.status;
-      const data = error.response.data;
-      
-      if (data && typeof data === 'object') {
-        if (Array.isArray(data.message)) {
-          // Handle validation errors with array of messages
-          const messages = data.message.map((msg: any) => `${msg.field}: ${msg.message}`).join(', ');
-          errorMessage = `API Error (${status}): ${messages}`;
-        } else if (data.message) {
-          errorMessage = `API Error (${status}): ${data.message}`;
-        } else if (data.error) {
-          errorMessage = `API Error (${status}): ${data.error}`;
-        } else {
-          errorMessage = `API Error (${status}): ${JSON.stringify(data)}`;
-        }
-      } else {
-        errorMessage = `API Error (${status}): ${data || 'Unknown error'}`;
-      }
-    } else if (error.request) {
-      // Network error
-      errorMessage = `Network Error: Could not connect to API at ${API_BASE_URL}${config.url}`;
-    } else {
-      // Other error
-      errorMessage = `Request Error: ${error.message}`;
-    }
-    
-    throw new Error(errorMessage);
+  // Ensure leading slash
+  const path = config.url.startsWith('/') ? config.url : `/${config.url}`;
+  const headers = config.headers ?? {};
+  const basePath = await pickBasePath(headers);
+
+  const response = await axios({
+    method: config.method,
+    url: `${API_BASE_URL}${basePath}${path}`,
+    data: config.data,
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+  });
+
+  if (response.status >= 400) {
+    throw new Error(`API Error (${response.status}): ${JSON.stringify(response.data)}`);
   }
+
+  return response.data;
 }
 
 // Create server instance
@@ -93,7 +96,7 @@ server.tool(
     // Use the apps endpoint for the specific organization
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: `/api/v1/${tenant}/apps`,
+      url: `/${tenant}/apps`,
       headers,
     });
 
@@ -120,7 +123,7 @@ server.tool(
   async ({ authToken, name, orgId, orgName, displayName }) => {
     const data = await makeApiRequest<any>({
       method: 'POST',
-      url: `/api/v1/${orgId?.length ? orgId : 'new'}/apps`,
+      url: `/${orgId?.length ? orgId : 'new'}/apps`,
       headers: {
         'Authorization': `Bearer ${authToken}`,
       },
@@ -158,7 +161,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: `/api/v1/${tenant || 'default'}/apps`,
+      url: `/${tenant || 'default'}/apps`,
       headers,
     });
 
@@ -197,7 +200,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: `/api/v1/${appName}/deployments`,
+      url: `/${appName}/deployments`,
       headers,
     });
 
@@ -229,7 +232,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'POST',
-      url: `/api/v1/${appName}/deployments`,
+      url: `/${appName}/deployments`,
       headers,
       data: {
         name,
@@ -264,7 +267,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: `/api/v1/${appName}/deployments/${deploymentName}`,
+      url: `/${appName}/deployments/${deploymentName}`,
       headers,
     });
 
@@ -376,7 +379,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'DELETE',
-      url: `/api/v1/${appName}/deployments`,
+      url: `/${appName}/deployments`,
       headers,
     });
 
@@ -424,7 +427,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'PATCH',
-      url: `/api/v1/${appName}/deployments/${deploymentName}`,
+      url: `/${appName}/deployments/${deploymentName}`,
       headers,
       data: updateData,
     });
@@ -456,7 +459,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: `/api/v1/${appName}/deployments/${deploymentName}`,
+      url: `/${appName}/deployments/${deploymentName}`,
       headers,
     });
 
@@ -491,7 +494,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'POST',
-      url: `/api/v1/${appName}/deployments/${sourceDeployment}/promote/${targetDeployment}`,
+      url: `/${appName}/deployments/${sourceDeployment}/promote/${targetDeployment}`,
       headers,
       data: {
         appId: appName,
@@ -532,7 +535,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: `/api/v1/${appName}/deployments/${deploymentName}`,
+      url: `/${appName}/deployments/${deploymentName}`,
       headers,
     });
 
@@ -583,7 +586,7 @@ server.tool(
   async ({ authToken }) => {
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: '/api/v1/tenants',
+      url: '/tenants',
       headers: {
         'Authorization': `Bearer ${authToken}`,
       },
@@ -619,7 +622,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'GET',
-      url: `/api/v1/${appName}/collaborators`,
+      url: `/${appName}/collaborators`,
       headers,
     });
 
@@ -651,7 +654,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'POST',
-      url: `/api/v1/${appName}/collaborators`,
+      url: `/${appName}/collaborators`,
       headers,
       data: {
         email,
@@ -687,7 +690,7 @@ server.tool(
 
     const data = await makeApiRequest<any>({
       method: 'DELETE',
-      url: `/api/v1/${appName}/collaborators`,
+      url: `/${appName}/collaborators`,
       headers,
     });
 
