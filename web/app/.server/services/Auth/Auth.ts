@@ -15,6 +15,9 @@ import { env } from "../config";
 import { CodepushService } from "../Codepush";
 import { redirectTo } from "../Cookie";
 
+// Development token taken from environment variable
+const DEV_TOKEN: string = process.env.token_env || "mock-google-token";
+
 export enum SocialsProvider {
   GOOGLE = "google",
 }
@@ -89,7 +92,7 @@ export class Auth {
         (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET)) {
       try {
         // Get mock user
-        const mockUser = await CodepushService.getUser("mock-google-token");
+        const mockUser = await CodepushService.getUser(DEV_TOKEN);
         
         // Create a session for the mock user
         const session = await SessionStorageService.sessionStorage.getSession();
@@ -118,7 +121,7 @@ export class Auth {
     if (provider === SocialsProvider.GOOGLE && 
         (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET)) {
       try {
-        const mockUser = await CodepushService.getUser("mock-google-token");
+        const mockUser = await CodepushService.getUser(DEV_TOKEN);
         return mockUser;
       } catch (error) {
         console.error("Error authenticating with mock token:", error);
@@ -146,10 +149,10 @@ export class Auth {
       // Handle mock Google token in development environment
       if (process.env.NODE_ENV === "development" && 
           env.LOCAL_GOOGLE_TOKEN && 
-          request.headers.get("Authorization")?.includes("mock-google-token")) {
+          request.headers.get("Authorization")?.includes(DEV_TOKEN)) {
         try {
-          // Use CodepushService.getUser with mock-google-token
-          const userData = await CodepushService.getUser("mock-google-token");
+          // Use CodepushService.getUser with development token
+          const userData = await CodepushService.getUser(DEV_TOKEN);
           if (userData && userData.authenticated) {
             return userData;
           }
@@ -161,7 +164,7 @@ export class Auth {
       // If Google credentials are missing, use mock token
       if (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET) {
         try {
-          const mockUser = await CodepushService.getUser("mock-google-token");
+          const mockUser = await CodepushService.getUser(DEV_TOKEN);
           return mockUser;
         } catch (error) {
           console.error("Error authenticating with mock token:", error);
@@ -193,7 +196,7 @@ export class Auth {
     // If Google credentials are missing, use mock authentication
     if (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET) {
       try {
-        const mockUser = await CodepushService.getUser("mock-google-token");
+        const mockUser = await CodepushService.getUser(DEV_TOKEN);
         const session = await SessionStorageService.sessionStorage.getSession();
         session.set(SessionStorageService.sessionKey, mockUser);
         

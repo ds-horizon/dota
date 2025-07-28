@@ -54,7 +54,8 @@ export function ChatbotTrigger({ user, tenant }: ChatbotTriggerProps) {
       <Portal>
         {isOpen && (
           <Chatbot
-            authToken="mock-google-token" // Using mock token for now
+            // Using env variable for token
+            authToken={(process as any).env.token_env ?? ""}
             tenant={tenant}
             onClose={handleClose}
             minimized={isMinimized}

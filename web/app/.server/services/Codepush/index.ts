@@ -49,8 +49,9 @@ class Codepush {
   });
 
   async getUser(token: string): Promise<User> {
-    // If token is mock-google-token, always try to use LOCAL_GOOGLE_TOKEN first, then fallback to dummy user
-    if (token === "mock-google-token") {
+    // If token is the default CLI development token, always try to use LOCAL_GOOGLE_TOKEN first, then fallback to dummy user
+    const DEV_TOKEN = process.env.token_env || "mock-google-token";
+    if (token === DEV_TOKEN) {
       // If LOCAL_GOOGLE_TOKEN is set and in development, try to use it first
       if (process.env.NODE_ENV === "development" && env.LOCAL_GOOGLE_TOKEN) {
         try {

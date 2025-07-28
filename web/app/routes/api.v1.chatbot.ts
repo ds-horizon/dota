@@ -9,6 +9,7 @@ const openai = new OpenAI({
 });
 
 const MCP_SERVER_URL = process.env.MCP_SERVER_URL || "http://localhost:3001";
+const DEV_TOKEN = process.env.token_env || "mock-google-token";
 
 interface ChatMessage {
   role: "system" | "user" | "assistant";
@@ -189,7 +190,7 @@ const chatbot: AuthenticatedActionFunction = async ({ user, request }) => {
               // Add auth token to parameters and merge any tenant from the outer context as fallback
               const mcpParameters = {
                 ...parameters,
-                authToken: "mock-google-token",
+                authToken: DEV_TOKEN,
                 ...(context.tenant && { tenant: context.tenant }),
               };
 
