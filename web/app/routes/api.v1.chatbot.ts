@@ -199,6 +199,14 @@ const chatbot: AuthenticatedActionFunction = async ({ user, request }) => {
               delete parameters.deployment_id;
               delete parameters.deploymentId;
 
+              // 6) Version / release alias -> label
+              if (!parameters.label && parameters.releaseVersion) {
+                parameters.label = parameters.releaseVersion;
+              }
+              if (!parameters.label && parameters.version) {
+                parameters.label = parameters.version;
+              }
+
               // Clean up redundant aliases to avoid MCP validation errors
               delete parameters.organization_id;
               delete parameters.organization;

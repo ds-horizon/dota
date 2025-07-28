@@ -548,10 +548,12 @@ app.post('/execute-tool', async (req, res) => {
         
         case 'rollout_for_release':
           // Parameters: label (string), optional tenant
-          if (!parameters.label) {
+          // Accept multiple aliases for the desired version string
+          const releaseLabel = parameters.label || parameters.releaseVersion || parameters.version || parameters.appVersion;
+          if (!releaseLabel) {
             return res.status(400).json({ error: 'Missing label parameter' });
           }
-          const releaseLabel = parameters.label;
+          const safeRegex = new RegExp(releaseLabel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
           const appsDataRr = await makeApiRequest<AppData>({
             method: 'GET',
             url: '/apps',
@@ -573,7 +575,7 @@ app.post('/execute-tool', async (req, res) => {
                     ...(parameters.tenant && { 'tenant': parameters.tenant }),
                   },
                 });
-                const match = (hist.history || []).find((h: any) => h.appVersion?.includes(releaseLabel) || h.description?.includes(releaseLabel));
+                const match = (hist.history || []).find((h: any) => safeRegex.test(h.label) || safeRegex.test(h.appVersion || '') || safeRegex.test(h.description || ''));
                 if (match) {
                   results.push({
                     appName: app.name,
