@@ -54,8 +54,8 @@ export function ChatbotTrigger({ user, tenant }: ChatbotTriggerProps) {
       <Portal>
         {isOpen && (
           <Chatbot
-            // Using env variable for token
-            authToken={(process as any).env.token_env ?? ""}
+            // Using Vite-provided env variable for token (exposed on client)
+            authToken={(import.meta as any).env.VITE_TOKEN_ENV ?? ""}
             tenant={tenant}
             onClose={handleClose}
             minimized={isMinimized}
