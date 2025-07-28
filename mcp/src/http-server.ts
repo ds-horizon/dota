@@ -448,6 +448,150 @@ app.post('/execute-tool', async (req, res) => {
             return res.json({ response: { app: found } });
           }
         
+        case 'increase_rollout':
+          // Alias for update_deployment but expects 'rollout' percentage only
+          // Required parameters: appName, deploymentName, rollout (number 0-100)
+          if (typeof parameters.rollout !== 'number') {
+            return res.status(400).json({ error: 'Missing rollout parameter (number)' });
+          }
+          const incRolloutData = await makeApiRequest({
+            method: 'PATCH',
+            url: `/apps/${parameters.appName}/deployments/${parameters.deploymentName}`,
+            headers: {
+              'Authorization': `Bearer ${parameters.authToken}`,
+              ...(parameters.tenant && { 'tenant': parameters.tenant }),
+            },
+            data: {
+              rollout: parameters.rollout,
+            },
+          });
+          return res.json({ response: incRolloutData });
+
+        case 'get_current_rollout':
+          // Fetch deployment and extract rollout
+          const depInfo = await makeApiRequest<any>({
+            method: 'GET',
+            url: `/apps/${parameters.appName}/deployments/${parameters.deploymentName}`,
+            headers: {
+              'Authorization': `Bearer ${parameters.authToken}`,
+              ...(parameters.tenant && { 'tenant': parameters.tenant }),
+            },
+          });
+          const rolloutPct = depInfo?.package?.rollout ?? 100;
+          return res.json({ response: { rollout: rolloutPct, deployment: depInfo } });
+
+        case 'latest_release_label':
+          // Return most recent release label for a deployment
+          const relHist = await makeApiRequest<any>({
+            method: 'GET',
+            url: `/apps/${parameters.appName}/deployments/${parameters.deploymentName}/history`,
+            headers: {
+              'Authorization': `Bearer ${parameters.authToken}`,
+              ...(parameters.tenant && { 'tenant': parameters.tenant }),
+            },
+          });
+          const latest = Array.isArray(relHist?.history) ? relHist.history[0] : undefined;
+          return res.json({ response: { latestRelease: latest } });
+        
+        case 'latest_codepushes':
+          // Summarise latest releases across all apps within the given period (default 7 days)
+          const lookbackDays = parameters.days ?? 7;
+          const sinceDate = Date.now() - lookbackDays * 24 * 60 * 60 * 1000;
+
+          // Step 1: list apps (optionally within tenant)
+          const appsResp = await makeApiRequest<AppData>({
+            method: 'GET',
+            url: '/apps',
+            headers: {
+              'Authorization': `Bearer ${parameters.authToken}`,
+              ...(parameters.tenant && { 'tenant': parameters.tenant }),
+            },
+          });
+
+          const summaries: any[] = [];
+
+          const appsArr = appsResp.apps || [];
+          for (const app of appsArr) {
+            const deployments = app.deployments || [];
+            for (const dep of deployments) {
+              try {
+                const hist = await makeApiRequest<{ history: any[] }>({
+                  method: 'GET',
+                  url: `/apps/${app.name}/deployments/${dep.name}/history`,
+                  headers: {
+                    'Authorization': `Bearer ${parameters.authToken}`,
+                    ...(parameters.tenant && { 'tenant': parameters.tenant }),
+                  },
+                });
+
+                const latestRelease = hist.history?.[0];
+                if (latestRelease && new Date(latestRelease.uploadTime).getTime() >= sinceDate) {
+                  summaries.push({
+                    appName: app.name,
+                    deployment: dep.name,
+                    label: latestRelease.label,
+                    description: latestRelease.description,
+                    rollout: latestRelease.rollout ?? 100,
+                    uploadTime: latestRelease.uploadTime,
+                  });
+                }
+              } catch (err: any) {
+                console.warn('Failed to fetch history for', app.name, dep.name, err?.message);
+              }
+            }
+          }
+
+          // Sort by time desc
+          summaries.sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());
+
+          return res.json({ response: { summaries } });
+        
+        case 'rollout_for_release':
+          // Parameters: label (string), optional tenant
+          if (!parameters.label) {
+            return res.status(400).json({ error: 'Missing label parameter' });
+          }
+          const releaseLabel = parameters.label;
+          const appsDataRr = await makeApiRequest<AppData>({
+            method: 'GET',
+            url: '/apps',
+            headers: {
+              'Authorization': `Bearer ${parameters.authToken}`,
+              ...(parameters.tenant && { 'tenant': parameters.tenant }),
+            },
+          });
+
+          const results: any[] = [];
+          for (const app of appsDataRr.apps || []) {
+            for (const dep of app.deployments || []) {
+              try {
+                const hist = await makeApiRequest<{ history: any[] }>({
+                  method: 'GET',
+                  url: `/apps/${app.name}/deployments/${dep.name}/history`,
+                  headers: {
+                    'Authorization': `Bearer ${parameters.authToken}`,
+                    ...(parameters.tenant && { 'tenant': parameters.tenant }),
+                  },
+                });
+                const match = (hist.history || []).find((h: any) => h.appVersion?.includes(releaseLabel) || h.description?.includes(releaseLabel));
+                if (match) {
+                  results.push({
+                    appName: app.name,
+                    deployment: dep.name,
+                    label: match.label,
+                    rollout: match.rollout ?? 100,
+                    description: match.description,
+                    uploaded: match.uploadTime,
+                  });
+                }
+              } catch (err: any) {
+                console.warn('history fetch failed', app.name, dep.name, err?.message);
+              }
+            }
+          }
+
+          return res.json({ response: { results } });
+        
         default:
           return res.status(400).json({ error: `Unknown tool: ${toolName}` });
       }

@@ -62,6 +62,21 @@ const chatbot: AuthenticatedActionFunction = async ({ user, request }) => {
     const body = await request.json() as ChatRequest;
     const { message, context = {}, history = [] } = body;
 
+    // ---------------------------
+    // Quick static replies (FAQ)
+    // ---------------------------
+    const staticReplies: Array<{ pattern: RegExp; answer: string }> = [
+      { pattern: /app version.*code ?push/i, answer: "In a CodePush update the native app version (e.g. 5.41.1) doesn't change; instead look at the CodePush label (v1, v3, etc.) to verify the patch." },
+      { pattern: /codepush .*adoption.*edge cases/i, answer: "Occasionally React-Native's instance manager can't apply a patch and the app rolls back to the bundled version. This is usually <5 % of devices." },
+      { pattern: /how .*send .*dota/i, answer: "OTA works linearly – we keep at most two live versions. To publish a new patch we either finish or halt the current rollout, then push the next one." },
+    ];
+
+    for (const s of staticReplies) {
+      if (s.pattern.test(message)) {
+        return json({ response: s.answer });
+      }
+    }
+
     if (!message) {
       return json({ error: "Message is required" }, { status: 400 });
     }
@@ -106,7 +121,9 @@ const chatbot: AuthenticatedActionFunction = async ({ user, request }) => {
                     "list_deployments", "create_deployment", "get_deployment",
                     "update_deployment", "delete_deployment", "update_release",
                     "get_release_history", "promote_release", "get_deployment_metrics",
-                    "list_collaborators", "add_collaborator", "remove_collaborator"
+                    "list_collaborators", "add_collaborator", "remove_collaborator",
+                    "increase_rollout", "get_current_rollout", "latest_release_label",
+                    "latest_codepushes", "rollout_for_release"
                   ],
                   description: "The tool to execute"
                 },
@@ -276,12 +293,39 @@ const chatbot: AuthenticatedActionFunction = async ({ user, request }) => {
                     ).join('\n\n')
                   }`;
                 }
-              } else if (tool === 'get_deployment_metrics') {
+              } else if (tool === 'get_deployment_metrics' || tool === 'get_current_rollout') {
                 const metrics = data.response && data.response.metrics;
                 if (metrics) {
                   formattedResponse = `Deployment Metrics:\n\n📊 Overview:\n- Total Downloads: ${metrics.totalDownloads || 0}\n- Active Installs: ${metrics.activeInstalls || 0}\n- Failed Installs: ${metrics.failedInstalls || 0}\n- Rollback Rate: ${metrics.rollbackRate || '0%'}\n\n📈 Recent Activity:\n- Last 7 days: ${metrics.weeklyDownloads || 0} downloads\n- Last 30 days: ${metrics.monthlyDownloads || 0} downloads`;
+                } else if (data.response?.rollout !== undefined) {
+                  formattedResponse = `Current rollout for ${parameters.deploymentName}: ${data.response.rollout}%`;
                 } else {
                   formattedResponse = "Metrics data retrieved successfully.";
+                }
+              } else if (tool === 'increase_rollout') {
+                formattedResponse = `✅ Rollout updated to ${parameters.rollout}% successfully! I will monitor the metrics and let you know if we should adjust again.`;
+              } else if (tool === 'latest_release_label') {
+                if (data.response?.latestRelease) {
+                  const lr = data.response.latestRelease;
+                  formattedResponse = `The latest CodePush label for ${parameters.deploymentName} is ${lr.label} (released on ${new Date(lr.uploadTime).toLocaleDateString()}).`;
+                } else {
+                  formattedResponse = 'No releases found.';
+                }
+              } else if (tool === 'latest_codepushes') {
+                const items = data.response?.summaries || [];
+                if (!items.length) {
+                  formattedResponse = 'No CodePush releases found in the last 7 days.';
+                } else {
+                  formattedResponse = `CodePush releases from the last ${parameters.days ?? 7} days:\n\n` +
+                    items.map((it: any, idx: number) => `${idx + 1}. ${it.appName} – ${it.deployment}\n   Label: ${it.label}\n   Rollout: ${it.rollout}%\n   Time: ${new Date(it.uploadTime).toLocaleString()}\n   ${it.description || ''}`).join('\n\n');
+                }
+              } else if (tool === 'rollout_for_release') {
+                const resArr = data.response?.results || [];
+                if (!resArr.length) {
+                  formattedResponse = `No deployments found containing version ${parameters.label}.`;
+                } else {
+                  formattedResponse = `Rollout details for ${parameters.label} (across apps):\n\n` +
+                    resArr.map((r: any, i: number) => `${i + 1}. ${r.appName} – ${r.deployment}\n   Label: ${r.label}\n   Rollout: ${r.rollout}%\n   Uploaded: ${new Date(r.uploaded).toLocaleString()}\n   ${r.description || ''}`).join('\n\n');
                 }
               } else if (tool === 'add_collaborator') {
                 formattedResponse = `✅ Collaborator added successfully!\n\nThe user has been granted access to this application and will receive an email notification.`;

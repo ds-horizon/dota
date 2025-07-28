@@ -16,6 +16,8 @@ import {
   IconRefresh,
   IconMinimize,
   IconX,
+  IconMaximize,
+  IconArrowsMinimize2,
 } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import styles from './index.module.css';
@@ -52,6 +54,7 @@ export function Chatbot({
 
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // auto-scroll on new message
@@ -120,6 +123,8 @@ export function Chatbot({
     }
   };
 
+  const toggleExpand = () => setIsExpanded(!isExpanded);
+
   // Minimized header
   if (minimized) {
     return (
@@ -134,7 +139,7 @@ export function Chatbot({
   }
 
   return (
-    <Paper className={styles.root}>
+    <Paper className={`${styles.root} ${isExpanded ? styles.expanded : ''}`}>
       {/* Header */}
       <Group className={styles.header} justify="space-between" align="center">
         <Group align="center" gap="xs">
@@ -151,6 +156,9 @@ export function Chatbot({
         <Group gap="xs" className={styles.controls}>
           <ActionIcon size="sm" onClick={() => setMessages([{ id: Date.now(), type: 'system', content: 'Chat cleared. How can I help?' }])}>
             <IconRefresh size={16} />
+          </ActionIcon>
+          <ActionIcon size="sm" onClick={toggleExpand}>
+            {isExpanded ? <IconArrowsMinimize2 size={16} /> : <IconMaximize size={16} />}
           </ActionIcon>
           <ActionIcon size="sm" onClick={onToggleMinimize}>
             <IconMinimize size={16} />
