@@ -248,15 +248,43 @@ app.post('/execute-tool', async (req, res) => {
           return res.json({ response: createDeploymentData });
         
         case 'get_deployment':
-          const getDeploymentData = await makeApiRequest({
-            method: 'GET',
-            url: `/apps/${parameters.appName}/deployments/${parameters.deploymentName}`,
-            headers: {
-              'Authorization': `Bearer ${parameters.authToken}`,
-              ...(parameters.tenant && { 'tenant': parameters.tenant }),
-            },
-          });
-          return res.json({ response: getDeploymentData });
+          try {
+            const getDeploymentData = await makeApiRequest({
+              method: 'GET',
+              url: `/apps/${parameters.appName}/deployments/${parameters.deploymentName}`,
+              headers: {
+                'Authorization': `Bearer ${parameters.authToken}`,
+                ...(parameters.tenant && { 'tenant': parameters.tenant }),
+              },
+            });
+            return res.json({ response: getDeploymentData });
+          } catch (err: any) {
+            if (err?.status === 404) {
+              // Fallback: list deployments and match by regex
+              const listDeps = await makeApiRequest<any>({
+                method: 'GET',
+                url: `/apps/${parameters.appName}/deployments`,
+                headers: {
+                  'Authorization': `Bearer ${parameters.authToken}`,
+                  ...(parameters.tenant && { 'tenant': parameters.tenant }),
+                },
+              });
+              const pat = new RegExp(parameters.deploymentName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+              const matched = (listDeps.deployments || listDeps || []).find((d: any) => pat.test(d.name));
+              if (matched) {
+                const depData = await makeApiRequest({
+                  method: 'GET',
+                  url: `/apps/${parameters.appName}/deployments/${matched.name}`,
+                  headers: {
+                    'Authorization': `Bearer ${parameters.authToken}`,
+                    ...(parameters.tenant && { 'tenant': parameters.tenant }),
+                  },
+                });
+                return res.json({ response: depData });
+              }
+            }
+            throw err;
+          }
         
         case 'update_deployment':
           const updateDeploymentData = await makeApiRequest({
@@ -584,6 +612,9 @@ app.post('/execute-tool', async (req, res) => {
             }
 
             for (const dep of deploymentList) {
+              if (!dep?.name) {
+                continue;
+              }
               try {
                 const hist = await makeApiRequest<{ history: any[] }>({
                   method: 'GET',
