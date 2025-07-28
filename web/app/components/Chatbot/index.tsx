@@ -17,7 +17,6 @@ import {
   IconMinimize,
   IconX,
   IconMaximize,
-  IconArrowsMinimize2,
 } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import styles from './index.module.css';
@@ -158,7 +157,7 @@ export function Chatbot({
             <IconRefresh size={16} />
           </ActionIcon>
           <ActionIcon size="sm" onClick={toggleExpand}>
-            {isExpanded ? <IconArrowsMinimize2 size={16} /> : <IconMaximize size={16} />}
+            {isExpanded ? <IconMinimize size={16} /> : <IconMaximize size={16} />}
           </ActionIcon>
           <ActionIcon size="sm" onClick={onToggleMinimize}>
             <IconMinimize size={16} />
