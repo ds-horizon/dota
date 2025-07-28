@@ -565,7 +565,25 @@ app.post('/execute-tool', async (req, res) => {
 
           const results: any[] = [];
           for (const app of appsDataRr.apps || []) {
-            for (const dep of app.deployments || []) {
+            let deploymentList = app.deployments || [];
+            if (!deploymentList.length || deploymentList.some((d: any)=> !d?.name)) {
+              // Fetch deployments for app if not present or malformed
+              try {
+                const depsResp = await makeApiRequest<any>({
+                  method: 'GET',
+                  url: `/apps/${app.name}/deployments`,
+                  headers: {
+                    'Authorization': `Bearer ${parameters.authToken}`,
+                    ...(parameters.tenant && { 'tenant': parameters.tenant }),
+                  },
+                });
+                deploymentList = depsResp.deployments || depsResp || [];
+              } catch (e) {
+                console.warn('Failed to list deployments for', app.name);
+              }
+            }
+
+            for (const dep of deploymentList) {
               try {
                 const hist = await makeApiRequest<{ history: any[] }>({
                   method: 'GET',
