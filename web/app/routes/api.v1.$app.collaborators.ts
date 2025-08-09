@@ -89,4 +89,3 @@ export const action = authenticateActionRequest({
   PATCH: updateCollabarator,
   DELETE: removeCollabarator,
 });
-```
