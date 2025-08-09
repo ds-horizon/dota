@@ -569,10 +569,17 @@ export function getManagementRouter(config: ManagementConfig): Router {
     nameResolver
       .resolveApp(accountId, appName, tenantId)
       .then((app: storageTypes.App) => {
-        const isAdmin: boolean =
-          app.collaborators && email && app.collaborators[email] && app.collaborators[email].isCurrentAccount;
-        let permission = role === "Owner" ? storageTypes.Permissions.Owner : storageTypes.Permissions.Collaborator;
-          throwIfInvalidPermissions(app, permission);
+        // Role changes require Owner permission regardless of the target role
+        throwIfInvalidPermissions(app, storageTypes.Permissions.Owner);
+
+        // Prevent demoting the current owner to a non-owner role
+        const currentUserIsOwner = storageTypes.isOwnedByCurrentUser(app);
+        const targetIsCurrentUser = !!(app.collaborators && email && app.collaborators[email] && app.collaborators[email].isCurrentAccount);
+        if (currentUserIsOwner && targetIsCurrentUser && role !== "Owner") {
+          throw errorUtils.restError(errorUtils.ErrorCode.Unauthorized,
+            "Owners cannot change their own role. Ask another owner to modify roles.");
+        }
+
         return storage.updateCollaborators(accountId, app.id, email, role);
       })
       .then(() => {
