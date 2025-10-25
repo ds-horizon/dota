@@ -41,4 +41,4 @@ For a complete list of available commands and their usage, please refer to the [
 ## Support
 
 - [Ask a Question (Discord)](https://discord.gg/tUpDV8EaDM)
-- [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
+- [Report an Issue](https://github.com/ds-horizon/dota/issues)

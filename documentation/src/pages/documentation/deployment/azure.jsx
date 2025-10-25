@@ -125,7 +125,7 @@ az storage container create \\
 az webapp deployment source config \\
   --name dota-server-<unique-suffix> \\
   --resource-group dota-resources \\
-  --repo-url https://github.com/dream-sports-labs/dota \\
+  --repo-url https://github.com/ds-horizon/dota \\
   --branch main \\
   --git-token <your-github-token>`}</code>
             </pre>

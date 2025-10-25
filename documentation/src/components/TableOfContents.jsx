@@ -168,7 +168,7 @@ export default function TableOfContents() {
           Ask a Question
         </a>
         <a 
-          href="https://github.com/dream-sports-labs/dota/issues" 
+          href="https://github.com/ds-horizon/dota/issues" 
           className="text-sm text-primary hover:text-primary-dark font-medium"
           target="_blank"
           rel="noopener noreferrer"

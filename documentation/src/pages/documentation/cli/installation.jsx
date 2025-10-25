@@ -41,7 +41,7 @@ export default function CLIInstallation() {
         <h2 className="text-2xl font-bold mb-4">Open Source & Contributions</h2>
         <p className="mb-4">
           DOTA CLI is <strong>open source</strong>. Interested in helping us improve? Check out our
-          GitHub <a href="https://github.com/dream-sports-labs/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">repository</a> for details on how to contribute fixes or features. We appreciate all
+          GitHub <a href="https://github.com/ds-horizon/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">repository</a> for details on how to contribute fixes or features. We appreciate all
           your input and feedback!
         </p>
       </div>

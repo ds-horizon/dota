@@ -14,7 +14,7 @@ export default function LocalDeployment() {
           <li>
             <p className="mb-2">Clone the repository:</p>
             <pre className="code-block">
-              <code>git clone https://github.com/dream-sports-labs/dota.git</code>
+              <code>git clone https://github.com/ds-horizon/dota.git</code>
             </pre>
           </li>
           <li>
