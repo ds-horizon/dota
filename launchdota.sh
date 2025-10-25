@@ -78,7 +78,7 @@ if [ -d "dota" ]; then
     git checkout main
     git pull origin main
 else
-    git clone -b main git@github.com:dream-sports-labs/dota.git
+    git clone -b main git@github.com:ds-horizon/dota.git
     cd dota
 fi
 
