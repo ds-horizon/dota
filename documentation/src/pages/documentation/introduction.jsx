@@ -24,7 +24,7 @@ export default function Introduction() {
         DOTA SDK and CLI are open-source! 🎉 We believe in creating an accessible, collaborative platform that thrives on community contributions.
       </p>
       <p className="mb-6">
-        <strong>Contribute:</strong> Interested in helping us improve? Check out our <a href="https://github.com/dream-sports-labs/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">GitHub repository</a> to get started! From feature suggestions to bug fixes, all contributions are welcome.
+        <strong>Contribute:</strong> Interested in helping us improve? Check out our <a href="https://github.com/ds-horizon/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">GitHub repository</a> to get started! From feature suggestions to bug fixes, all contributions are welcome.
       </p>
 
       <h2 className="text-2xl font-bold mb-4">Features Offered</h2>

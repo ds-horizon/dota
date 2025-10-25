@@ -32,7 +32,7 @@ DOTA is a self-hostable, modular toolchain that empowers React Native developers
 - [CLI Usage Guide](https://dota.dreamsportslabs.com/documentation/cli/commands)
 - [Plugin System](https://dota.dreamsportslabs.com/documentation/plugins)
 - [Ask a Question (Discord)](https://discord.gg/tUpDV8EaDM)
-- [Report an Issue](https://github.com/dream-sports-labs/dota/issues)
+- [Report an Issue](https://github.com/ds-horizon/dota/issues)
 
 ---
 
@@ -78,7 +78,7 @@ If you prefer a step-by-step approach instead of the one-line quickstart, follow
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/dream-sports-labs/dota
+   git clone https://github.com/ds-horizon/dota
    ```
 2. **Create Environment Files**
    ```bash
@@ -169,4 +169,4 @@ This code is provided under the MIT License, see the [LICENSE](LICENSE.txt) to l
 
 ## ✉️ Contact
 
-If you need feedback or support, reach out via the [Issue Tracker](https://github.com/dream-sports-labs/dota/issues) or [Discord](https://discord.gg/tUpDV8EaDM).
+If you need feedback or support, reach out via the [Issue Tracker](https://github.com/ds-horizon/dota/issues) or [Discord](https://discord.gg/tUpDV8EaDM).

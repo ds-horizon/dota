@@ -120,7 +120,7 @@ sudo npm install -g pm2`}</code>
             <p className="mb-2">Clone and set up your DOTA Server:</p>
             <pre className="code-block">
               <code>{`# Clone repository
-git clone https://github.com/dream-sports-labs/dota.git
+git clone https://github.com/ds-horizon/dota.git
 cd dota-server
 
 # Install dependencies

@@ -27,7 +27,7 @@ export default function Quickstart() {
           <div className="p-4 rounded-lg border border-gray-200 dark-mode:border-gray-700">
             <h3 className="text-lg font-semibold mb-2">Clone the Repository</h3>
             <div className="bg-gray-100 dark-mode:bg-gray-800 p-3 rounded-lg">
-              <code className="text-sm font-mono">git clone https://github.com/dream-sports-labs/dota</code>
+              <code className="text-sm font-mono">git clone https://github.com/ds-horizon/dota</code>
             </div>
           </div>
 
@@ -119,7 +119,7 @@ export default function Quickstart() {
           <li>
             <strong>Clone the Repository</strong>
             <div className="bg-gray-100 dark-mode:bg-gray-800 p-3 rounded-lg mt-2">
-              <code className="text-sm font-mono">git clone https://github.com/dream-sports-labs/dota</code>
+              <code className="text-sm font-mono">git clone https://github.com/ds-horizon/dota</code>
             </div>
           </li>
 

@@ -7,7 +7,7 @@ export default function Home() {
         <p className="text-lg mb-6">
           DOTA enables React Native developers to deploy mobile app updates directly to their users' devices. 
           It consists of two parts: DOTA Server where developers publish app updates (JS, HTML, CSS or image changes), 
-          and <a href="https://github.com/dream-sports-labs/dota" className="text-dota-600 hover:underline">DOTA React Native Client SDK</a> that 
+          and <a href="https://github.com/ds-horizon/dota" className="text-dota-600 hover:underline">DOTA React Native Client SDK</a> that 
           enables querying for updates from within an app.
         </p>
         
@@ -18,7 +18,7 @@ export default function Home() {
             </link>
           </li>
           <li>
-            <a href="https://github.com/dream-sports-labs/dota" target="_blank" rel="noopener noreferrer" className="inline-block bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-6 py-3 rounded-md text-base font-medium mb-4 transition-colors dark:text-white">
+            <a href="https://github.com/ds-horizon/dota" target="_blank" rel="noopener noreferrer" className="inline-block bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-6 py-3 rounded-md text-base font-medium mb-4 transition-colors dark:text-white">
               GitHub Repository
             </a>
           </li>
@@ -98,7 +98,7 @@ export default function Home() {
               The React Native client SDK enables your app to check for and apply updates from the DOTA server.
             </p>
             <p className="mt-6">
-              <a href="https://github.com/dream-sports-labs/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline font-medium">
+              <a href="https://github.com/ds-horizon/dota" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline font-medium">
                 Configure React Native →
               </a>
             </p>

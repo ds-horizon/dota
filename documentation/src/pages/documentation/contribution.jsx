@@ -67,7 +67,7 @@ export default function Contribution() {
           <li>
             <h3 className="text-xl font-semibold mb-2">Clone Your Fork</h3>
             <pre className="code-block">
-              <code>git clone https://github.com/dream-sports-labs/dota.git</code>
+              <code>git clone https://github.com/ds-horizon/dota.git</code>
             </pre>
           </li>
           
@@ -141,7 +141,7 @@ git commit -m "Description of your changes"`}</code>
             <strong>Discord:</strong> Join our <a href="https://discord.gg/tUpDV8EaDM" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">DreamSportsLabs Discord server</a>
           </li>
           <li>
-            <strong>GitHub Issues:</strong> Open an issue on our <a href="https://github.com/dream-sports-labs/dota/issues" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">GitHub repository</a>
+            <strong>GitHub Issues:</strong> Open an issue on our <a href="https://github.com/ds-horizon/dota/issues" target="_blank" rel="noopener noreferrer" className="text-dota-600 hover:underline">GitHub repository</a>
           </li>
         </ul>
       </div>

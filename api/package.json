@@ -32,7 +32,7 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
-  "author": "Dream Sports Labs <dreamsportslabs@dream11.com> (https://github.com/dream-sports-labs)",
+  "author": "Dream Sports Labs <dreamsportslabs@dream11.com> (https://github.com/ds-horizon)",
   "dependencies": {
     "@azure/data-tables": "^13.3.0",
     "@azure/identity": "^4.2.1",

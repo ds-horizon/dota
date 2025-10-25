@@ -166,7 +166,7 @@ function App() {
   useEffect(() => {
     const fetchGithubStats = async () => {
       try {
-        const response = await fetch('https://api.github.com/repos/dream-sports-labs/dota');
+        const response = await fetch('https://api.github.com/repos/ds-horizon/dota');
         const data = await response.json();
         setGithubStats({
           stars: data.stargazers_count,
@@ -418,7 +418,7 @@ function App() {
                     Get Started Free <ArrowRight />
                   </button>
                   <a
-                    href="https://github.com/dream-sports-labs/dota"
+                    href="https://github.com/ds-horizon/dota"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-secondary btn-lg group inline-flex gap-2 items-center"
@@ -854,7 +854,7 @@ MyApp = codePush(codePushOptions)(MyApp);`}
                   <ul className="space-y-8">
                     <li className="flex items-start group hover:transform hover:-translate-x-1 transition-all duration-200 relative">
                       <a 
-                        href="https://github.com/dream-sports-labs/dota/discussions" 
+                        href="https://github.com/ds-horizon/dota/discussions" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="absolute inset-0 z-10"
@@ -878,7 +878,7 @@ MyApp = codePush(codePushOptions)(MyApp);`}
                     </li>
                     <li className="flex items-start group hover:transform hover:-translate-x-1 transition-all duration-200 relative">
                       <a 
-                        href="https://github.com/dream-sports-labs/dota/issues" 
+                        href="https://github.com/ds-horizon/dota/issues" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="absolute inset-0 z-10"
@@ -904,7 +904,7 @@ MyApp = codePush(codePushOptions)(MyApp);`}
                     </li>
                     <li className="flex items-start group hover:transform hover:-translate-x-1 transition-all duration-200 relative">
                       <a 
-                        href="https://github.com/dream-sports-labs/dota/pulls" 
+                        href="https://github.com/ds-horizon/dota/pulls" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="absolute inset-0 z-10"

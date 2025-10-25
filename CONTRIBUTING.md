@@ -57,7 +57,7 @@ All contributions must be properly tested to maintain project stability:
 ## Getting Support
 
 - If you have questions or need clarification on contributing, reach out via:
-  - [Issue Tracker](https://github.com/dream-sports-labs/dota/issues)
+  - [Issue Tracker](https://github.com/ds-horizon/dota/issues)
   - [Discord](https://discord.gg/tUpDV8EaDM)
 ## Development Setup
 
@@ -72,7 +72,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/dream-sports-labs/dota
+git clone https://github.com/ds-horizon/dota
 ```
 
 2. Create environment files:
